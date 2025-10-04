@@ -1,71 +1,212 @@
-# MiniShop — E-commerce Microservices Platform
+# 🛍️ MiniShop — E-Commerce Microservices Platform
 
-MiniShop is a modern, distributed e-commerce backend built with **Java 21**, **Spring Boot 3.x**, and **Spring Cloud**, designed following **Microservices Architecture** principles.
+[![Java 21](https://img.shields.io/badge/Java-21%20LTS-orange.svg?style=for-the-badge&logo=openjdk)](https://adoptium.net/)
+[![Spring Boot 3.3.2](https://img.shields.io/badge/Spring%20Boot-3.3.2-brightgreen.svg?style=for-the-badge&logo=springboot)](https://spring.io/projects/spring-boot)
+[![Spring Cloud 2023.0.3](https://img.shields.io/badge/Spring%20Cloud-2023.0.3-blue.svg?style=for-the-badge&logo=spring)](https://spring.io/projects/spring-cloud)
+[![Apache Kafka](https://img.shields.io/badge/Apache%20Kafka-Distributed%20Events-231F20.svg?style=for-the-badge&logo=apachekafka)](https://kafka.apache.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database%20Per%20Service-336791.svg?style=for-the-badge&logo=postgresql)](https://www.postgresql.org/)
+[![Docker](https://img.shields.io/badge/Docker-Multi--stage%20Containers-2496ED.svg?style=for-the-badge&logo=docker)](https://www.docker.com/)
 
----
-
-## 🏗️ System Architecture & Services
-
-| Service | Port | Description | Tech Stack | Status |
-|---|---|---|---|---|
-| **User Service** | `8081` | Authentication, Authorization, JWT, Profile Management | Spring Boot 3.3, Security 6, PostgreSQL, Flyway, JJWT | ✅ Completed |
-| **Product Service** | `8082` | Product Catalog, Categories, Inventory linkage | Spring Boot 3.3, PostgreSQL, Flyway | 🚧 Planned |
-| **Eureka Server** | `8761` | Service Discovery & Registry | Spring Cloud Netflix Eureka | 🚧 Planned |
-| **API Gateway** | `8080` | Unified API Entrypoint, Routing, Rate Limiting | Spring Cloud Gateway | 🚧 Planned |
-| **Order Service** | `8083` | Order Processing, Saga Orchestration | Spring Boot 3.3, PostgreSQL, Kafka | 🚧 Planned |
-| **Payment Service** | `8084` | Payment Gateways integration (VNPay/Momo/Stripe) | Spring Boot 3.3, PostgreSQL | 🚧 Planned |
+**MiniShop** is an enterprise-grade, distributed e-commerce backend platform built with **Java 21**, **Spring Boot 3.3**, **Spring Cloud 2023**, and **Apache Kafka**. Designed to mirror high-throughput production e-commerce architectures (e.g., Shopee, Lazada), it implements core distributed patterns including **Choreography-based Saga**, **Stateless JWT Security**, **Service Discovery**, **Resilience4j Circuit Breakers**, and **Database-per-Service** isolation.
 
 ---
 
-## 🚀 User Service Highlights
+## 🏛️ System Architecture
 
-- **Stateless Authentication**: JWT Access Tokens (HS256) + Hashed Refresh Tokens (SHA-256 in DB) with token rotation & revocation support.
-- **Role-Based Access Control**: `ADMIN`, `SELLER`, `CUSTOMER`.
-- **Database Migrations**: Version-controlled migrations via Flyway.
-- **Containerization**: Multi-stage Docker build ready for Docker Compose / Kubernetes.
-- **Interactive Documentation**: OpenAPI 3 / Swagger UI at `/swagger-ui.html`.
+```mermaid
+graph TD
+    Client(["📱 Web / Mobile Clients"])
+    
+    subgraph Edge Layer
+        Gateway["🛡️ API Gateway (Port 8080)<br/>• Non-blocking Netty<br/>• JWT Pre-Validation Filter<br/>• Circuit Breakers & CORS<br/>• Request Tracing (X-Trace-Id)"]
+    end
+    
+    subgraph Service Discovery
+        Eureka["🧭 Eureka Server (Port 8761)<br/>• Dynamic Service Registry<br/>• Realtime Instance Health Heartbeats"]
+    end
+    
+    subgraph Core Microservices
+        UserService["👤 User Service (Port 8081)<br/>• Auth, JWT & Token Rotation<br/>• User Profiles & Admin Status"]
+        ProductService["📦 Product Service (Port 8082)<br/>• Catalog & Hierarchical Categories<br/>• Dynamic Filtering & Multi-spec"]
+        OrderService["🛒 Order Service (Port 8083)<br/>• Shopping Cart Snapshots<br/>• Order State Machine<br/>• Saga Orchestrator & Compensation"]
+    end
+    
+    subgraph Event Broker
+        Kafka{{"📨 Apache Kafka<br/>Topics: order.created, stock.reserved, payment.succeeded, etc."}}
+    end
 
-### API Endpoints (v1)
+    subgraph Data Stores
+        UserDB[("🗄️ user_db (PostgreSQL)")]
+        ProductDB[("🗄️ product_db (PostgreSQL)")]
+        OrderDB[("🗄️ order_db (PostgreSQL)")]
+    end
 
-```http
-POST   /api/v1/auth/register       # Register new user
-POST   /api/v1/auth/login          # Authenticate & receive tokens
-POST   /api/v1/auth/refresh        # Rotate refresh token & issue new access token
-POST   /api/v1/auth/logout         # Revoke refresh token
-GET    /api/v1/users/me            # Get current user profile (JWT required)
-PUT    /api/v1/users/me            # Update user profile (JWT required)
-GET    /api/v1/users               # Admin: List all users (ADMIN only)
-PUT    /api/v1/users/{id}/status   # Admin: Update account status (ADMIN only)
+    Client -->|HTTP / REST| Gateway
+    Gateway -->|Discovery Lookup| Eureka
+    Gateway -->|Load-Balanced lb://| UserService
+    Gateway -->|Load-Balanced lb://| ProductService
+    Gateway -->|Load-Balanced lb://| OrderService
+    
+    OrderService -.->|Synchronous Feign Price Snapshot| ProductService
+    OrderService <===>|Publish / Consume Events| Kafka
+    
+    UserService --> UserDB
+    ProductService --> ProductDB
+    OrderService --> OrderDB
 ```
 
 ---
 
-## 🛠️ Tech Stack
+## 📦 Microservices Catalog
 
-- **Language & Runtime**: Java 21 LTS
-- **Framework**: Spring Boot 3.3.2, Spring Security 6
-- **Database**: PostgreSQL 16
-- **Migration**: Flyway
-- **Object Mapping**: MapStruct 1.5.5
-- **Security & Tokens**: JJWT 0.12.6, BCrypt (cost factor 12)
-- **Documentation**: Springdoc OpenAPI 2.6.0
-- **Containerization**: Docker (Eclipse Temurin Alpine)
+| Service | Port | Database | Primary Responsibilities | Status |
+|---|---|---|---|---|
+| **[Eureka Server](./eureka-server)** | `8761` | *None* | Centralized Service Registry, Dynamic Discovery, Health Checks | ✅ Active |
+| **[API Gateway](./api-gateway)** | `8080` | *None* | Reactive Entrypoint, Route Management, JWT Filter, Circuit Breakers, CORS | ✅ Active |
+| **[User Service](./user-service)** | `8081` | `user_db` (PostgreSQL) | Authentication, Token Rotation, Role-based Auth (`ADMIN`, `SELLER`, `CUSTOMER`) | ✅ Active |
+| **[Product Service](./product-service)** | `8082` | `product_db` (PostgreSQL) | Product Catalog, Category Tree, Specification Search, Owner Authorization | ✅ Active |
+| **[Order Service](./order-service)** | `8083` | `order_db` (PostgreSQL) | Shopping Cart, Order State Machine, OpenFeign, Kafka Saga Orchestration | ✅ Active |
 
 ---
 
-## 📦 Getting Started
+## ⚡ Choreography-based Saga Orchestration
 
-### Local Development
+The platform implements a distributed **Choreography-based Saga pattern** to maintain data consistency across services without two-phase commit (2PC) locks.
 
-1. Navigate to the service folder:
-   ```bash
-   cd user-service
-   ```
-2. Run database migration and start service:
-   ```bash
-   ./mvnw spring-boot:run
-   ```
-3. Access Swagger UI:
-   ```
-   http://localhost:8081/swagger-ui.html
-   ```
+```text
+1. Order Creation:
+   [Client] POST /api/v1/orders/checkout ──► [Order Service]
+                                                  │
+                                                  ├─► Saves Order (PENDING) & captures immutable snapshots
+                                                  ├─► Clears Shopping Cart
+                                                  └─► Publishes "order.created" to Kafka
+
+2. Stock Reservation (Inventory Service):
+   [Kafka] "order.created" ──► [Inventory Service]
+                                      │
+                                      ├── (Success) ──► Publishes "stock.reserved"
+                                      └── (Failure) ──► Publishes "stock.rejected"
+
+3. Order State Advance / Payment Trigger:
+   [Kafka] "stock.reserved" ──► [Order Service]
+                                      │
+                                      ├─► Status: STOCK_RESERVED
+                                      └─► Publishes "payment.requested"
+
+4. Payment Processing (Payment Service):
+   [Kafka] "payment.requested" ──► [Payment Service]
+                                         │
+                                         ├── (Success) ──► Publishes "payment.succeeded"
+                                         └── (Failure) ──► Publishes "payment.failed"
+
+5. Order Confirmation & Compensating Transactions:
+   [Kafka] "payment.succeeded" ──► [Order Service] ──► Status: CONFIRMED ──► Publishes "order.confirmed"
+   [Kafka] "payment.failed"    ──► [Order Service] ──► Status: CANCELLED ──► Publishes "order.cancelled" (Rolls back stock)
+
+6. Safety Timeout Worker:
+   [OrderTimeoutScheduler] scans for orders stuck in STOCK_RESERVED > 15 mins ──► Marks CANCELLED & triggers "order.cancelled"
+```
+
+---
+
+## 🛡️ Key Architectural Patterns & Features
+
+- **Database per Service**: Zero direct table joins across services. Cross-service data is communicated via synchronous OpenFeign DTOs or asynchronous Kafka domain events.
+- **Immutable Price & Name Snapshots**: When adding items to cart or checking out, `order-service` takes immutable snapshots of product name and price. Changes to product records by sellers never alter existing orders.
+- **Idempotent Consumers**: Every consumer verifies event uniqueness against the `processed_events` table before executing logic to prevent duplicate processing on at-least-once message delivery.
+- **Audit Trail History**: State transitions (`PENDING` ➔ `STOCK_RESERVED` ➔ `CONFIRMED` ➔ `PROCESSING` ➔ `SHIPPING` ➔ `DELIVERED` ➔ `COMPLETED` / `CANCELLED`) are verified by a state machine and logged into `order_status_history`.
+- **Stateless Authentication**: JJWT 0.12.6 tokens with SHA-256 hashed refresh tokens, token rotation on refresh, and instant revocation on logout.
+- **Reactive API Gateway**: Non-blocking Spring Cloud Gateway filtering requests, attaching `X-Trace-Id` headers, extracting user claims (`X-User-Id`, `X-User-Role`), and providing Resilience4j 503 fallback handlers.
+
+---
+
+## 📡 API Catalog Overview
+
+### 👤 User Service (`8081` / via Gateway `8080`)
+```http
+POST   /api/v1/auth/register          # Register user (CUSTOMER / SELLER)
+POST   /api/v1/auth/login             # Authenticate & issue Access + Refresh tokens
+POST   /api/v1/auth/refresh           # Rotate refresh token & get new access token
+POST   /api/v1/auth/logout            # Revoke refresh token
+GET    /api/v1/users/me               # Get current user profile (JWT)
+PUT    /api/v1/users/me               # Update current profile (JWT)
+GET    /api/v1/users                  # Admin: List users with pagination & filtering
+PUT    /api/v1/users/{id}/status      # Admin: Lock/Activate user account
+```
+
+### 📦 Product Service (`8082` / via Gateway `8080`)
+```http
+GET    /api/v1/products               # Public: Dynamic multi-criteria search & pagination
+GET    /api/v1/products/{id}          # Public: Product detail with image gallery
+POST   /api/v1/products               # Seller/Admin: Create new product
+PUT    /api/v1/products/{id}          # Owner/Admin: Update product details
+DELETE /api/v1/products/{id}          # Owner/Admin: Soft delete product (HIDDEN)
+GET    /api/v1/categories             # Public: Category tree hierarchy
+POST   /api/v1/categories             # Admin: Create category
+```
+
+### 🛒 Order Service (`8083` / via Gateway `8080`)
+```http
+GET    /api/v1/cart                   # Get current user's shopping cart & subtotal
+POST   /api/v1/cart/items             # Add product with real-time price snapshot
+PUT    /api/v1/cart/items/{itemId}    # Update item quantity
+DELETE /api/v1/cart/items/{itemId}    # Remove item from cart
+DELETE /api/v1/cart                   # Clear cart
+POST   /api/v1/orders/checkout        # Checkout cart & launch Saga workflow
+GET    /api/v1/orders                 # User: Order history with status filter
+GET    /api/v1/orders/{id}            # User/Admin: Order detail & audit status history
+POST   /api/v1/orders/{id}/cancel     # User: Cancel order (triggers compensation)
+PUT    /api/v1/orders/{id}/status     # Seller/Admin: Advance order lifecycle
+```
+
+---
+
+## 🛠️ Technology Stack & Dependencies
+
+- **Language & JDK**: Java 21 LTS (Eclipse Temurin)
+- **Frameworks**: Spring Boot 3.3.2, Spring Cloud 2023.0.3 (Gateway, Netflix Eureka, OpenFeign)
+- **Event Messaging**: Apache Kafka 3.x with Spring Kafka
+- **Fault Tolerance**: Resilience4j Reactive Circuit Breaker
+- **Persistence & Migration**: PostgreSQL 16, Spring Data JPA, Hibernate 6, Flyway Migrations
+- **Security**: Spring Security 6, JJWT 0.12.6, BCrypt (cost factor 12)
+- **Mapping & Utilities**: MapStruct 1.5.5, Lombok
+- **API Documentation**: Springdoc OpenAPI 2.6.0 (Swagger UI at `/swagger-ui.html`)
+- **Containerization**: Multi-stage Dockerfiles with healthchecks
+
+---
+
+## 🚀 Getting Started
+
+### 1. Prerequisites
+- **JDK 21 LTS**
+- **Docker & Docker Compose** (for PostgreSQL & Kafka)
+- **Maven 3.9+** (or using bundled `./mvnw`)
+
+### 2. Running Services Locally
+
+Start the services in the following order:
+
+```bash
+# 1. Start Eureka Discovery Server
+cd eureka-server && ./mvnw spring-boot:run
+
+# 2. Start Core Services
+cd ../user-service && ./mvnw spring-boot:run
+cd ../product-service && ./mvnw spring-boot:run
+cd ../order-service && ./mvnw spring-boot:run
+
+# 3. Start API Gateway
+cd ../api-gateway && ./mvnw spring-boot:run
+```
+
+### 3. Service Dashboards & Swagger UIs
+- **Eureka Dashboard**: [http://localhost:8761](http://localhost:8761)
+- **API Gateway Entry**: [http://localhost:8080](http://localhost:8080)
+- **User Service Swagger**: [http://localhost:8081/swagger-ui.html](http://localhost:8081/swagger-ui.html)
+- **Product Service Swagger**: [http://localhost:8082/swagger-ui.html](http://localhost:8082/swagger-ui.html)
+- **Order Service Swagger**: [http://localhost:8083/swagger-ui.html](http://localhost:8083/swagger-ui.html)
+
+---
+
+## 📄 License
+This project is open-source and available under the [MIT License](LICENSE).
