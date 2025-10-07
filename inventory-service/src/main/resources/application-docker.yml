@@ -1,0 +1,15 @@
+server:
+  port: 8085
+
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres-inventory-db:5432/inventory_db
+    username: postgres
+    password: postgres
+  kafka:
+    bootstrap-servers: kafka:9092
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
