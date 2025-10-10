@@ -7,7 +7,7 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database%20Per%20Service-336791.svg?style=for-the-badge&logo=postgresql)](https://www.postgresql.org/)
 [![Docker](https://img.shields.io/badge/Docker-Multi--stage%20Containers-2496ED.svg?style=for-the-badge&logo=docker)](https://www.docker.com/)
 
-**MiniShop** is an enterprise-grade, distributed e-commerce backend platform built with **Java 21**, **Spring Boot 3.3**, **Spring Cloud 2023**, and **Apache Kafka**. Designed to mirror high-throughput production e-commerce architectures (e.g., Shopee, Lazada), it implements core distributed patterns including **Choreography-based Saga**, **Stateless JWT Security**, **Service Discovery**, **Resilience4j Circuit Breakers**, and **Database-per-Service** isolation.
+**MiniShop** is an enterprise-grade, distributed e-commerce backend platform built with **Java 21**, **Spring Boot 3.3**, **Spring Cloud 2023**, and **Apache Kafka**. Designed to mirror high-throughput production e-commerce architectures (e.g., Shopee, Lazada), it implements core distributed patterns including **Choreography-based Saga**, **Optimistic Locking Anti-Oversell Concurrency Control**, **Stateless JWT Security**, **Service Discovery**, **Resilience4j Circuit Breakers**, and **Database-per-Service** isolation.
 
 ---
 
@@ -29,16 +29,18 @@ graph TD
         UserService["👤 User Service (Port 8081)<br/>• Auth, JWT & Token Rotation<br/>• User Profiles & Admin Status"]
         ProductService["📦 Product Service (Port 8082)<br/>• Catalog & Hierarchical Categories<br/>• Dynamic Filtering & Multi-spec"]
         OrderService["🛒 Order Service (Port 8083)<br/>• Shopping Cart Snapshots<br/>• Order State Machine<br/>• Saga Orchestrator & Compensation"]
+        InventoryService["📊 Inventory Service (Port 8085)<br/>• Anti-Oversell Optimistic Locking<br/>• Append-Only Movements Audit<br/>• Saga Reservation Handlers"]
     end
     
     subgraph Event Broker
-        Kafka{{"📨 Apache Kafka<br/>Topics: order.created, stock.reserved, payment.succeeded, etc."}}
+        Kafka{{"📨 Apache Kafka<br/>Topics: order.created, stock.reserved, payment.succeeded, inventory.updated, etc."}}
     end
 
     subgraph Data Stores
         UserDB[("🗄️ user_db (PostgreSQL)")]
         ProductDB[("🗄️ product_db (PostgreSQL)")]
         OrderDB[("🗄️ order_db (PostgreSQL)")]
+        InventoryDB[("🗄️ inventory_db (PostgreSQL)")]
     end
 
     Client -->|HTTP / REST| Gateway
@@ -46,13 +48,16 @@ graph TD
     Gateway -->|Load-Balanced lb://| UserService
     Gateway -->|Load-Balanced lb://| ProductService
     Gateway -->|Load-Balanced lb://| OrderService
+    Gateway -->|Load-Balanced lb://| InventoryService
     
     OrderService -.->|Synchronous Feign Price Snapshot| ProductService
     OrderService <===>|Publish / Consume Events| Kafka
+    InventoryService <===>|Publish / Consume Events| Kafka
     
     UserService --> UserDB
     ProductService --> ProductDB
     OrderService --> OrderDB
+    InventoryService --> InventoryDB
 ```
 
 ---
@@ -66,6 +71,7 @@ graph TD
 | **[User Service](./user-service)** | `8081` | `user_db` (PostgreSQL) | Authentication, Token Rotation, Role-based Auth (`ADMIN`, `SELLER`, `CUSTOMER`) | ✅ Active |
 | **[Product Service](./product-service)** | `8082` | `product_db` (PostgreSQL) | Product Catalog, Category Tree, Specification Search, Owner Authorization | ✅ Active |
 | **[Order Service](./order-service)** | `8083` | `order_db` (PostgreSQL) | Shopping Cart, Order State Machine, OpenFeign, Kafka Saga Orchestration | ✅ Active |
+| **[Inventory Service](./inventory-service)** | `8085` | `inventory_db` (PostgreSQL) | Anti-Oversell Optimistic Locking (`@Version`), Saga Event Handlers, Append-only Audit | ✅ Active |
 
 ---
 
@@ -81,11 +87,11 @@ The platform implements a distributed **Choreography-based Saga pattern** to mai
                                                   ├─► Clears Shopping Cart
                                                   └─► Publishes "order.created" to Kafka
 
-2. Stock Reservation (Inventory Service):
+2. Stock Reservation (Inventory Service - Optimistic Locking):
    [Kafka] "order.created" ──► [Inventory Service]
                                       │
-                                      ├── (Success) ──► Publishes "stock.reserved"
-                                      └── (Failure) ──► Publishes "stock.rejected"
+                                      ├── (Success: all items available) ──► Publishes "stock.reserved"
+                                      └── (Failure: out of stock)        ──► Publishes "stock.rejected"
 
 3. Order State Advance / Payment Trigger:
    [Kafka] "stock.reserved" ──► [Order Service]
@@ -101,10 +107,14 @@ The platform implements a distributed **Choreography-based Saga pattern** to mai
 
 5. Order Confirmation & Compensating Transactions:
    [Kafka] "payment.succeeded" ──► [Order Service] ──► Status: CONFIRMED ──► Publishes "order.confirmed"
-   [Kafka] "payment.failed"    ──► [Order Service] ──► Status: CANCELLED ──► Publishes "order.cancelled" (Rolls back stock)
+                                   [Inventory Service] ──► Deducts real stock & publishes "inventory.updated"
 
-6. Safety Timeout Worker:
-   [OrderTimeoutScheduler] scans for orders stuck in STOCK_RESERVED > 15 mins ──► Marks CANCELLED & triggers "order.cancelled"
+   [Kafka] "payment.failed"    ──► [Order Service] ──► Status: CANCELLED ──► Publishes "order.cancelled"
+                                   [Inventory Service] ──► Releases reserved stock & publishes "inventory.updated"
+
+6. Safety Timeout Workers:
+   [OrderTimeoutScheduler] scans for orders stuck in STOCK_RESERVED > 15 mins ──► Marks CANCELLED & triggers compensation
+   [StockReservationTimeoutJob] in Inventory Service releases orphaned reservations > 15 mins
 ```
 
 ---
@@ -112,9 +122,10 @@ The platform implements a distributed **Choreography-based Saga pattern** to mai
 ## 🛡️ Key Architectural Patterns & Features
 
 - **Database per Service**: Zero direct table joins across services. Cross-service data is communicated via synchronous OpenFeign DTOs or asynchronous Kafka domain events.
-- **Immutable Price & Name Snapshots**: When adding items to cart or checking out, `order-service` takes immutable snapshots of product name and price. Changes to product records by sellers never alter existing orders.
-- **Idempotent Consumers**: Every consumer verifies event uniqueness against the `processed_events` table before executing logic to prevent duplicate processing on at-least-once message delivery.
-- **Audit Trail History**: State transitions (`PENDING` ➔ `STOCK_RESERVED` ➔ `CONFIRMED` ➔ `PROCESSING` ➔ `SHIPPING` ➔ `DELIVERED` ➔ `COMPLETED` / `CANCELLED`) are verified by a state machine and logged into `order_status_history`.
+- **Optimistic Locking Anti-Oversell Control**: JPA `@Version` on `Inventory` combined with Spring Retry (`@Retryable`) ensures multiple concurrent purchases on scarce items never result in overselling.
+- **Append-Only Movement Audit Trail**: Every stock change (`IMPORT`, `RESERVE`, `DEDUCT`, `RELEASE`, `ADJUST`) is permanently logged into `stock_movements` for audit and reconciliation.
+- **Immutable Price & Name Snapshots**: When adding items to cart or checking out, `order-service` captures snapshots of product name and price. Future seller updates never alter historical orders.
+- **Idempotent Consumers**: Consumers verify message uniqueness against `processed_events` before executing business logic, protecting against duplicate deliveries.
 - **Stateless Authentication**: JJWT 0.12.6 tokens with SHA-256 hashed refresh tokens, token rotation on refresh, and instant revocation on logout.
 - **Reactive API Gateway**: Non-blocking Spring Cloud Gateway filtering requests, attaching `X-Trace-Id` headers, extracting user claims (`X-User-Id`, `X-User-Role`), and providing Resilience4j 503 fallback handlers.
 
@@ -159,6 +170,14 @@ POST   /api/v1/orders/{id}/cancel     # User: Cancel order (triggers compensatio
 PUT    /api/v1/orders/{id}/status     # Seller/Admin: Advance order lifecycle
 ```
 
+### 📊 Inventory Service (`8085` / via Gateway `8080`)
+```http
+POST   /api/v1/inventory/import          # Admin/Seller: Import stock with batch note
+GET    /api/v1/inventory/{productId}     # Admin/Seller: View inventory & version numbers
+PUT    /api/v1/inventory/{productId}/adjust # Admin: Manually adjust stock with audit note
+GET    /api/v1/inventory/{productId}/movements # Admin: View append-only audit trail
+```
+
 ---
 
 ## 🛠️ Technology Stack & Dependencies
@@ -166,7 +185,7 @@ PUT    /api/v1/orders/{id}/status     # Seller/Admin: Advance order lifecycle
 - **Language & JDK**: Java 21 LTS (Eclipse Temurin)
 - **Frameworks**: Spring Boot 3.3.2, Spring Cloud 2023.0.3 (Gateway, Netflix Eureka, OpenFeign)
 - **Event Messaging**: Apache Kafka 3.x with Spring Kafka
-- **Fault Tolerance**: Resilience4j Reactive Circuit Breaker
+- **Concurrency & Resilience**: JPA `@Version` Optimistic Locking, Spring Retry (`@Retryable`), Resilience4j Circuit Breaker
 - **Persistence & Migration**: PostgreSQL 16, Spring Data JPA, Hibernate 6, Flyway Migrations
 - **Security**: Spring Security 6, JJWT 0.12.6, BCrypt (cost factor 12)
 - **Mapping & Utilities**: MapStruct 1.5.5, Lombok
@@ -194,6 +213,7 @@ cd eureka-server && ./mvnw spring-boot:run
 cd ../user-service && ./mvnw spring-boot:run
 cd ../product-service && ./mvnw spring-boot:run
 cd ../order-service && ./mvnw spring-boot:run
+cd ../inventory-service && ./mvnw spring-boot:run
 
 # 3. Start API Gateway
 cd ../api-gateway && ./mvnw spring-boot:run
@@ -205,6 +225,7 @@ cd ../api-gateway && ./mvnw spring-boot:run
 - **User Service Swagger**: [http://localhost:8081/swagger-ui.html](http://localhost:8081/swagger-ui.html)
 - **Product Service Swagger**: [http://localhost:8082/swagger-ui.html](http://localhost:8082/swagger-ui.html)
 - **Order Service Swagger**: [http://localhost:8083/swagger-ui.html](http://localhost:8083/swagger-ui.html)
+- **Inventory Service Swagger**: [http://localhost:8085/swagger-ui.html](http://localhost:8085/swagger-ui.html)
 
 ---
 
