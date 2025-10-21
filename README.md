@@ -7,7 +7,7 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database%20Per%20Service-336791.svg?style=for-the-badge&logo=postgresql)](https://www.postgresql.org/)
 [![Docker](https://img.shields.io/badge/Docker-Multi--stage%20Containers-2496ED.svg?style=for-the-badge&logo=docker)](https://www.docker.com/)
 
-**MiniShop** is an enterprise-grade, distributed e-commerce backend platform built with **Java 21**, **Spring Boot 3.3**, **Spring Cloud 2023**, and **Apache Kafka**. Designed to mirror high-throughput production e-commerce architectures (e.g., Shopee, Lazada), it implements core distributed patterns including **Choreography-based Saga**, **Anti-Oversell Optimistic Locking**, **Payment Gateway HMAC-SHA512 Cryptographic Verification**, **Stateless JWT Security**, **Service Discovery**, **Resilience4j Circuit Breakers**, and **Database-per-Service** isolation.
+**MiniShop** is an enterprise-grade, distributed e-commerce backend platform built with **Java 21**, **Spring Boot 3.3**, **Spring Cloud 2023**, and **Apache Kafka**. Designed to mirror high-throughput production e-commerce architectures (e.g., Shopee, Lazada), it implements core distributed patterns including **Choreography-based Saga**, **Anti-Oversell Optimistic Locking Concurrency Control**, **Payment Gateway HMAC-SHA512 Verification**, **Asynchronous Multi-channel Notifications**, **Stateless JWT Security**, **Service Discovery**, **Resilience4j Circuit Breakers**, and **Database-per-Service** isolation.
 
 ---
 
@@ -31,10 +31,11 @@ graph TD
         OrderService["🛒 Order Service (Port 8083)<br/>• Shopping Cart Snapshots<br/>• Order State Machine<br/>• Saga Orchestrator & Compensation"]
         InventoryService["📊 Inventory Service (Port 8085)<br/>• Anti-Oversell Optimistic Locking<br/>• Append-Only Movements Audit<br/>• Saga Reservation Handlers"]
         PaymentService["💳 Payment Service (Port 8084)<br/>• VNPay Sandbox & COD Settlement<br/>• HMAC-SHA512 Signature Security<br/>• IPN Webhook & Raw Audit Logs"]
+        NotificationService["🔔 Notification Service (Port 8086)<br/>• Multi-channel Email / SMS Delivery<br/>• Database Template Placeholder Engine<br/>• Audit Logs & Scheduled Auto-retry"]
     end
     
     subgraph Event Broker
-        Kafka{{"📨 Apache Kafka<br/>Topics: order.created, stock.reserved, payment.requested, payment.succeeded, etc."}}
+        Kafka{{"📨 Apache Kafka<br/>Topics: order.created, stock.reserved, payment.succeeded, order.confirmed, etc."}}
     end
 
     subgraph Data Stores
@@ -43,6 +44,7 @@ graph TD
         OrderDB[("🗄️ order_db (PostgreSQL)")]
         InventoryDB[("🗄️ inventory_db (PostgreSQL)")]
         PaymentDB[("🗄️ payment_db (PostgreSQL)")]
+        NotificationDB[("🗄️ notification_db (PostgreSQL)")]
     end
 
     Client -->|HTTP / REST| Gateway
@@ -52,17 +54,20 @@ graph TD
     Gateway -->|Load-Balanced lb://| OrderService
     Gateway -->|Load-Balanced lb://| InventoryService
     Gateway -->|Load-Balanced lb://| PaymentService
+    Gateway -->|Load-Balanced lb://| NotificationService
     
     OrderService -.->|Synchronous Feign Price Snapshot| ProductService
     OrderService <===>|Publish / Consume Events| Kafka
     InventoryService <===>|Publish / Consume Events| Kafka
     PaymentService <===>|Publish / Consume Events| Kafka
+    NotificationService <===|Pure Asynchronous Consumer| Kafka
     
     UserService --> UserDB
     ProductService --> ProductDB
     OrderService --> OrderDB
     InventoryService --> InventoryDB
     PaymentService --> PaymentDB
+    NotificationService --> NotificationDB
 ```
 
 ---
@@ -78,6 +83,7 @@ graph TD
 | **[Order Service](./order-service)** | `8083` | `order_db` (PostgreSQL) | Shopping Cart, Order State Machine, OpenFeign, Kafka Saga Orchestration | ✅ Active |
 | **[Inventory Service](./inventory-service)** | `8085` | `inventory_db` (PostgreSQL) | Anti-Oversell Optimistic Locking (`@Version`), Saga Event Handlers, Append-only Audit | ✅ Active |
 | **[Payment Service](./payment-service)** | `8084` | `payment_db` (PostgreSQL) | VNPay Sandbox Gateway, HMAC-SHA512 Signature Security, IPN Server Webhook, Raw Audit Logs | ✅ Active |
+| **[Notification Service](./notification-service)** | `8086` | `notification_db` (PostgreSQL) | Multi-channel Delivery (Email/SMS), Template Placeholder Engine, Audit Logs, Auto-Retry | ✅ Active |
 
 ---
 
@@ -117,16 +123,19 @@ The platform implements a distributed **Choreography-based Saga pattern** to mai
                                          │                 └── (Failed)     ──► Publishes "payment.failed"
 
 5. Order Confirmation & Compensating Transactions:
-   [Kafka] "payment.succeeded" ──► [Order Service] ──► Status: CONFIRMED ──► Publishes "order.confirmed"
+   [Kafka] "payment.succeeded" ──► [Order Service] ──────► Status: CONFIRMED ──► Publishes "order.confirmed"
                                    [Inventory Service] ──► Deducts real stock & publishes "inventory.updated"
+                                   [Notification Service] ─► Renders ORDER_CONFIRMED & Dispatches Email
 
-   [Kafka] "payment.failed"    ──► [Order Service] ──► Status: CANCELLED ──► Publishes "order.cancelled"
+   [Kafka] "payment.failed"    ──► [Order Service] ──────► Status: CANCELLED ──► Publishes "order.cancelled"
                                    [Inventory Service] ──► Releases reserved stock & publishes "inventory.updated"
+                                   [Notification Service] ─► Renders ORDER_CANCELLED / PAYMENT_FAILED & Dispatches Email
 
 6. Safety Timeout Workers:
    [OrderTimeoutScheduler] in Order Service scans for stuck orders in STOCK_RESERVED > 15 mins ──► Triggers compensation
    [StockReservationTimeoutJob] in Inventory Service releases orphaned reservations > 15 mins
    [PaymentTimeoutScheduler] in Payment Service expires pending payments > 15 mins and publishes "payment.failed"
+   [NotificationRetryScheduler] in Notification Service retries failed messages up to 3 times
 ```
 
 ---
@@ -134,8 +143,10 @@ The platform implements a distributed **Choreography-based Saga pattern** to mai
 ## 🛡️ Key Architectural Patterns & Features
 
 - **Database per Service**: Zero direct table joins across services. Cross-service data is communicated via synchronous OpenFeign DTOs or asynchronous Kafka domain events.
+- **Asynchronous Side-Effect Isolation**: Notification delivery failures never throw unhandled exceptions back to Kafka or block core checkout/payment workflows.
+- **Database-Driven Notification Templates**: Templates are stored in `notification_templates` for zero-downtime content edits, supporting dynamic `{{placeholder}}` token rendering.
 - **Cryptographic Gateway Security**: VNPay callbacks are strictly validated with HMAC-SHA512. Return URLs are strictly decoupled from authoritative server-to-server IPN webhooks.
-- **Raw Callback Audit Trail**: Verbatim payloads from payment gateways are permanently preserved in `payment_callback_logs` before signature processing for financial dispute resolution.
+- **Raw Callback & Notification Audit Trails**: Verbatim payloads from gateways are saved in `payment_callback_logs` and all delivered notifications are tracked in `notification_logs`.
 - **Optimistic Locking Anti-Oversell Control**: JPA `@Version` on `Inventory` combined with Spring Retry (`@Retryable`) ensures multiple concurrent purchases on scarce items never result in overselling.
 - **Append-Only Movement Audit Trail**: Every stock change (`IMPORT`, `RESERVE`, `DEDUCT`, `RELEASE`, `ADJUST`) is permanently logged into `stock_movements` for audit and reconciliation.
 - **Immutable Price & Name Snapshots**: When adding items to cart or checking out, `order-service` captures snapshots of product name and price. Future seller updates never alter historical orders.
@@ -201,6 +212,13 @@ GET    /api/v1/payments/vnpay/ipn             # Public: Authoritative Server-to-
 POST   /api/v1/payments/vnpay/ipn             # Public: Authoritative Server-to-Server IPN webhook
 ```
 
+### 🔔 Notification Service (`8086` / via Gateway `8080`)
+```http
+GET    /api/v1/notifications/logs             # Admin: Query notification delivery logs with filters
+POST   /api/v1/notifications/{logId}/resend   # Admin: Manually trigger redelivery of failed notification
+GET    /api/v1/notifications/templates        # Admin: List all notification templates & tokens
+```
+
 ---
 
 ## 🛠️ Technology Stack & Dependencies
@@ -208,6 +226,7 @@ POST   /api/v1/payments/vnpay/ipn             # Public: Authoritative Server-to-
 - **Language & JDK**: Java 21 LTS (Eclipse Temurin)
 - **Frameworks**: Spring Boot 3.3.2, Spring Cloud 2023.0.3 (Gateway, Netflix Eureka, OpenFeign)
 - **Event Messaging**: Apache Kafka 3.x with Spring Kafka
+- **Mailing & Communication**: Spring Boot Mail (`JavaMailSender`), Jakarta Mail
 - **Cryptography & Security**: HMAC-SHA512 Signature Verification, Spring Security 6, JJWT 0.12.6, BCrypt (cost factor 12)
 - **Concurrency & Resilience**: JPA `@Version` Optimistic Locking, Spring Retry (`@Retryable`), Resilience4j Circuit Breaker
 - **Persistence & Migration**: PostgreSQL 16, Spring Data JPA, Hibernate 6, Flyway Migrations
@@ -238,6 +257,7 @@ cd ../product-service && ./mvnw spring-boot:run
 cd ../order-service && ./mvnw spring-boot:run
 cd ../inventory-service && ./mvnw spring-boot:run
 cd ../payment-service && ./mvnw spring-boot:run
+cd ../notification-service && ./mvnw spring-boot:run
 
 # 3. Start API Gateway
 cd ../api-gateway && ./mvnw spring-boot:run
@@ -251,6 +271,7 @@ cd ../api-gateway && ./mvnw spring-boot:run
 - **Order Service Swagger**: [http://localhost:8083/swagger-ui.html](http://localhost:8083/swagger-ui.html)
 - **Inventory Service Swagger**: [http://localhost:8085/swagger-ui.html](http://localhost:8085/swagger-ui.html)
 - **Payment Service Swagger**: [http://localhost:8084/swagger-ui.html](http://localhost:8084/swagger-ui.html)
+- **Notification Service Swagger**: [http://localhost:8086/swagger-ui.html](http://localhost:8086/swagger-ui.html)
 
 ---
 
