@@ -1,0 +1,14 @@
+server:
+  port: 8087
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://mongodb:27017/review_db
+  kafka:
+    bootstrap-servers: kafka:9092
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka

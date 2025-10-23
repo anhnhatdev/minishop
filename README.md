@@ -5,9 +5,10 @@
 [![Spring Cloud 2023.0.3](https://img.shields.io/badge/Spring%20Cloud-2023.0.3-blue.svg?style=for-the-badge&logo=spring)](https://spring.io/projects/spring-cloud)
 [![Apache Kafka](https://img.shields.io/badge/Apache%20Kafka-Distributed%20Events-231F20.svg?style=for-the-badge&logo=apachekafka)](https://kafka.apache.org/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database%20Per%20Service-336791.svg?style=for-the-badge&logo=postgresql)](https://www.postgresql.org/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Polyglot%20Persistence-47A248.svg?style=for-the-badge&logo=mongodb)](https://www.mongodb.com/)
 [![Docker](https://img.shields.io/badge/Docker-Multi--stage%20Containers-2496ED.svg?style=for-the-badge&logo=docker)](https://www.docker.com/)
 
-**MiniShop** is an enterprise-grade, distributed e-commerce backend platform built with **Java 21**, **Spring Boot 3.3**, **Spring Cloud 2023**, and **Apache Kafka**. Designed to mirror high-throughput production e-commerce architectures (e.g., Shopee, Lazada), it implements core distributed patterns including **Choreography-based Saga**, **Anti-Oversell Optimistic Locking Concurrency Control**, **Payment Gateway HMAC-SHA512 Verification**, **Asynchronous Multi-channel Notifications**, **Stateless JWT Security**, **Service Discovery**, **Resilience4j Circuit Breakers**, and **Database-per-Service** isolation.
+**MiniShop** is an enterprise-grade, distributed e-commerce backend platform built with **Java 21**, **Spring Boot 3.3**, **Spring Cloud 2023**, and **Apache Kafka**. Designed to mirror high-throughput production e-commerce architectures (e.g., Shopee, Lazada), it implements core distributed patterns including **Choreography-based Saga**, **Anti-Oversell Optimistic Locking Concurrency Control**, **Polyglot Persistence (PostgreSQL & MongoDB)**, **Payment Gateway HMAC-SHA512 Verification**, **Asynchronous Notifications**, **Stateless JWT Security**, **Service Discovery**, **Resilience4j Circuit Breakers**, and **Database-per-Service** isolation.
 
 ---
 
@@ -32,10 +33,11 @@ graph TD
         InventoryService["📊 Inventory Service (Port 8085)<br/>• Anti-Oversell Optimistic Locking<br/>• Append-Only Movements Audit<br/>• Saga Reservation Handlers"]
         PaymentService["💳 Payment Service (Port 8084)<br/>• VNPay Sandbox & COD Settlement<br/>• HMAC-SHA512 Signature Security<br/>• IPN Webhook & Raw Audit Logs"]
         NotificationService["🔔 Notification Service (Port 8086)<br/>• Multi-channel Email / SMS Delivery<br/>• Database Template Placeholder Engine<br/>• Audit Logs & Scheduled Auto-retry"]
+        ReviewService["⭐ Review Service (Port 8087)<br/>• Polyglot Persistence with MongoDB<br/>• Strict DELIVERED Eligibility<br/>• Native Aggregation Pipeline Summary"]
     end
     
     subgraph Event Broker
-        Kafka{{"📨 Apache Kafka<br/>Topics: order.created, stock.reserved, payment.succeeded, order.confirmed, etc."}}
+        Kafka{{"📨 Apache Kafka<br/>Topics: order.created, stock.reserved, payment.succeeded, product.rating.updated, etc."}}
     end
 
     subgraph Data Stores
@@ -45,6 +47,7 @@ graph TD
         InventoryDB[("🗄️ inventory_db (PostgreSQL)")]
         PaymentDB[("🗄️ payment_db (PostgreSQL)")]
         NotificationDB[("🗄️ notification_db (PostgreSQL)")]
+        ReviewDB[("🍃 review_db (MongoDB)")]
     end
 
     Client -->|HTTP / REST| Gateway
@@ -55,12 +58,16 @@ graph TD
     Gateway -->|Load-Balanced lb://| InventoryService
     Gateway -->|Load-Balanced lb://| PaymentService
     Gateway -->|Load-Balanced lb://| NotificationService
+    Gateway -->|Load-Balanced lb://| ReviewService
     
     OrderService -.->|Synchronous Feign Price Snapshot| ProductService
+    ReviewService -.->|Synchronous Feign Eligibility Check| OrderService
+    
     OrderService <===>|Publish / Consume Events| Kafka
     InventoryService <===>|Publish / Consume Events| Kafka
     PaymentService <===>|Publish / Consume Events| Kafka
     NotificationService <===|Pure Asynchronous Consumer| Kafka
+    ReviewService ===>|Publish Rating Updates| Kafka
     
     UserService --> UserDB
     ProductService --> ProductDB
@@ -68,6 +75,7 @@ graph TD
     InventoryService --> InventoryDB
     PaymentService --> PaymentDB
     NotificationService --> NotificationDB
+    ReviewService --> ReviewDB
 ```
 
 ---
@@ -84,6 +92,7 @@ graph TD
 | **[Inventory Service](./inventory-service)** | `8085` | `inventory_db` (PostgreSQL) | Anti-Oversell Optimistic Locking (`@Version`), Saga Event Handlers, Append-only Audit | ✅ Active |
 | **[Payment Service](./payment-service)** | `8084` | `payment_db` (PostgreSQL) | VNPay Sandbox Gateway, HMAC-SHA512 Signature Security, IPN Server Webhook, Raw Audit Logs | ✅ Active |
 | **[Notification Service](./notification-service)** | `8086` | `notification_db` (PostgreSQL) | Multi-channel Delivery (Email/SMS), Template Placeholder Engine, Audit Logs, Auto-Retry | ✅ Active |
+| **[Review Service](./review-service)** | `8087` | `review_db` (MongoDB) | Polyglot Persistence, Order Item Eligibility, Mongo Aggregation Pipeline, Rating Sync | ✅ Active |
 
 ---
 
@@ -131,17 +140,22 @@ The platform implements a distributed **Choreography-based Saga pattern** to mai
                                    [Inventory Service] ──► Releases reserved stock & publishes "inventory.updated"
                                    [Notification Service] ─► Renders ORDER_CANCELLED / PAYMENT_FAILED & Dispatches Email
 
-6. Safety Timeout Workers:
-   [OrderTimeoutScheduler] in Order Service scans for stuck orders in STOCK_RESERVED > 15 mins ──► Triggers compensation
-   [StockReservationTimeoutJob] in Inventory Service releases orphaned reservations > 15 mins
-   [PaymentTimeoutScheduler] in Payment Service expires pending payments > 15 mins and publishes "payment.failed"
-   [NotificationRetryScheduler] in Notification Service retries failed messages up to 3 times
+6. Customer Reviews & Rating Sync (Post-Delivery):
+   [Client] POST /api/v1/reviews ──► [Review Service]
+                                            │
+                                            ├─► Feign check with Order Service: order.status == DELIVERED
+                                            ├─► Saves Document in MongoDB
+                                            ├─► Calculates Aggregation Pipeline (Avg & Breakdown)
+                                            └─► Publishes "product.rating.updated" ──► Consumed by Product Service
 ```
 
 ---
 
 ## 🛡️ Key Architectural Patterns & Features
 
+- **Polyglot Persistence**: Strategic database selection based on data characteristics (PostgreSQL for strict ACID transactions in Orders/Inventory/Payments, and MongoDB for read-heavy flexible review documents).
+- **Strict Business Rule Enforcement**: Reviews strictly require `DELIVERED` order status and user ownership verified via synchronous OpenFeign calls.
+- **Native Database Aggregations**: Rating distributions (1-5 stars) and averages are computed natively in MongoDB using `$match` and `$group` aggregation pipelines.
 - **Database per Service**: Zero direct table joins across services. Cross-service data is communicated via synchronous OpenFeign DTOs or asynchronous Kafka domain events.
 - **Asynchronous Side-Effect Isolation**: Notification delivery failures never throw unhandled exceptions back to Kafka or block core checkout/payment workflows.
 - **Database-Driven Notification Templates**: Templates are stored in `notification_templates` for zero-downtime content edits, supporting dynamic `{{placeholder}}` token rendering.
@@ -219,6 +233,15 @@ POST   /api/v1/notifications/{logId}/resend   # Admin: Manually trigger redelive
 GET    /api/v1/notifications/templates        # Admin: List all notification templates & tokens
 ```
 
+### ⭐ Review Service (`8087` / via Gateway `8080`)
+```http
+POST   /api/v1/reviews                        # Customer: Submit a review for delivered order item
+GET    /api/v1/reviews/product/{productId}    # Public: List paginated reviews with star filter
+GET    /api/v1/reviews/product/{productId}/summary # Public: Get rating summary & star breakdown
+POST   /api/v1/reviews/{id}/reply             # Seller/Admin: Reply to customer review
+PUT    /api/v1/reviews/{id}/hide              # Admin: Soft-hide abusive review
+```
+
 ---
 
 ## 🛠️ Technology Stack & Dependencies
@@ -226,10 +249,10 @@ GET    /api/v1/notifications/templates        # Admin: List all notification tem
 - **Language & JDK**: Java 21 LTS (Eclipse Temurin)
 - **Frameworks**: Spring Boot 3.3.2, Spring Cloud 2023.0.3 (Gateway, Netflix Eureka, OpenFeign)
 - **Event Messaging**: Apache Kafka 3.x with Spring Kafka
+- **Persistence**: PostgreSQL 16, MongoDB 7, Spring Data JPA, Spring Data MongoDB, Flyway
 - **Mailing & Communication**: Spring Boot Mail (`JavaMailSender`), Jakarta Mail
-- **Cryptography & Security**: HMAC-SHA512 Signature Verification, Spring Security 6, JJWT 0.12.6, BCrypt (cost factor 12)
+- **Cryptography & Security**: HMAC-SHA512 Signature Verification, Spring Security 6, JJWT 0.12.6, BCrypt
 - **Concurrency & Resilience**: JPA `@Version` Optimistic Locking, Spring Retry (`@Retryable`), Resilience4j Circuit Breaker
-- **Persistence & Migration**: PostgreSQL 16, Spring Data JPA, Hibernate 6, Flyway Migrations
 - **Mapping & Utilities**: MapStruct 1.5.5, Lombok
 - **API Documentation**: Springdoc OpenAPI 2.6.0 (Swagger UI at `/swagger-ui.html`)
 - **Containerization**: Multi-stage Dockerfiles with healthchecks
@@ -240,7 +263,7 @@ GET    /api/v1/notifications/templates        # Admin: List all notification tem
 
 ### 1. Prerequisites
 - **JDK 21 LTS**
-- **Docker & Docker Compose** (for PostgreSQL & Kafka)
+- **Docker & Docker Compose** (for PostgreSQL, MongoDB & Kafka)
 - **Maven 3.9+** (or using bundled `./mvnw`)
 
 ### 2. Running Services Locally
@@ -258,6 +281,7 @@ cd ../order-service && ./mvnw spring-boot:run
 cd ../inventory-service && ./mvnw spring-boot:run
 cd ../payment-service && ./mvnw spring-boot:run
 cd ../notification-service && ./mvnw spring-boot:run
+cd ../review-service && ./mvnw spring-boot:run
 
 # 3. Start API Gateway
 cd ../api-gateway && ./mvnw spring-boot:run
@@ -272,6 +296,7 @@ cd ../api-gateway && ./mvnw spring-boot:run
 - **Inventory Service Swagger**: [http://localhost:8085/swagger-ui.html](http://localhost:8085/swagger-ui.html)
 - **Payment Service Swagger**: [http://localhost:8084/swagger-ui.html](http://localhost:8084/swagger-ui.html)
 - **Notification Service Swagger**: [http://localhost:8086/swagger-ui.html](http://localhost:8086/swagger-ui.html)
+- **Review Service Swagger**: [http://localhost:8087/swagger-ui.html](http://localhost:8087/swagger-ui.html)
 
 ---
 
