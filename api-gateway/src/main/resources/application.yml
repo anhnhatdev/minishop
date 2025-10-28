@@ -23,7 +23,9 @@ spring:
             allowCredentials: true
             maxAge: 3600
       routes:
-        # User Service Auth Routes (Public)
+        # ==========================================
+        # 1. USER SERVICE
+        # ==========================================
         - id: user-service-auth
           uri: lb://user-service
           predicates:
@@ -34,7 +36,6 @@ spring:
                 name: userServiceCircuitBreaker
                 fallbackUri: forward:/fallback/user-service
 
-        # User Service Profile & Admin Routes (Protected)
         - id: user-service-users
           uri: lb://user-service
           predicates:
@@ -46,11 +47,13 @@ spring:
                 name: userServiceCircuitBreaker
                 fallbackUri: forward:/fallback/user-service
 
-        # Product Service Read Routes (Public)
+        # ==========================================
+        # 2. PRODUCT SERVICE
+        # ==========================================
         - id: product-service-read
           uri: lb://product-service
           predicates:
-            - Path=/api/v1/products/**
+            - Path=/api/v1/products/**, /api/v1/categories/**
             - Method=GET
           filters:
             - name: CircuitBreaker
@@ -58,11 +61,10 @@ spring:
                 name: productServiceCircuitBreaker
                 fallbackUri: forward:/fallback/product-service
 
-        # Product Service Write Routes (Protected)
         - id: product-service-write
           uri: lb://product-service
           predicates:
-            - Path=/api/v1/products/**
+            - Path=/api/v1/products/**, /api/v1/categories/**
             - Method=POST,PUT,DELETE
           filters:
             - AuthenticationFilter
@@ -71,30 +73,100 @@ spring:
                 name: productServiceCircuitBreaker
                 fallbackUri: forward:/fallback/product-service
 
-        # Category Service Read Routes (Public)
-        - id: category-service-read
-          uri: lb://product-service
+        # ==========================================
+        # 3. ORDER SERVICE
+        # ==========================================
+        - id: order-service
+          uri: lb://order-service
           predicates:
-            - Path=/api/v1/categories/**
-            - Method=GET
-          filters:
-            - name: CircuitBreaker
-              args:
-                name: productServiceCircuitBreaker
-                fallbackUri: forward:/fallback/product-service
-
-        # Category Service Write Routes (Protected)
-        - id: category-service-write
-          uri: lb://product-service
-          predicates:
-            - Path=/api/v1/categories/**
-            - Method=POST
+            - Path=/api/v1/cart/**, /api/v1/orders/**
           filters:
             - AuthenticationFilter
             - name: CircuitBreaker
               args:
-                name: productServiceCircuitBreaker
-                fallbackUri: forward:/fallback/product-service
+                name: orderServiceCircuitBreaker
+                fallbackUri: forward:/fallback/order-service
+
+        # ==========================================
+        # 4. INVENTORY SERVICE
+        # ==========================================
+        - id: inventory-service
+          uri: lb://inventory-service
+          predicates:
+            - Path=/api/v1/inventory/**
+          filters:
+            - AuthenticationFilter
+            - name: CircuitBreaker
+              args:
+                name: inventoryServiceCircuitBreaker
+                fallbackUri: forward:/fallback/inventory-service
+
+        # ==========================================
+        # 5. PAYMENT SERVICE
+        # ==========================================
+        # Public: VNPay Sandbox Return & IPN Webhook
+        - id: payment-service-public
+          uri: lb://payment-service
+          predicates:
+            - Path=/api/v1/payments/vnpay/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: paymentServiceCircuitBreaker
+                fallbackUri: forward:/fallback/payment-service
+
+        # Protected: Payment Status Polling & Admin Callback Logs
+        - id: payment-service-protected
+          uri: lb://payment-service
+          predicates:
+            - Path=/api/v1/payments/**
+          filters:
+            - AuthenticationFilter
+            - name: CircuitBreaker
+              args:
+                name: paymentServiceCircuitBreaker
+                fallbackUri: forward:/fallback/payment-service
+
+        # ==========================================
+        # 6. NOTIFICATION SERVICE
+        # ==========================================
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+            - Path=/api/v1/notifications/**
+          filters:
+            - AuthenticationFilter
+            - name: CircuitBreaker
+              args:
+                name: notificationServiceCircuitBreaker
+                fallbackUri: forward:/fallback/notification-service
+
+        # ==========================================
+        # 7. REVIEW SERVICE
+        # ==========================================
+        # Public: Get product reviews and rating summary
+        - id: review-service-read
+          uri: lb://review-service
+          predicates:
+            - Path=/api/v1/reviews/product/**
+            - Method=GET
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: reviewServiceCircuitBreaker
+                fallbackUri: forward:/fallback/review-service
+
+        # Protected: Post review, reply, hide review
+        - id: review-service-write
+          uri: lb://review-service
+          predicates:
+            - Path=/api/v1/reviews/**
+          filters:
+            - AuthenticationFilter
+            - name: CircuitBreaker
+              args:
+                name: reviewServiceCircuitBreaker
+                fallbackUri: forward:/fallback/review-service
 
 jwt:
   secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
@@ -121,11 +193,46 @@ resilience4j:
         permittedNumberOfCallsInHalfOpenState: 5
         failureRateThreshold: 50
         waitDurationInOpenState: 10000
+      orderServiceCircuitBreaker:
+        slidingWindowSize: 10
+        permittedNumberOfCallsInHalfOpenState: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000
+      inventoryServiceCircuitBreaker:
+        slidingWindowSize: 10
+        permittedNumberOfCallsInHalfOpenState: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000
+      paymentServiceCircuitBreaker:
+        slidingWindowSize: 10
+        permittedNumberOfCallsInHalfOpenState: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000
+      notificationServiceCircuitBreaker:
+        slidingWindowSize: 10
+        permittedNumberOfCallsInHalfOpenState: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000
+      reviewServiceCircuitBreaker:
+        slidingWindowSize: 10
+        permittedNumberOfCallsInHalfOpenState: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000
   timelimiter:
     instances:
       userServiceCircuitBreaker:
         timeoutDuration: 5s
       productServiceCircuitBreaker:
+        timeoutDuration: 5s
+      orderServiceCircuitBreaker:
+        timeoutDuration: 5s
+      inventoryServiceCircuitBreaker:
+        timeoutDuration: 5s
+      paymentServiceCircuitBreaker:
+        timeoutDuration: 5s
+      notificationServiceCircuitBreaker:
+        timeoutDuration: 5s
+      reviewServiceCircuitBreaker:
         timeoutDuration: 5s
 
 management:
