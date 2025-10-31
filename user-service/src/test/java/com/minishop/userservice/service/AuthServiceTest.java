@@ -40,6 +40,8 @@ class AuthServiceTest {
     private TokenService tokenService;
     @Mock
     private UserMapper userMapper;
+    @Mock
+    private com.minishop.userservice.event.producer.UserEventProducer userEventProducer;
 
     @InjectMocks
     private AuthService authService;
@@ -92,6 +94,7 @@ class AuthServiceTest {
         assertNotNull(response);
         assertEquals("user@example.com", response.getEmail());
         verify(userRepository).save(any(User.class));
+        verify(userEventProducer).publishUserRegistered(any());
     }
 
     @Test
