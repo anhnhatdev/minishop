@@ -22,4 +22,7 @@ public interface OrderRepository extends JpaRepository<Order, UUID> {
     Page<Order> findByUserIdAndStatus(UUID userId, OrderStatus status, Pageable pageable);
 
     List<Order> findByStatusAndCreatedAtBefore(OrderStatus status, Instant timestamp);
+
+    @org.springframework.data.jpa.repository.Query(value = "SELECT nextval('order_code_seq')", nativeQuery = true)
+    Long getNextOrderSequence();
 }
