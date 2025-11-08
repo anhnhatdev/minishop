@@ -201,7 +201,15 @@ public class OrderService {
 
     private String generateOrderCode() {
         String datePart = LocalDate.now().format(DATE_FORMATTER);
-        int randomPart = 1000 + random.nextInt(9000);
+        try {
+            Long seq = orderRepository.getNextOrderSequence();
+            if (seq != null) {
+                return String.format("ORD%s%06d", datePart, seq % 1000000);
+            }
+        } catch (Exception e) {
+            log.warn("Failed to fetch order sequence from DB, falling back to secure random: {}", e.getMessage());
+        }
+        int randomPart = 100000 + random.nextInt(900000);
         return "ORD" + datePart + randomPart;
     }
 }
