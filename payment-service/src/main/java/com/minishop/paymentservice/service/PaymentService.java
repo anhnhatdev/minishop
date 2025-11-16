@@ -96,7 +96,8 @@ public class PaymentService {
             paymentEventProducer.publishPaymentSucceeded(succeededEvent);
 
         } else if (method == PaymentMethod.VNPAY) {
-            String paymentUrl = vnPayClient.createPaymentUrl(transactionCode, event.getAmount(), "127.0.0.1");
+            String clientIp = (event.getClientIp() != null && !event.getClientIp().isBlank()) ? event.getClientIp() : "127.0.0.1";
+            String paymentUrl = vnPayClient.createPaymentUrl(transactionCode, event.getAmount(), clientIp);
 
             PaymentTransaction transaction = PaymentTransaction.builder()
                     .orderId(event.getOrderId())

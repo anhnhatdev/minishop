@@ -21,5 +21,6 @@ public class PaymentRequestedEvent {
     private UUID userId;
     private BigDecimal amount;
     private String paymentMethod;
+    private String clientIp;
     private Instant timestamp;
 }
