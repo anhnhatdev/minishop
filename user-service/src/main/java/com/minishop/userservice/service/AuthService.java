@@ -16,12 +16,14 @@ import com.minishop.userservice.mapper.UserMapper;
 import com.minishop.userservice.repository.UserRepository;
 import com.minishop.userservice.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthService {
 
     private final UserRepository userRepository;
@@ -57,8 +59,9 @@ public class AuthService {
                             .timestamp(java.time.Instant.now())
                             .build();
             userEventProducer.publishUserRegistered(event);
+            log.info("Successfully published user.registered event for email: {}", savedUser.getEmail());
         } catch (Exception ex) {
-            // Event publication failure must not block registration transaction
+            log.error("Failed to publish user.registered event for user {}: {}", savedUser.getEmail(), ex.getMessage(), ex);
         }
 
         return userMapper.toUserResponse(savedUser);

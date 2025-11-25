@@ -133,11 +133,16 @@ public class NotificationService {
     public void retryFailedNotifications() {
         List<NotificationLog> failedLogs = logRepository.findByStatusAndRetryCountLessThan(NotificationStatus.FAILED, 3);
         if (!failedLogs.isEmpty()) {
-            log.info("Found {} failed notifications to retry", failedLogs.size());
+            Instant now = Instant.now();
             for (NotificationLog logEntry : failedLogs) {
-                logEntry.setRetryCount(logEntry.getRetryCount() + 1);
-                deliver(logEntry);
-                logRepository.save(logEntry);
+                // Exponential backoff: retry 1 after 60s, retry 2 after 300s (5m), retry 3 after 900s (15m)
+                long minIntervalSeconds = (long) Math.pow(5, logEntry.getRetryCount()) * 12; // 12s, 60s, 300s
+                if (logEntry.getCreatedAt() != null && logEntry.getCreatedAt().plusSeconds(minIntervalSeconds).isBefore(now)) {
+                    log.info("Retrying failed notification ID: {} (attempt {}/3)", logEntry.getId(), logEntry.getRetryCount() + 1);
+                    logEntry.setRetryCount(logEntry.getRetryCount() + 1);
+                    deliver(logEntry);
+                    logRepository.save(logEntry);
+                }
             }
         }
     }
