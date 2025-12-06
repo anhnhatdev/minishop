@@ -133,9 +133,8 @@ public class ProductService {
         if (request.getPrice() != null) {
             product.setPrice(request.getPrice());
         }
-        if (request.getStockQuantity() != null) {
-            product.setStockQuantity(request.getStockQuantity());
-        }
+        // Note: stockQuantity is managed exclusively by inventory-service via inventory.updated event sync
+        // to maintain append-only audit trail and prevent oversell race conditions.
         if (request.getStatus() != null) {
             product.setStatus(request.getStatus());
         }
