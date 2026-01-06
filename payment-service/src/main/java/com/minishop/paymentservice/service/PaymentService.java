@@ -273,6 +273,22 @@ public class PaymentService {
     }
 
     @Transactional
+    public PaymentStatusResponse processRefund(UUID orderId, String reason) {
+        PaymentTransaction transaction = paymentTransactionRepository.findByOrderId(orderId)
+                .orElseThrow(() -> new PaymentTransactionNotFoundException("Payment transaction not found for order: " + orderId));
+
+        if (transaction.getStatus() != PaymentStatus.SUCCESS) {
+            throw new IllegalStateException("Only successful transactions can be refunded. Current status: " + transaction.getStatus());
+        }
+
+        log.info("Processing refund for orderId: {}, transaction: {}, reason: {}", orderId, transaction.getTransactionCode(), reason);
+        transaction.setStatus(PaymentStatus.REFUNDED);
+        PaymentTransaction saved = paymentTransactionRepository.save(transaction);
+
+        return paymentMapper.toPaymentStatusResponse(saved);
+    }
+
+    @Transactional
     public void scanAndExpireStuckTransactions() {
         List<PaymentTransaction> expiredList = paymentTransactionRepository.findByStatusInAndExpiredAtBefore(
                 List.of(PaymentStatus.INITIATED, PaymentStatus.PENDING), Instant.now()
