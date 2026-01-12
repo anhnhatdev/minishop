@@ -37,4 +37,15 @@ public class PaymentController {
         List<PaymentCallbackLogResponse> logs = paymentService.getCallbackLogs(orderId);
         return ResponseEntity.ok(logs);
     }
+
+    @PostMapping("/{orderId}/refund")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Admin: Trigger refund for a successful payment transaction")
+    public ResponseEntity<PaymentStatusResponse> refundPayment(
+            @PathVariable UUID orderId,
+            @RequestParam(required = false, defaultValue = "Order cancelled / dispute refund") String reason
+    ) {
+        PaymentStatusResponse response = paymentService.processRefund(orderId, reason);
+        return ResponseEntity.ok(response);
+    }
 }
