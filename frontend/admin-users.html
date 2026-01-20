@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MiniShop Admin - User Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "surface-dim": "#d8dadc",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#b4c5ff",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "tertiary-container": "#bc4800",
+                        "surface-variant": "#e0e3e5",
+                        "surface-tint": "#0053db",
+                        "inverse-on-surface": "#eff1f3",
+                        "tertiary": "#943700",
+                        "surface": "#f7f9fb",
+                        "on-error-container": "#93000a",
+                        "primary": "#004ac6",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#eeefff",
+                        "primary-fixed": "#dbe1ff",
+                        "on-primary": "#ffffff",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-container-high": "#e6e8ea",
+                        "outline": "#737686",
+                        "surface-bright": "#f7f9fb",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#eceef0",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "secondary-fixed": "#d3e4fe",
+                        "inverse-surface": "#2d3133",
+                        "on-secondary-container": "#54647a",
+                        "on-background": "#191c1e",
+                        "secondary-container": "#d0e1fb",
+                        "on-tertiary-fixed": "#360f00",
+                        "on-tertiary-container": "#ffede6",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "surface-container-low": "#f2f4f6",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-surface": "#191c1e",
+                        "on-primary-fixed": "#00174b",
+                        "surface-container-highest": "#e0e3e5",
+                        "outline-variant": "#c3c6d7",
+                        "primary-container": "#2563eb",
+                        "on-surface-variant": "#434655",
+                        "on-secondary-fixed": "#0b1c30",
+                        "secondary": "#505f76",
+                        "tertiary-fixed": "#ffdbcd",
+                        "background": "#f7f9fb",
+                        "on-tertiary-fixed-variant": "#7d2d00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-lg": "32px",
+                        "container-padding": "24px",
+                        "stack-sm": "8px",
+                        "base": "4px",
+                        "max-width-auth": "400px",
+                        "stack-md": "16px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "code-sm": ["JetBrains Mono"],
+                        "label-caps": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "code-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f7f9fb; } /* background */
+        .debug-panel { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Table styles */
+        th, td { border-bottom: 1px solid #e0e3e5; padding: 12px 16px; text-align: left; }
+        th { font-weight: 600; color: #434655; }
+        tr:hover { background-color: #f2f4f6; }
+        
+        /* Form inputs */
+        input[type="text"], select {
+            border: 1px solid #c3c6d7;
+            border-radius: 0.125rem;
+            padding: 8px 12px;
+            font-size: 14px;
+            color: #191c1e;
+            background-color: #ffffff;
+            transition: all 0.2s;
+        }
+        input[type="text"]:focus, select:focus {
+            border-color: #2563eb;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+        }
+        
+        /* Buttons */
+        .btn-primary {
+            background-color: #2563eb;
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 0.125rem;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+        .btn-primary:hover { opacity: 0.9; }
+        .btn-secondary {
+            border: 1px solid #c3c6d7;
+            color: #434655;
+            padding: 8px 16px;
+            border-radius: 0.125rem;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+        .btn-secondary:hover { background-color: #f2f4f6; }
+        
+        /* Status badges */
+        .badge { padding: 4px 8px; border-radius: 9999px; font-size: 12px; font-weight: 600; }
+        .badge-active { background-color: #dbe1ff; color: #00174b; }
+        .badge-locked { background-color: #ffdad6; color: #93000a; }
+    </style>
+</head>
+<body class="flex bg-background min-h-screen pb-10">
+<!-- SideNavBar -->
+<nav class="h-screen w-64 fixed left-0 top-0 flex flex-col bg-surface-container-low dark:bg-surface-container-lowest border-r border-outline-variant dark:border-outline z-40">
+<div class="flex flex-col h-full p-stack-md space-y-stack-sm">
+<div class="mb-stack-lg">
+<h1 class="font-headline-md text-headline-md text-primary">MiniShop HQ</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">System Administrator</p>
+</div>
+<ul class="flex-1 space-y-2">
+<li>
+<a class="flex items-center p-2 bg-secondary-container dark:bg-secondary-fixed-dim text-on-secondary-container dark:text-on-secondary-fixed font-bold rounded-lg cursor-pointer active:scale-95 hover:transition-all duration-150" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="group">group</span>
+<span class="font-body-md text-body-md">User Management</span>
+</a>
+</li>
+<li>
+<a class="flex items-center p-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg cursor-pointer active:scale-95 hover:transition-all duration-150" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="category">category</span>
+<span class="font-body-md text-body-md">Categories</span>
+</a>
+</li>
+<li>
+<a class="flex items-center p-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg cursor-pointer active:scale-95 hover:transition-all duration-150" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="shopping_cart">shopping_cart</span>
+<span class="font-body-md text-body-md">Global Orders</span>
+</a>
+</li>
+<li>
+<a class="flex items-center p-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg cursor-pointer active:scale-95 hover:transition-all duration-150" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="history">history</span>
+<span class="font-body-md text-body-md">Notification Logs</span>
+</a>
+</li>
+<li>
+<a class="flex items-center p-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg cursor-pointer active:scale-95 hover:transition-all duration-150" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="payments">payments</span>
+<span class="font-body-md text-body-md">Payment Logs</span>
+</a>
+</li>
+<li>
+<a class="flex items-center p-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg cursor-pointer active:scale-95 hover:transition-all duration-150" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="edit_calendar">edit_calendar</span>
+<span class="font-body-md text-body-md">Inventory Adjustments</span>
+</a>
+</li>
+</ul>
+<button class="w-full btn-primary mb-stack-md">New Entry</button>
+<div class="mt-auto border-t border-outline-variant pt-stack-sm space-y-2">
+<a class="flex items-center p-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg cursor-pointer active:scale-95 hover:transition-all duration-150" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="terminal">terminal</span>
+<span class="font-body-md text-body-md">Debug Console</span>
+</a>
+<a class="flex items-center p-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg cursor-pointer active:scale-95 hover:transition-all duration-150" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="help_outline">help_outline</span>
+<span class="font-body-md text-body-md">Support</span>
+</a>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="ml-64 flex-1 flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline sticky top-0 z-30">
+<div class="flex justify-between items-center w-full px-container-padding py-stack-sm">
+<div class="font-headline-lg text-headline-lg font-bold text-primary dark:text-inverse-primary">MiniShop Admin</div>
+<div class="flex items-center space-x-4">
+<span class="material-symbols-outlined text-on-surface-variant dark:text-surface-variant cursor-pointer hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors p-2 rounded-full" data-icon="account_circle">account_circle</span>
+<span class="material-symbols-outlined text-on-surface-variant dark:text-surface-variant cursor-pointer hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors p-2 rounded-full" data-icon="settings">settings</span>
+<span class="material-symbols-outlined text-on-surface-variant dark:text-surface-variant cursor-pointer hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors p-2 rounded-full" data-icon="logout">logout</span>
+</div>
+</div>
+</header>
+<div class="p-container-padding flex-1 overflow-auto">
+<!-- Success Banner -->
+<div class="bg-secondary-fixed text-on-secondary-fixed p-4 rounded-lg mb-6 flex items-center shadow-sm">
+<span class="material-symbols-outlined mr-2" data-icon="check_circle">check_circle</span>
+<span class="font-body-md text-body-md">User status successfully updated.</span>
+</div>
+<!-- Header & Filters -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">User Management</h2>
+<div class="flex flex-wrap gap-4 w-full md:w-auto">
+<div class="relative w-full md:w-64">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline" data-icon="search">search</span>
+<input class="w-full pl-10" placeholder="Search users..." type="text"/>
+</div>
+<select class="w-full md:w-auto">
+<option value="">All Roles</option>
+<option value="admin">Admin</option>
+<option value="seller">Seller</option>
+<option value="customer">Customer</option>
+</select>
+<select class="w-full md:w-auto">
+<option value="">All Statuses</option>
+<option value="active">Active</option>
+<option value="locked">Locked</option>
+</select>
+</div>
+</div>
+<!-- Main Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0_4px_6px_-1px_rgb(0,0,0,0.1)] overflow-hidden mb-6">
+<div class="overflow-x-auto">
+<table class="w-full whitespace-nowrap">
+<thead class="bg-surface-container-low">
+<tr>
+<th class="font-body-sm text-body-sm text-on-surface-variant">Email</th>
+<th class="font-body-sm text-body-sm text-on-surface-variant">Full Name</th>
+<th class="font-body-sm text-body-sm text-on-surface-variant">Role</th>
+<th class="font-body-sm text-body-sm text-on-surface-variant">Status</th>
+<th class="font-body-sm text-body-sm text-on-surface-variant">Date Created</th>
+<th class="font-body-sm text-body-sm text-on-surface-variant text-right">Actions</th>
+</tr>
+</thead>
+<tbody>
+<!-- Row 1 -->
+<tr>
+<td class="font-body-md text-body-md text-on-surface">admin@minishop.com</td>
+<td class="font-body-md text-body-md text-on-surface">Jane Doe</td>
+<td class="font-body-md text-body-md text-on-surface">Admin</td>
+<td><span class="badge badge-active">Active</span></td>
+<td class="font-body-md text-body-md text-on-surface-variant">2023-10-01</td>
+<td class="text-right">
+<button class="text-error hover:bg-error-container p-2 rounded-full transition-colors" title="Lock User">
+<span class="material-symbols-outlined" data-icon="lock">lock</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr>
+<td class="font-body-md text-body-md text-on-surface">seller1@minishop.com</td>
+<td class="font-body-md text-body-md text-on-surface">John Smith</td>
+<td class="font-body-md text-body-md text-on-surface">Seller</td>
+<td><span class="badge badge-locked">Locked</span></td>
+<td class="font-body-md text-body-md text-on-surface-variant">2023-10-05</td>
+<td class="text-right">
+<button class="text-primary hover:bg-secondary-container p-2 rounded-full transition-colors" title="Unlock User">
+<span class="material-symbols-outlined" data-icon="lock_open">lock_open</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr>
+<td class="font-body-md text-body-md text-on-surface">cust99@example.com</td>
+<td class="font-body-md text-body-md text-on-surface">Alice Cooper</td>
+<td class="font-body-md text-body-md text-on-surface">Customer</td>
+<td><span class="badge badge-active">Active</span></td>
+<td class="font-body-md text-body-md text-on-surface-variant">2023-10-10</td>
+<td class="text-right">
+<button class="text-error hover:bg-error-container p-2 rounded-full transition-colors" title="Lock User">
+<span class="material-symbols-outlined" data-icon="lock">lock</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr>
+<td class="font-body-md text-body-md text-on-surface">test@example.com</td>
+<td class="font-body-md text-body-md text-on-surface">Test User</td>
+<td class="font-body-md text-body-md text-on-surface">Customer</td>
+<td><span class="badge badge-active">Active</span></td>
+<td class="font-body-md text-body-md text-on-surface-variant">2023-10-12</td>
+<td class="text-right">
+<button class="text-error hover:bg-error-container p-2 rounded-full transition-colors" title="Lock User">
+<span class="material-symbols-outlined" data-icon="lock">lock</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination placeholder -->
+<div class="border-t border-outline-variant p-4 flex justify-between items-center bg-surface-container-lowest">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Showing 1-4 of 124 users</span>
+<div class="flex space-x-2">
+<button class="btn-secondary" disabled="">Prev</button>
+<button class="btn-secondary">Next</button>
+</div>
+</div>
+</div>
+<!-- Debug Panel -->
+<div class="bg-surface-container-low border border-outline-variant rounded-lg overflow-hidden mt-8">
+<div class="bg-surface-container flex justify-between items-center p-3 border-b border-outline-variant cursor-pointer" onclick="document.getElementById('debug-content').classList.toggle('hidden')">
+<div class="flex items-center text-on-surface">
+<span class="material-symbols-outlined mr-2" data-icon="code">code</span>
+<span class="font-headline-md text-headline-md text-sm">GET /users (Debug Data)</span>
+</div>
+<span class="material-symbols-outlined text-outline" data-icon="expand_more">expand_more</span>
+</div>
+<div class="p-4 debug-panel font-code-sm text-code-sm text-on-surface-variant overflow-x-auto relative" id="debug-content">
+<button class="absolute top-2 right-2 text-outline hover:text-on-surface" title="Copy to Clipboard">
+<span class="material-symbols-outlined" data-icon="content_copy">content_copy</span>
+</button>
+<pre><code>{
+  "status": "success",
+  "data": [
+    {
+      "id": "usr_101",
+      "email": "admin@minishop.com",
+      "full_name": "Jane Doe",
+      "role": "Admin",
+      "status": "Active",
+      "created_at": "2023-10-01T08:30:00Z"
+    },
+    {
+      "id": "usr_102",
+      "email": "seller1@minishop.com",
+      "full_name": "John Smith",
+      "role": "Seller",
+      "status": "Locked",
+      "created_at": "2023-10-05T14:15:22Z"
+    }
+  ],
+  "meta": {
+    "total": 124,
+    "page": 1,
+    "limit": 20
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="fixed bottom-0 w-full z-40 bg-inverse-surface dark:bg-surface-container-lowest shadow-md flex justify-between items-center px-container-padding h-10">
+<div class="flex items-center space-x-4">
+<span class="font-label-caps text-label-caps text-surface-bright dark:text-on-surface flex items-center">
+<span class="w-2 h-2 rounded-full bg-primary-fixed mr-2 animate-pulse"></span>
+                MiniShop Admin v2.4.0 - JWT: Active
+             </span>
+</div>
+<div class="flex space-x-4">
+<a class="font-label-caps text-label-caps text-surface-dim dark:text-outline-variant hover:text-primary-fixed transition-opacity duration-200" href="#">API Status</a>
+<a class="font-label-caps text-label-caps text-surface-dim dark:text-outline-variant hover:text-primary-fixed transition-opacity duration-200" href="#">Docs</a>
+<a class="font-label-caps text-label-caps text-surface-dim dark:text-outline-variant hover:text-primary-fixed transition-opacity duration-200" href="#">Security Policy</a>
+</div>
+</footer>
+
+    <!-- Global MiniShop Interconnected Navigation & API Client -->
+    <script src="js/nav.js"></script>
+</body></html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MiniShop - Đánh giá sản phẩm</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#d3e4fe",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#00174b",
+                        "outline-variant": "#c3c6d7",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "surface-tint": "#0053db",
+                        "outline": "#737686",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "on-secondary-container": "#54647a",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-container": "#eceef0",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#bc4800",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "primary-container": "#2563eb",
+                        "on-surface-variant": "#434655",
+                        "inverse-primary": "#b4c5ff",
+                        "on-background": "#191c1e",
+                        "background": "#f7f9fb",
+                        "surface-container-low": "#f2f4f6",
+                        "inverse-on-surface": "#eff1f3",
+                        "tertiary": "#943700",
+                        "surface-bright": "#f7f9fb",
+                        "on-tertiary-container": "#ffede6",
+                        "surface-variant": "#e0e3e5",
+                        "on-primary-container": "#eeefff",
+                        "on-surface": "#191c1e",
+                        "surface-dim": "#d8dadc",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "secondary": "#505f76",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#ffdbcd",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "inverse-surface": "#2d3133",
+                        "error-container": "#ffdad6",
+                        "surface-container-high": "#e6e8ea",
+                        "surface-container-highest": "#e0e3e5",
+                        "secondary-container": "#d0e1fb",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#0b1c30",
+                        "surface": "#f7f9fb",
+                        "primary": "#004ac6",
+                        "on-tertiary-fixed": "#360f00",
+                        "on-tertiary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "stack-sm": "8px",
+                        "max-width-auth": "400px",
+                        "stack-md": "16px",
+                        "stack-lg": "32px",
+                        "container-padding": "24px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "code-sm": ["JetBrains Mono"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "code-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .filled-icon {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col pb-16">
+<!-- Top Token Status Bar -->
+<div class="fixed top-0 left-0 w-full z-50 bg-inverse-surface text-surface-container-lowest font-code-sm text-code-sm py-1 px-4 flex justify-between items-center shadow-sm">
+<div class="flex items-center gap-2">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-fixed opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary-fixed"></span>
+</span>
+<span>JWT: Active</span>
+</div>
+<div class="flex gap-4">
+<span class="opacity-80">ENV: Staging</span>
+<span class="opacity-80">Role: CUSTOMER</span>
+</div>
+</div>
+<!-- TopAppBar -->
+<header class="sticky top-6 z-40 w-full bg-surface-container-lowest shadow-sm mt-6">
+<div class="flex justify-between items-center w-full px-container-padding py-stack-md max-w-7xl mx-auto">
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:bg-surface-variant p-2 rounded-full transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="text-headline-md font-headline-md font-extrabold text-primary">MiniShop</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="text-on-surface-variant hover:bg-surface-variant p-2 rounded-full transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">shopping_cart</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-variant p-2 rounded-full transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1 max-w-7xl mx-auto w-full px-container-padding py-stack-lg flex flex-col lg:flex-row gap-8 mt-4">
+<!-- Main Content Area: Review Items -->
+<div class="flex-1 flex flex-col gap-6">
+<div class="mb-2">
+<h2 class="text-headline-lg font-headline-lg text-on-surface">Đánh giá đơn hàng #ORD-9982</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1">Đã giao hàng thành công vào 24/10/2023</p>
+</div>
+<!-- Item 1: Needs Review -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0_4px_6px_-1px_rgb(0_0_0_/_0.1)] overflow-hidden border border-surface-variant flex flex-col md:flex-row">
+<div class="p-4 md:w-1/3 flex-shrink-0 bg-surface-container-low flex flex-col items-center justify-center">
+<img class="w-full h-48 object-cover rounded-lg border border-outline-variant" data-alt="A high-quality, studio-lit photograph of a sleek, modern mechanical keyboard on a clean white desk, bright lighting, tech aesthetic, minimalistic e-commerce product shot." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2qkP0YG3BgVOotfFV1bJK6MsXHJT3ZKY9S_Kv_H8EOQkVY3brww4EXVJGd1cdQbFyyXUyLxdp420mtIGReOmMzQvc0aKnkXOH8vnDRSt-iB3EFgk6wU0e-IuZ10axjhGsWD1jFYuZY1rFoaYsWGo9Cq1VOgB06UvCKEanlkt9d9PmcZUEU_hE_g4EBQRHLTCs1F0nDpikIO2el39VrIg_fQJ-lkMvNcPJUe6KSaWPrth-7lPojmw"/>
+<div class="mt-4 text-center">
+<h3 class="text-body-md font-body-md font-bold text-on-surface">Keychron K8 Pro</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Phân loại: Red Switch, Nhôm</p>
+</div>
+</div>
+<div class="p-6 md:w-2/3 flex flex-col gap-4">
+<div>
+<label class="text-label-caps font-label-caps text-on-surface-variant block mb-2 uppercase">Chất lượng sản phẩm</label>
+<div class="flex gap-2">
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined text-3xl">star</span></button>
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined text-3xl">star</span></button>
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined text-3xl">star</span></button>
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined text-3xl">star</span></button>
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined text-3xl">star</span></button>
+</div>
+</div>
+<div class="flex-1">
+<label class="text-label-caps font-label-caps text-on-surface-variant block mb-2 uppercase" for="comment-1">Nhận xét của bạn</label>
+<textarea class="w-full bg-surface-bright border border-outline-variant rounded-lg p-3 text-body-sm font-body-sm focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none" id="comment-1" placeholder="Hãy chia sẻ cảm nhận của bạn về sản phẩm này..." rows="3"></textarea>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 border border-outline-variant rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined">add_a_photo</span>
+<span class="text-label-caps font-label-caps">Thêm ảnh</span>
+</button>
+</div>
+<button class="mt-auto w-full bg-primary text-on-primary py-3 rounded-lg text-body-md font-body-md font-bold hover:bg-primary/90 transition-colors">
+                        Gửi đánh giá
+                    </button>
+</div>
+</div>
+<!-- Item 2: Success State (Already Reviewed) -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0_4px_6px_-1px_rgb(0_0_0_/_0.1)] overflow-hidden border border-surface-variant flex flex-col md:flex-row opacity-80">
+<div class="p-4 md:w-1/3 flex-shrink-0 bg-surface-container-low flex flex-col items-center justify-center relative">
+<img class="w-full h-48 object-cover rounded-lg border border-outline-variant" data-alt="A pristine white wireless gaming mouse sitting on a dark grey mousepad, top-down view, clean professional e-commerce product photography, bright balanced lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgz6WJ-TMI2C5LCopZfs8PzSkk-4rLJD9M097IADW8U-4-t5xaCtWMXSHNI3TRf2J5hD7O8Cp9YVZlAyRjeGKr_a-21a95drKLBKJ60tDwzn3QRYhW3XrXf_j4A39cZ63kcU5SqUHHuklh3hsyc0ntFeG28zCAsNrndZsyYekKXw7kV-4fa-BrMXDjtNHFLkJv4efRB1-4SG_U2k5DEHsxIBLu8y37EqEKgWdztTtoGgD_ArnS7Lg"/>
+<div class="mt-4 text-center">
+<h3 class="text-body-md font-body-md font-bold text-on-surface">Logitech G304</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Phân loại: Trắng</p>
+</div>
+</div>
+<div class="p-6 md:w-2/3 flex flex-col justify-center items-center text-center bg-surface-bright">
+<div class="w-16 h-16 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-3xl filled-icon">check_circle</span>
+</div>
+<h4 class="text-headline-md font-headline-md text-on-surface mb-2">Bạn đã đánh giá sản phẩm này</h4>
+<div class="flex gap-1 mb-4 text-primary">
+<span class="material-symbols-outlined filled-icon">star</span>
+<span class="material-symbols-outlined filled-icon">star</span>
+<span class="material-symbols-outlined filled-icon">star</span>
+<span class="material-symbols-outlined filled-icon">star</span>
+<span class="material-symbols-outlined filled-icon">star</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant max-w-md italic">"Chuột dùng rất êm, nhạy. Form cầm vừa tay, màu trắng cực đẹp. Giao hàng nhanh đóng gói cẩn thận."</p>
+<button class="mt-6 text-primary text-body-sm font-body-sm hover:underline font-semibold">Chỉnh sửa đánh giá</button>
+</div>
+</div>
+</div>
+<!-- Debug Panel Side -->
+<div class="w-full lg:w-80 flex flex-col gap-4">
+<div class="bg-surface-container-highest border border-outline-variant rounded-lg overflow-hidden flex flex-col h-fit sticky top-24">
+<div class="bg-inverse-surface text-surface-container-lowest px-4 py-3 flex justify-between items-center cursor-pointer">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">api</span>
+<span class="text-label-caps font-label-caps font-bold tracking-wider">DEBUG: POST /reviews</span>
+</div>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</div>
+<div class="p-4 bg-surface-container-low font-code-sm text-code-sm text-on-surface-variant flex flex-col gap-3">
+<div>
+<div class="text-label-caps font-label-caps text-outline mb-1">ENDPOINT</div>
+<div class="bg-surface-container px-2 py-1 rounded border border-outline-variant break-all">
+                            https://api.minishop.dev/v1/orders/ORD-9982/reviews
+                        </div>
+</div>
+<div>
+<div class="text-label-caps font-label-caps text-outline mb-1 flex justify-between">
+<span>REQUEST PAYLOAD</span>
+<span class="material-symbols-outlined text-[14px] cursor-pointer hover:text-primary">content_copy</span>
+</div>
+<div class="bg-[#1e1e1e] text-[#d4d4d4] p-3 rounded overflow-x-auto">
+<pre><code>{
+  "item_id": "ITM-001",
+  "rating": 5,
+  "comment": "Draft comment...",
+  "images": []
+}</code></pre>
+</div>
+</div>
+<div>
+<div class="text-label-caps font-label-caps text-outline mb-1">VALIDATION RULES</div>
+<ul class="list-disc pl-4 space-y-1 opacity-80">
+<li>rating: Integer, 1-5, Required</li>
+<li>comment: String, max 500 chars</li>
+<li>images: Array of URLs, max 3</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="fixed bottom-0 left-0 w-full z-50 bg-inverse-surface dark:bg-surface-container-highest text-surface-container-lowest dark:text-on-surface flex justify-between items-center px-gutter py-2">
+<div class="text-label-caps font-label-caps text-surface-container-lowest">
+            JWT: Active | Role: CUSTOMER
+        </div>
+<div class="flex gap-4">
+<a class="text-surface-dim px-2 text-body-sm font-body-sm hover:text-primary-fixed-dim transition-colors opacity-80" href="#">View Token</a>
+<a class="text-surface-dim px-2 text-body-sm font-body-sm hover:text-primary-fixed-dim transition-colors opacity-80" href="#">Logout</a>
+</div>
+</footer>
+
+    <!-- Global MiniShop Interconnected Navigation & API Client -->
+    <script src="js/nav.js"></script>
+</body></html>

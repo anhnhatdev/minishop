@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Orders - MiniShop</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed": "#d3e4fe",
+                      "on-error-container": "#93000a",
+                      "on-primary-fixed-variant": "#003ea8",
+                      "on-secondary": "#ffffff",
+                      "on-primary-fixed": "#00174b",
+                      "outline-variant": "#c3c6d7",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "surface-tint": "#0053db",
+                      "outline": "#737686",
+                      "on-error": "#ffffff",
+                      "tertiary-fixed-dim": "#ffb596",
+                      "on-secondary-container": "#54647a",
+                      "primary-fixed": "#dbe1ff",
+                      "surface-container": "#eceef0",
+                      "error": "#ba1a1a",
+                      "tertiary-container": "#bc4800",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "primary-container": "#2563eb",
+                      "on-surface-variant": "#434655",
+                      "inverse-primary": "#b4c5ff",
+                      "on-background": "#191c1e",
+                      "background": "#f7f9fb",
+                      "surface-container-low": "#f2f4f6",
+                      "inverse-on-surface": "#eff1f3",
+                      "tertiary": "#943700",
+                      "surface-bright": "#f7f9fb",
+                      "on-tertiary-container": "#ffede6",
+                      "surface-variant": "#e0e3e5",
+                      "on-primary-container": "#eeefff",
+                      "on-surface": "#191c1e",
+                      "surface-dim": "#d8dadc",
+                      "primary-fixed-dim": "#b4c5ff",
+                      "secondary": "#505f76",
+                      "on-primary": "#ffffff",
+                      "tertiary-fixed": "#ffdbcd",
+                      "on-tertiary-fixed-variant": "#7d2d00",
+                      "inverse-surface": "#2d3133",
+                      "error-container": "#ffdad6",
+                      "surface-container-high": "#e6e8ea",
+                      "surface-container-highest": "#e0e3e5",
+                      "secondary-container": "#d0e1fb",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed": "#0b1c30",
+                      "surface": "#f7f9fb",
+                      "primary": "#004ac6",
+                      "on-tertiary-fixed": "#360f00",
+                      "on-tertiary": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "stack-sm": "8px",
+                      "max-width-auth": "400px",
+                      "stack-md": "16px",
+                      "stack-lg": "32px",
+                      "container-padding": "24px",
+                      "base": "4px"
+              },
+              "fontFamily": {
+                      "code-sm": [
+                              "JetBrains Mono"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "code-sm": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .tab-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .tab-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-surface min-h-screen text-on-surface flex flex-col font-body-md text-body-md pt-20 pb-16">
+<!-- TopAppBar -->
+<header class="bg-surface-container-lowest dark:bg-inverse-surface shadow-sm dark:shadow-none sticky top-0 z-40 flex justify-between items-center w-full px-container-padding py-stack-md max-w-7xl mx-auto absolute">
+<div class="flex items-center gap-4">
+<h1 class="text-headline-md font-headline-md font-extrabold text-primary dark:text-inverse-primary">MiniShop</h1>
+</div>
+<!-- Search Bar (hidden on mobile, expanded on desktop) -->
+<div class="hidden md:flex flex-1 max-w-md mx-6">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors text-body-md font-body-md placeholder:text-on-surface-variant" placeholder="Search orders..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:bg-surface-variant dark:hover:bg-surface-container-high transition-colors p-2 rounded-full active:scale-95 duration-100 flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+</button>
+<button class="text-primary dark:text-inverse-primary font-bold border-b-2 border-primary hover:bg-surface-variant dark:hover:bg-surface-container-high transition-colors p-2 active:scale-95 duration-100 flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 w-full max-w-7xl mx-auto px-gutter md:px-container-padding py-stack-lg grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Orders List Section (Takes up more space on large screens) -->
+<section class="lg:col-span-8 flex flex-col gap-6">
+<!-- Page Header -->
+<div>
+<h2 class="text-headline-lg font-headline-lg text-on-surface">Danh sách đơn hàng của tôi</h2>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1">Manage and track your recent purchases.</p>
+</div>
+<!-- Status Tabs -->
+<div class="w-full border-b border-outline-variant overflow-x-auto tab-scrollbar">
+<div class="flex whitespace-nowrap min-w-max">
+<button class="px-4 py-3 text-body-md font-body-md text-primary font-bold border-b-2 border-primary">Tất cả</button>
+<button class="px-4 py-3 text-body-md font-body-md text-on-surface-variant hover:text-on-surface transition-colors border-b-2 border-transparent">Chờ xử lý</button>
+<button class="px-4 py-3 text-body-md font-body-md text-on-surface-variant hover:text-on-surface transition-colors border-b-2 border-transparent">Đang giao</button>
+<button class="px-4 py-3 text-body-md font-body-md text-on-surface-variant hover:text-on-surface transition-colors border-b-2 border-transparent">Đã giao</button>
+<button class="px-4 py-3 text-body-md font-body-md text-on-surface-variant hover:text-on-surface transition-colors border-b-2 border-transparent">Đã hủy</button>
+</div>
+</div>
+<!-- Order Cards Grid -->
+<div class="grid grid-cols-1 gap-4">
+<!-- Card 1: Delivered -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant p-4 shadow-[0_4px_6px_-1px_rgb(0,0,0,0.1)] hover:shadow-[0_10px_15px_-3px_rgb(0,0,0,0.1)] transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-lg">receipt_long</span>
+<span class="text-body-md font-body-md font-bold">ORD-2023-9876</span>
+</div>
+<span class="text-body-sm font-body-sm text-on-surface-variant">24 Oct, 2023 • 14:30</span>
+</div>
+<span class="px-2 py-1 rounded bg-secondary-container text-on-secondary-container text-label-caps font-label-caps flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Đã giao
+                        </span>
+</div>
+<div class="flex items-center gap-4 mb-4 pb-4 border-b border-outline-variant">
+<img class="w-16 h-16 object-cover rounded bg-surface-container-low" data-alt="A sleek, modern wireless mechanical keyboard with rgb lighting on a dark desk mat. High tech aesthetic, minimalistic design, soft studio lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8BynvBE_dGuqkN9vznwvYGX0m-rR1Kb80SXA2BHns8Ih1Gg-KrMQ8djrcBOMCznMzCUxKBjL3fbUseYmflDRdNLacSMjhdqvYIeNFFANf0XaqVAmB90fBa3bYNXLBtUsUebBfhY7NOEljKTHhnmRbgfBr92_neOOUgdZQN1RTko2OUatXF2l1RxiWBG7jahK-4C2SeJSabgApaKRfVvnj8KLu3aTj2POj6Yedi2_QWWtzZho9EGM"/>
+<div class="flex-1">
+<h3 class="text-body-md font-body-md line-clamp-1">Mechanical Wireless Keyboard Pro X</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Qty: 1</p>
+</div>
+</div>
+<div class="flex justify-between items-center mt-2">
+<div>
+<span class="text-body-sm font-body-sm text-on-surface-variant">Total Amount</span>
+<div class="text-headline-md font-headline-md font-bold text-primary">$129.99</div>
+</div>
+<a class="text-body-sm font-body-sm text-primary hover:underline font-bold flex items-center" href="#">
+                            Xem chi tiết <span class="material-symbols-outlined text-sm ml-1">chevron_right</span>
+</a>
+</div>
+</div>
+<!-- Card 2: Processing -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant p-4 shadow-[0_4px_6px_-1px_rgb(0,0,0,0.1)] hover:shadow-[0_10px_15px_-3px_rgb(0,0,0,0.1)] transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-lg">receipt_long</span>
+<span class="text-body-md font-body-md font-bold">ORD-2023-9877</span>
+</div>
+<span class="text-body-sm font-body-sm text-on-surface-variant">25 Oct, 2023 • 09:15</span>
+</div>
+<span class="px-2 py-1 rounded bg-tertiary-fixed text-on-tertiary-fixed-variant text-label-caps font-label-caps flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">pending</span> Chờ xử lý
+                        </span>
+</div>
+<div class="flex items-center gap-4 mb-4 pb-4 border-b border-outline-variant">
+<div class="flex -space-x-2">
+<img class="w-12 h-12 object-cover rounded border-2 border-surface-container-lowest bg-surface-container-low" data-alt="A minimalist white ceramic coffee mug on a light wooden table. Soft morning sunlight filtering through a window, clean aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAbui9Qu7O-AWWRMJmMeeAGGm7YTxhBrUMAm4879DmDyLTJIm954RUj4lqcHIVGJcLHQOrZGq9I-fWPVL2vDqd0nSVVoR5SClDzjpZ_gUHeS4PASbcuFi2HE4LchIkq9nZL82DzE-V5YMNAsCPdg-kiqsqrnb70i2lZMRt9eSIUo1Nkisr5yTVjYnwwfHPz9hER0FQAyWVjD6ZLTsRhAmzveK932949yWF8Gbl1m4Vi9su4YBGzSE"/>
+<img class="w-12 h-12 object-cover rounded border-2 border-surface-container-lowest bg-surface-container-low" data-alt="A small bag of artisanal dark roast coffee beans. Rustic burlap texture mixed with clean modern packaging design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSKsSMDOK7T0h6_cNi0v22VtOUqCGGrzo1qNwfWZaUy5Z2fwulRJIGwTyiXB1UEgA6b1pfFdV8j6ZRlqJVK2PlTLlfBKFOy39nB--LmU6caua2fFwUmLqx6NSWzaedOJL12iTl-xbonlqbJvQJMANHgEuTm5QjNiuKJ4b-ObVkVShJlFbPlRW0zcXiCY1QerJTneYnX8cGjd3ZfJrbjCQd1vizTMxpU8rxmUk8TjR5bGSvHCDcacM"/>
+</div>
+<div class="flex-1 ml-2">
+<h3 class="text-body-md font-body-md line-clamp-1">Morning Brew Set + 1 more</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Qty: 2 items</p>
+</div>
+</div>
+<div class="flex justify-between items-center mt-2">
+<div>
+<span class="text-body-sm font-body-sm text-on-surface-variant">Total Amount</span>
+<div class="text-headline-md font-headline-md font-bold text-primary">$45.50</div>
+</div>
+<a class="text-body-sm font-body-sm text-primary hover:underline font-bold flex items-center" href="#">
+                            Xem chi tiết <span class="material-symbols-outlined text-sm ml-1">chevron_right</span>
+</a>
+</div>
+</div>
+<!-- Card 3: Cancelled -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant p-4 shadow-[0_4px_6px_-1px_rgb(0,0,0,0.1)] opacity-75">
+<div class="flex justify-between items-start mb-4">
+<div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-lg">receipt_long</span>
+<span class="text-body-md font-body-md font-bold text-on-surface-variant line-through">ORD-2023-9870</span>
+</div>
+<span class="text-body-sm font-body-sm text-on-surface-variant">20 Oct, 2023 • 18:45</span>
+</div>
+<span class="px-2 py-1 rounded bg-error-container text-on-error-container text-label-caps font-label-caps flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">cancel</span> Đã hủy
+                        </span>
+</div>
+<div class="flex justify-between items-center mt-2 pt-4 border-t border-outline-variant">
+<div>
+<span class="text-body-sm font-body-sm text-on-surface-variant">Total Amount</span>
+<div class="text-body-md font-body-md text-on-surface-variant">$89.00</div>
+</div>
+<a class="text-body-sm font-body-sm text-on-surface-variant hover:text-primary transition-colors flex items-center" href="#">
+                            Xem chi tiết <span class="material-symbols-outlined text-sm ml-1">chevron_right</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Pagination (Simple) -->
+<div class="flex justify-center items-center gap-2 mt-4">
+<button class="p-2 border border-outline-variant rounded text-on-surface-variant disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<span class="text-body-sm font-body-sm">Page 1 of 3</span>
+<button class="p-2 border border-outline-variant rounded text-on-surface hover:border-primary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</section>
+<!-- Debug Panel Section (Side panel on large screens, bottom on small) -->
+<aside class="lg:col-span-4 flex flex-col gap-4">
+<div class="bg-surface-container-low border border-outline-variant rounded-lg overflow-hidden flex flex-col sticky top-24">
+<!-- Debug Header -->
+<div class="bg-surface-variant px-4 py-3 flex justify-between items-center cursor-pointer border-b border-outline-variant" id="debug-toggle">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">api</span>
+<h3 class="text-label-caps font-label-caps text-on-surface-variant font-bold">API DEBUG</h3>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm transition-transform" id="debug-chevron">expand_more</span>
+</div>
+<!-- Debug Content -->
+<div class="p-4 bg-slate-50 flex flex-col gap-3" id="debug-content">
+<div class="flex justify-between items-center">
+<span class="px-2 py-1 bg-primary text-on-primary text-code-sm font-code-sm rounded">GET /api/v1/orders</span>
+<span class="text-code-sm font-code-sm text-on-surface-variant">200 OK • 120ms</span>
+</div>
+<div class="relative mt-2">
+<div class="absolute top-2 right-2 flex gap-2">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1" title="Copy to clipboard">
+<span class="material-symbols-outlined text-sm">content_copy</span>
+</button>
+</div>
+<pre class="bg-surface-container-highest text-on-surface p-4 rounded text-code-sm font-code-sm overflow-x-auto whitespace-pre border border-outline-variant">{
+  "status": "success",
+  "data": {
+    "orders": [
+      {
+        "id": "ORD-2023-9876",
+        "date": "2023-10-24T14:30:00Z",
+        "status": "DELIVERED",
+        "total": 129.99,
+        "items": [...]
+      },
+      {
+        "id": "ORD-2023-9877",
+        "date": "2023-10-25T09:15:00Z",
+        "status": "PROCESSING",
+        "total": 45.50,
+        "items": [...]
+      }
+    ],
+    "pagination": {
+      "page": 1,
+      "limit": 10,
+      "total": 24
+    }
+  }
+}</pre>
+</div>
+</div>
+</div>
+</aside>
+</main>
+<!-- Footer / Persistent Token Bar -->
+<footer class="bg-inverse-surface dark:bg-surface-container-highest fixed bottom-0 left-0 w-full z-50 flex justify-between items-center px-gutter py-2">
+<div class="flex items-center gap-2">
+<span class="relative flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-fixed opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-primary-fixed"></span>
+</span>
+<span class="text-surface-container-lowest dark:text-on-surface text-label-caps font-label-caps">JWT: Active | Role: CUSTOMER</span>
+</div>
+<div class="flex gap-4">
+<a class="text-primary-fixed font-bold underline hover:text-primary-fixed-dim transition-colors text-label-caps font-label-caps" href="#">View Token</a>
+<button class="text-surface-dim hover:text-primary-fixed-dim transition-colors text-label-caps font-label-caps">Logout</button>
+</div>
+</footer>
+<!-- Script for micro-interactions -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const debugToggle = document.getElementById('debug-toggle');
+            const debugContent = document.getElementById('debug-content');
+            const debugChevron = document.getElementById('debug-chevron');
+            
+            let isDebugOpen = true;
+
+            debugToggle.addEventListener('click', () => {
+                isDebugOpen = !isDebugOpen;
+                if(isDebugOpen) {
+                    debugContent.style.display = 'flex';
+                    debugChevron.style.transform = 'rotate(0deg)';
+                } else {
+                    debugContent.style.display = 'none';
+                    debugChevron.style.transform = 'rotate(-90deg)';
+                }
+            });
+        });
+    </script>
+
+    <!-- Global MiniShop Interconnected Navigation & API Client -->
+    <script src="js/nav.js"></script>
+</body></html>

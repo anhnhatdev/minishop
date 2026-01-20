@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Danh sách sản phẩm | MiniShop</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#d3e4fe",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#00174b",
+                        "outline-variant": "#c3c6d7",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "surface-tint": "#0053db",
+                        "outline": "#737686",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "on-secondary-container": "#54647a",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-container": "#eceef0",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#bc4800",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "primary-container": "#2563eb",
+                        "on-surface-variant": "#434655",
+                        "inverse-primary": "#b4c5ff",
+                        "on-background": "#191c1e",
+                        "background": "#f7f9fb",
+                        "surface-container-low": "#f2f4f6",
+                        "inverse-on-surface": "#eff1f3",
+                        "tertiary": "#943700",
+                        "surface-bright": "#f7f9fb",
+                        "on-tertiary-container": "#ffede6",
+                        "surface-variant": "#e0e3e5",
+                        "on-primary-container": "#eeefff",
+                        "on-surface": "#191c1e",
+                        "surface-dim": "#d8dadc",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "secondary": "#505f76",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#ffdbcd",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "inverse-surface": "#2d3133",
+                        "error-container": "#ffdad6",
+                        "surface-container-high": "#e6e8ea",
+                        "surface-container-highest": "#e0e3e5",
+                        "secondary-container": "#d0e1fb",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#0b1c30",
+                        "surface": "#f7f9fb",
+                        "primary": "#004ac6",
+                        "on-tertiary-fixed": "#360f00",
+                        "on-tertiary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "stack-sm": "8px",
+                        "max-width-auth": "400px",
+                        "stack-md": "16px",
+                        "stack-lg": "32px",
+                        "container-padding": "24px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "code-sm": ["JetBrains Mono"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "code-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                },
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md text-body-md">
+<!-- Top AppBar -->
+<header class="bg-surface-container-lowest dark:bg-inverse-surface shadow-sm dark:shadow-none sticky top-0 z-40">
+<div class="flex justify-between items-center w-full px-container-padding py-stack-md max-w-7xl mx-auto">
+<div class="flex items-center gap-stack-md">
+<span class="text-headline-md font-headline-md font-extrabold text-primary dark:text-inverse-primary">MiniShop</span>
+</div>
+<div class="flex items-center gap-stack-md text-primary dark:text-inverse-primary">
+<button class="hover:bg-surface-variant dark:hover:bg-surface-container-high transition-colors p-2 rounded-full active:scale-95 duration-100">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+</button>
+<button class="hover:bg-surface-variant dark:hover:bg-surface-container-high transition-colors p-2 rounded-full active:scale-95 duration-100">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Token Status Bar -->
+<div class="bg-slate-900 text-slate-50 w-full flex items-center justify-center py-2 z-30 relative shadow-sm">
+<div class="flex items-center gap-2">
+<span class="relative flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-surface-variant opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-surface-dim"></span>
+</span>
+<span class="font-code-sm text-code-sm">Role: GUEST | Access Token: None (Public API)</span>
+</div>
+</div>
+<!-- Main Content Grid -->
+<main class="flex-1 w-full max-w-7xl mx-auto px-container-padding py-stack-lg grid grid-cols-1 lg:grid-cols-4 gap-stack-lg">
+<!-- Left Sidebar: Filters -->
+<aside class="lg:col-span-1 space-y-stack-lg">
+<div class="bg-surface-container-lowest shadow-sm rounded-xl p-container-padding">
+<h2 class="font-headline-md text-headline-md mb-stack-md border-b border-surface-variant pb-2">Bộ lọc</h2>
+<!-- Categories -->
+<div class="mb-stack-md">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-stack-sm">Danh mục</h3>
+<div class="space-y-2">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input checked="" class="form-checkbox h-4 w-4 text-primary-container border-outline-variant rounded-sm focus:ring-primary-container focus:ring-offset-0 focus:outline-none" type="checkbox"/>
+<span class="text-body-sm font-body-sm text-on-surface group-hover:text-primary-container transition-colors">Điện thoại</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="form-checkbox h-4 w-4 text-primary-container border-outline-variant rounded-sm focus:ring-primary-container focus:ring-offset-0 focus:outline-none" type="checkbox"/>
+<span class="text-body-sm font-body-sm text-on-surface group-hover:text-primary-container transition-colors">Laptop</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="form-checkbox h-4 w-4 text-primary-container border-outline-variant rounded-sm focus:ring-primary-container focus:ring-offset-0 focus:outline-none" type="checkbox"/>
+<span class="text-body-sm font-body-sm text-on-surface group-hover:text-primary-container transition-colors">Phụ kiện</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="form-checkbox h-4 w-4 text-primary-container border-outline-variant rounded-sm focus:ring-primary-container focus:ring-offset-0 focus:outline-none" type="checkbox"/>
+<span class="text-body-sm font-body-sm text-on-surface group-hover:text-primary-container transition-colors">Âm thanh</span>
+</label>
+</div>
+</div>
+<!-- Price Range -->
+<div class="mb-stack-lg">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-stack-sm">Khoảng giá (VNĐ)</h3>
+<div class="flex items-center gap-2">
+<div class="flex-1 relative">
+<label class="sr-only" for="price-min">Giá tối thiểu</label>
+<input class="w-full text-body-sm font-body-sm border-outline-variant rounded-md focus:border-primary-container focus:ring-2 focus:ring-primary-container focus:ring-opacity-50 py-1 px-2 h-9 shadow-sm placeholder:text-outline" id="price-min" placeholder="Từ" type="number"/>
+</div>
+<span class="text-on-surface-variant">-</span>
+<div class="flex-1 relative">
+<label class="sr-only" for="price-max">Giá tối đa</label>
+<input class="w-full text-body-sm font-body-sm border-outline-variant rounded-md focus:border-primary-container focus:ring-2 focus:ring-primary-container focus:ring-opacity-50 py-1 px-2 h-9 shadow-sm placeholder:text-outline" id="price-max" placeholder="Đến" type="number"/>
+</div>
+</div>
+</div>
+<!-- Apply Button -->
+<button class="w-full bg-primary-container hover:bg-surface-tint text-on-primary font-body-sm text-body-sm py-2 rounded-md transition-colors shadow-sm active:scale-[0.98]">
+                    Áp dụng bộ lọc
+                </button>
+</div>
+</aside>
+<!-- Right Main Area: Products -->
+<section class="lg:col-span-3 space-y-stack-md">
+<!-- Sorting & Meta -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between bg-surface-container-lowest shadow-sm rounded-xl p-stack-sm px-stack-md gap-stack-sm">
+<p class="font-body-sm text-body-sm text-on-surface-variant">Hiển thị <span class="font-bold text-on-surface">1-12</span> của <span class="font-bold text-on-surface">48</span> sản phẩm</p>
+<div class="flex items-center gap-2">
+<label class="font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap" for="sort">Sắp xếp:</label>
+<select class="text-body-sm font-body-sm border-outline-variant rounded-md focus:border-primary-container focus:ring-0 py-1 pl-2 pr-8 bg-surface shadow-sm cursor-pointer h-9" id="sort">
+<option>Mới nhất</option>
+<option>Giá tăng dần</option>
+<option>Giá giảm dần</option>
+</select>
+</div>
+</div>
+<!-- Product Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-stack-md">
+<!-- Product Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col group hover:shadow-md transition-shadow border border-surface-variant">
+<div class="relative w-full aspect-square bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A sleek, modern high-end smartphone with a bezel-less display resting on a minimalist white surface. The lighting is studio quality, soft and diffuse, creating subtle reflections on the glass screen. The color palette is dominated by pure whites, soft grays, and the deep black of the screen, creating a clean, tech-focused aesthetic suitable for a professional e-commerce product shot." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKoe8aeCUuW9kdCom7j9F_wfh3zCDnwOkh5-lrNrgv2CAcZdperJx82pEyt2Wt8HcCzKQr5HlC0rlBBqVP16xi_A_8_zxVEttRVLru1U5ncegA7D2dtWhb-JgWkhIMKx2XB4ts-RTTts9TdKh2RHt_d70ZRTGnBnb3UQMvSF59o7Ai0MbuPtTD7TcJYlBjCB59xe_zwj_YJEy4sUBIOCyCSDgfFEJOCZ0aR3D8Xv-7pHly1Z72Gaw"/>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<h3 class="font-body-md text-body-md text-on-surface font-semibold mb-1 line-clamp-2 group-hover:text-primary-container transition-colors">Smartphone X Pro Max - 256GB Đen Bạc</h3>
+<div class="flex items-center gap-1 mb-2">
+<div class="flex text-tertiary-container">
+<span class="material-symbols-outlined text-[16px]" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="star_half" data-weight="fill">star_half</span>
+</div>
+<span class="text-code-sm font-code-sm text-outline">(128)</span>
+</div>
+<div class="mt-auto pt-2 flex items-center justify-between">
+<span class="font-headline-md text-headline-md text-error font-bold">24.990.000 ₫</span>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col group hover:shadow-md transition-shadow border border-surface-variant">
+<div class="relative w-full aspect-square bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A premium ultrabook laptop angled slightly to show its thin profile and brushed aluminum chassis. The device sits on a pristine, bright background illuminated by crisp white light. The aesthetic emphasizes modern minimalism and high performance, utilizing a grayscale palette with metallic silver highlights, conveying a professional and high-tech vibe perfect for a digital storefront." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvTFhpbpyUbE8zFnunaIkY2mMTXkHsFOcKhS_PpJG9-els0GOBwcPEK5oE4SAQElqDsVP9nriuI_66b8Jx3sKfmaoQkXP2VLfQM3JZ8OK3zS8Y5VhbPX3oUK5JW2hCTS8UvYCp_Wrdv7otpsyCwvJZrYxMaqforSAmlBTN52h65MwnVJR6AbNyjn7v2UkZhgz7x66xZ5sfS2Qti8Ro7AKUeJP04bsm6cz3Xa4lk52C3Gmyx_tKOZ4"/>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<h3 class="font-body-md text-body-md text-on-surface font-semibold mb-1 line-clamp-2 group-hover:text-primary-container transition-colors">Laptop UltraBook 14" - Intel Core i7, 16GB RAM</h3>
+<div class="flex items-center gap-1 mb-2">
+<div class="flex text-tertiary-container">
+<span class="material-symbols-outlined text-[16px]" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="star" data-weight="fill">star</span>
+</div>
+<span class="text-code-sm font-code-sm text-outline">(45)</span>
+</div>
+<div class="mt-auto pt-2 flex items-center justify-between">
+<span class="font-headline-md text-headline-md text-error font-bold">32.490.000 ₫</span>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col group hover:shadow-md transition-shadow border border-surface-variant">
+<div class="relative w-full aspect-square bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A pair of high-end wireless noise-canceling headphones resting on a sleek, minimalist geometric stand. The lighting is crisp and bright, creating a clean, modern aesthetic with soft shadows. The color palette focuses on pristine whites, soft matte blacks, and subtle brushed metal accents, projecting an image of premium audio quality and sophisticated utilitarian design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmZV0pJk139E94UsC6W2XxYAWnMugtpeUOpN1hH_CJRo32ozNdJ8pULkxIulMxqJ7qcj3fxzMaJ42qMDvb2ZdA02lNQgts3urRLD5kaZUQhDCuvlvWSnQSILv8IWXgD7lxAbeasOBNXckaC1qapLP6gbX3lnwCTRlEX91Yc8-e8rq9Ub-LIR2N4IltgnEJU_SCWWeX3e6MN-wBC6ppno6EbUr5ixn3oX32DCHXtqpBX-FZeTL4jQU"/>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<h3 class="font-body-md text-body-md text-on-surface font-semibold mb-1 line-clamp-2 group-hover:text-primary-container transition-colors">Tai nghe Chụp tai Chống ồn Không dây Pro Max</h3>
+<div class="flex items-center gap-1 mb-2">
+<div class="flex text-tertiary-container">
+<span class="material-symbols-outlined text-[16px]" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="star_border">star_border</span>
+</div>
+<span class="text-code-sm font-code-sm text-outline">(210)</span>
+</div>
+<div class="mt-auto pt-2 flex items-center justify-between">
+<span class="font-headline-md text-headline-md text-error font-bold">8.990.000 ₫</span>
+</div>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col group hover:shadow-md transition-shadow border border-surface-variant">
+<div class="relative w-full aspect-square bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A modern smartwatch with a sleek metallic casing and a minimalist digital watch face displayed on the screen. It is positioned on a crisp white surface under bright, even studio lighting. The aesthetic is clean and functional, utilizing a minimalist palette of stark white, graphite gray, and polished steel to emphasize technological sophistication and utility." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9sXfYhZIIb1dV6Ysx475dZTBw_F4kA66l8nOp07At1IGbP-leQ3QWlmV-LNhwwLTRFRykdKC6LqNUeOYA5DTAAWQgC0kyev02xO2x-q9szgCOaXTO5FC1W99jyFqSltwilQuNkLZRiwU2gazKWu4aSMj_8s8Y4et79Rq2EZsxpooT9ECUijKOnc4-n159vOs5sW6tl-MXnSEUvrb20OjiiBkpFqTWJTmr2a7C5bXTtG1xO4XMrpY"/>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<h3 class="font-body-md text-body-md text-on-surface font-semibold mb-1 line-clamp-2 group-hover:text-primary-container transition-colors">Đồng hồ Thông minh Series 8 - Viền Thép</h3>
+<div class="flex items-center gap-1 mb-2">
+<div class="flex text-tertiary-container">
+<span class="material-symbols-outlined text-[16px]" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="star_half" data-weight="fill">star_half</span>
+</div>
+<span class="text-code-sm font-code-sm text-outline">(89)</span>
+</div>
+<div class="mt-auto pt-2 flex items-center justify-between">
+<span class="font-headline-md text-headline-md text-error font-bold">11.590.000 ₫</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="flex justify-center mt-stack-lg">
+<nav class="flex items-center gap-1 bg-surface-container-lowest shadow-sm rounded-lg p-1 border border-surface-variant">
+<button class="p-2 rounded-md hover:bg-surface-container transition-colors text-on-surface-variant disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-10 h-10 rounded-md bg-primary-container text-on-primary font-body-sm font-semibold flex items-center justify-center">1</button>
+<button class="w-10 h-10 rounded-md hover:bg-surface-container transition-colors text-on-surface font-body-sm flex items-center justify-center">2</button>
+<button class="w-10 h-10 rounded-md hover:bg-surface-container transition-colors text-on-surface font-body-sm flex items-center justify-center">3</button>
+<span class="w-10 h-10 flex items-center justify-center text-on-surface-variant">...</span>
+<button class="w-10 h-10 rounded-md hover:bg-surface-container transition-colors text-on-surface font-body-sm flex items-center justify-center">8</button>
+<button class="p-2 rounded-md hover:bg-surface-container transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</nav>
+</div>
+</section>
+</main>
+<!-- Debug Panel (Collapsible) -->
+<div class="fixed bottom-12 right-gutter z-50 max-w-lg w-full sm:w-[450px]" id="debug-panel-container">
+<!-- Panel Header / Trigger -->
+<button class="w-full bg-slate-800 text-slate-50 p-3 rounded-t-lg shadow-lg flex justify-between items-center hover:bg-slate-700 transition-colors border border-slate-700 border-b-0" onclick="toggleDebugPanel()">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="bug_report">bug_report</span>
+<span class="font-code-sm text-code-sm font-bold">API Debugger (Public)</span>
+</div>
+<span class="material-symbols-outlined transition-transform duration-200" data-icon="expand_less" id="debug-chevron">expand_less</span>
+</button>
+<!-- Panel Content -->
+<div class="bg-slate-50 border-x border-b border-slate-300 shadow-xl rounded-b-lg overflow-hidden hidden max-h-[400px] flex flex-col" id="debug-content">
+<div class="p-3 bg-blue-50 border-b border-blue-200">
+<p class="font-code-sm text-code-sm text-blue-900 break-all">
+<span class="font-bold">GET</span> /api/v1/products?category=dien-thoai&amp;page=1&amp;sort=newest
+                </p>
+</div>
+<div class="p-4 overflow-y-auto flex-1 bg-slate-100">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-caps text-label-caps text-slate-500">JSON RESPONSE</span>
+<button class="text-slate-500 hover:text-slate-800" title="Copy to clipboard">
+<span class="material-symbols-outlined text-[16px]" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+<pre class="font-code-sm text-code-sm text-slate-800 whitespace-pre-wrap break-words">{
+  "status": "success",
+  "data": {
+    "items": [
+      {
+        "id": "p_101",
+        "name": "Smartphone X Pro Max",
+        "price": 24990000,
+        "rating": 4.8
+      }
+    ],
+    "meta": {
+      "total": 48,
+      "page": 1,
+      "limit": 12
+    }
+  }
+}</pre>
+</div>
+</div>
+</div>
+<!-- Footer component from JSON -->
+<footer class="bg-inverse-surface dark:bg-surface-container-highest shadow-none fixed bottom-0 left-0 w-full z-50 flex justify-between items-center px-gutter py-2">
+<span class="text-label-caps font-label-caps text-surface-container-lowest">JWT: Active | Role: CUSTOMER</span>
+<div class="flex gap-4">
+<a class="text-body-sm font-body-sm text-surface-dim px-2 hover:text-primary-fixed-dim transition-colors active:opacity-80" href="#">View Token</a>
+<a class="text-body-sm font-body-sm text-surface-dim px-2 hover:text-primary-fixed-dim transition-colors active:opacity-80" href="#">Logout</a>
+</div>
+</footer>
+<script>
+        function toggleDebugPanel() {
+            const content = document.getElementById('debug-content');
+            const chevron = document.getElementById('debug-chevron');
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                chevron.style.transform = 'rotate(180deg)';
+            } else {
+                content.classList.add('hidden');
+                chevron.style.transform = 'rotate(0deg)';
+            }
+        }
+    </script>
+
+    <!-- Global MiniShop Interconnected Navigation & API Client -->
+    <script src="js/nav.js"></script>
+</body></html>

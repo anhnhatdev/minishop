@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MiniShop - System Status</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-fixed-dim": "#ffb596",
+                      "on-primary-fixed": "#00174b",
+                      "error-container": "#ffdad6",
+                      "on-primary-fixed-variant": "#003ea8",
+                      "primary-fixed": "#dbe1ff",
+                      "on-surface": "#191c1e",
+                      "surface-container-highest": "#e0e3e5",
+                      "surface-container": "#eceef0",
+                      "secondary-container": "#d0e1fb",
+                      "on-surface-variant": "#434655",
+                      "primary-container": "#2563eb",
+                      "on-tertiary": "#ffffff",
+                      "secondary-fixed": "#d3e4fe",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "tertiary": "#943700",
+                      "error": "#ba1a1a",
+                      "surface": "#f7f9fb",
+                      "tertiary-container": "#bc4800",
+                      "secondary": "#505f76",
+                      "on-tertiary-container": "#ffede6",
+                      "on-primary": "#ffffff",
+                      "surface-container-low": "#f2f4f6",
+                      "on-background": "#191c1e",
+                      "outline-variant": "#c3c6d7",
+                      "surface-bright": "#f7f9fb",
+                      "inverse-surface": "#2d3133",
+                      "on-error-container": "#93000a",
+                      "inverse-on-surface": "#eff1f3",
+                      "outline": "#737686",
+                      "primary-fixed-dim": "#b4c5ff",
+                      "surface-container-high": "#e6e8ea",
+                      "on-secondary-container": "#54647a",
+                      "tertiary-fixed": "#ffdbcd",
+                      "surface-tint": "#0053db",
+                      "on-primary-container": "#eeefff",
+                      "on-secondary": "#ffffff",
+                      "on-secondary-fixed": "#0b1c30",
+                      "on-tertiary-fixed-variant": "#7d2d00",
+                      "on-error": "#ffffff",
+                      "primary": "#004ac6",
+                      "background": "#f7f9fb",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "surface-variant": "#e0e3e5",
+                      "on-tertiary-fixed": "#360f00",
+                      "surface-dim": "#d8dadc",
+                      "inverse-primary": "#b4c5ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "stack-sm": "8px",
+                      "base": "4px",
+                      "gutter": "16px",
+                      "max-width-auth": "400px",
+                      "container-padding": "24px",
+                      "stack-md": "16px",
+                      "stack-lg": "32px"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ],
+                      "code-sm": [
+                              "JetBrains Mono"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "code-sm": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .caution-stripes {
+            background-image: repeating-linear-gradient(
+                45deg,
+                #fcd34d,
+                #fcd34d 10px,
+                #111827 10px,
+                #111827 20px
+            );
+        }
+        .caution-text-banner {
+            background-color: #fcd34d;
+            color: #111827;
+            text-align: center;
+            font-weight: bold;
+            padding: 8px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- DEV/TEST Banner -->
+<div class="caution-stripes h-2 w-full"></div>
+<div class="caution-text-banner font-label-caps uppercase tracking-widest flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+        ⚠️ Khu vực DEV/TEST — không dùng trong môi trường production
+        <span class="material-symbols-outlined text-[16px]">warning</span>
+</div>
+<div class="caution-stripes h-2 w-full"></div>
+<!-- TopAppBar -->
+<header class="bg-background flex justify-between items-center w-full px-container-padding py-stack-sm bg-surface-container flat no shadows full-width top-0 z-40 relative">
+<div class="flex items-center gap-4">
+<h1 class="font-headline-lg text-headline-lg font-bold text-primary">MiniShop</h1>
+<nav class="hidden md:flex gap-6 ml-8">
+<!-- Assuming context from JSON, though not directly applicable to System Status, providing a generic Top Nav based on Brand Anchors if needed, or hiding per mandate. Hiding nav links as this is a specific tool view. -->
+</nav>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<button aria-label="bug_report" class="p-2 hover:bg-surface-container-high rounded-full transition-colors opacity-80">
+<span class="material-symbols-outlined">bug_report</span>
+</button>
+<button aria-label="help" class="p-2 hover:bg-surface-container-high rounded-full transition-colors opacity-80">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-full w-64 p-stack-md gap-stack-sm bg-surface-container-low border-r border-outline-variant flat no shadows relative z-30">
+<div class="mb-6">
+<h2 class="font-headline-md text-headline-md text-primary">MiniShop Auth</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">API Version 1.0.4</p>
+</div>
+<nav class="flex-1 flex flex-col gap-2">
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">lock</span>
+                    Auth Flow
+                </a>
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">terminal</span>
+                    API Debug
+                </a>
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">key</span>
+                    Token Manager
+                </a>
+<a class="flex items-center gap-3 p-3 rounded-lg bg-secondary-container text-on-secondary-container font-semibold font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">settings</span>
+                    Settings
+                </a>
+<div class="mt-8 pt-4 border-t border-outline-variant">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-2 uppercase tracking-widest">Debug Tools</h3>
+<a class="flex items-center gap-2 p-2 rounded-lg text-primary hover:bg-primary-fixed transition-colors text-sm font-medium" href="http://localhost:8761" target="_blank">
+<span class="material-symbols-outlined text-[18px]">link</span>
+                        Eureka Dashboard (localhost:8761)
+                    </a>
+</div>
+</nav>
+<div class="mt-auto flex flex-col gap-2">
+<button class="w-full py-2 bg-primary text-on-primary rounded-lg font-body-md text-body-md hover:opacity-90 transition-opacity">
+                    Refresh Session
+                </button>
+<div class="flex flex-col gap-1 mt-4">
+<a class="flex items-center gap-3 p-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-[18px]">description</span>
+                        Docs
+                    </a>
+<a class="flex items-center gap-3 p-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+                        Logout
+                    </a>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 p-container-padding overflow-y-auto bg-surface">
+<div class="max-w-6xl mx-auto space-y-stack-lg">
+<!-- Dashboard Header & Controls -->
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">System Status</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Real-time health overview of microservices</p>
+</div>
+<div class="flex items-center gap-4">
+<label class="flex items-center gap-2 cursor-pointer">
+<div class="relative">
+<input checked="" class="sr-only" type="checkbox"/>
+<div class="block bg-surface-variant w-10 h-6 rounded-full"></div>
+<div class="dot absolute left-1 top-1 bg-primary w-4 h-4 rounded-full transition transform translate-x-4"></div>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">Auto-refresh</span>
+</label>
+<button class="flex items-center gap-2 px-4 py-2 bg-surface-container-high hover:bg-surface-container-highest text-on-surface rounded-lg transition-colors border border-outline-variant font-body-sm text-body-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">refresh</span>
+                            Refresh Now
+                        </button>
+</div>
+</div>
+<!-- Service List Bento Grid approach -->
+<div class="grid grid-cols-1 gap-4">
+<!-- Header Row -->
+<div class="hidden md:grid grid-cols-12 gap-4 px-6 py-3 bg-surface-container-low rounded-t-lg border-b border-outline-variant font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">
+<div class="col-span-1">Status</div>
+<div class="col-span-4">Service Name</div>
+<div class="col-span-3">Response Time</div>
+<div class="col-span-4 text-right">Actions</div>
+</div>
+<!-- Service Item: user-service -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center p-4 md:px-6 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-sm hover:border-primary-fixed-dim transition-colors">
+<div class="col-span-1 flex items-center justify-start">
+<div class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]"></div>
+</div>
+<div class="col-span-4 font-code-sm text-code-sm text-on-surface font-medium">user-service</div>
+<div class="col-span-3 font-code-sm text-code-sm text-on-surface-variant">42ms</div>
+<div class="col-span-4 flex justify-end">
+<button class="px-3 py-1.5 text-xs font-medium text-primary border border-outline-variant rounded hover:bg-primary-fixed transition-colors" onclick="document.getElementById('modal-user-service').classList.remove('hidden')">Details</button>
+</div>
+</div>
+<!-- Service Item: product-service -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center p-4 md:px-6 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-sm hover:border-primary-fixed-dim transition-colors">
+<div class="col-span-1 flex items-center justify-start">
+<div class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]"></div>
+</div>
+<div class="col-span-4 font-code-sm text-code-sm text-on-surface font-medium">product-service</div>
+<div class="col-span-3 font-code-sm text-code-sm text-on-surface-variant">115ms</div>
+<div class="col-span-4 flex justify-end">
+<button class="px-3 py-1.5 text-xs font-medium text-primary border border-outline-variant rounded hover:bg-primary-fixed transition-colors">Details</button>
+</div>
+</div>
+<!-- Service Item: order-service (DOWN) -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center p-4 md:px-6 bg-error-container/20 rounded-lg border border-error/30 shadow-sm">
+<div class="col-span-1 flex items-center justify-start">
+<div class="w-3 h-3 rounded-full bg-error shadow-[0_0_8px_rgba(186,26,26,0.5)]"></div>
+</div>
+<div class="col-span-4 font-code-sm text-code-sm text-error font-medium">order-service</div>
+<div class="col-span-3 font-code-sm text-code-sm text-error">Timeout</div>
+<div class="col-span-4 flex justify-end">
+<button class="px-3 py-1.5 text-xs font-medium text-error border border-error/50 rounded hover:bg-error-container transition-colors">Details</button>
+</div>
+</div>
+<!-- Service Item: inventory-service -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center p-4 md:px-6 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-sm hover:border-primary-fixed-dim transition-colors">
+<div class="col-span-1 flex items-center justify-start">
+<div class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]"></div>
+</div>
+<div class="col-span-4 font-code-sm text-code-sm text-on-surface font-medium">inventory-service</div>
+<div class="col-span-3 font-code-sm text-code-sm text-on-surface-variant">68ms</div>
+<div class="col-span-4 flex justify-end">
+<button class="px-3 py-1.5 text-xs font-medium text-primary border border-outline-variant rounded hover:bg-primary-fixed transition-colors">Details</button>
+</div>
+</div>
+<!-- Service Item: payment-service -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center p-4 md:px-6 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-sm hover:border-primary-fixed-dim transition-colors">
+<div class="col-span-1 flex items-center justify-start">
+<div class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]"></div>
+</div>
+<div class="col-span-4 font-code-sm text-code-sm text-on-surface font-medium">payment-service</div>
+<div class="col-span-3 font-code-sm text-code-sm text-on-surface-variant">210ms</div>
+<div class="col-span-4 flex justify-end">
+<button class="px-3 py-1.5 text-xs font-medium text-primary border border-outline-variant rounded hover:bg-primary-fixed transition-colors">Details</button>
+</div>
+</div>
+<!-- Service Item: notification-service -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center p-4 md:px-6 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-sm hover:border-primary-fixed-dim transition-colors">
+<div class="col-span-1 flex items-center justify-start">
+<div class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]"></div>
+</div>
+<div class="col-span-4 font-code-sm text-code-sm text-on-surface font-medium">notification-service</div>
+<div class="col-span-3 font-code-sm text-code-sm text-on-surface-variant">35ms</div>
+<div class="col-span-4 flex justify-end">
+<button class="px-3 py-1.5 text-xs font-medium text-primary border border-outline-variant rounded hover:bg-primary-fixed transition-colors">Details</button>
+</div>
+</div>
+<!-- Service Item: gateway -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center p-4 md:px-6 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-sm hover:border-primary-fixed-dim transition-colors">
+<div class="col-span-1 flex items-center justify-start">
+<div class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]"></div>
+</div>
+<div class="col-span-4 font-code-sm text-code-sm text-on-surface font-medium">gateway</div>
+<div class="col-span-3 font-code-sm text-code-sm text-on-surface-variant">12ms</div>
+<div class="col-span-4 flex justify-end">
+<button class="px-3 py-1.5 text-xs font-medium text-primary border border-outline-variant rounded hover:bg-primary-fixed transition-colors">Details</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer -->
+<footer class="bg-inverse-surface fixed bottom-0 w-full z-50 flex justify-between items-center px-container-padding py-2 h-10 shadow-md">
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-inverse-on-surface">MiniShop Utility v2.1.0</span>
+<div class="flex gap-4">
+<a class="font-label-caps text-label-caps text-surface-variant hover:text-primary-fixed-dim transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-caps text-label-caps text-surface-variant hover:text-primary-fixed-dim transition-colors" href="#">Terms of Service</a>
+<a class="font-label-caps text-label-caps text-surface-variant hover:text-primary-fixed-dim transition-colors" href="#">API Docs</a>
+</div>
+</footer>
+<!-- Modal for Details -->
+<div class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-scrim/50 backdrop-blur-sm p-4" id="modal-user-service">
+<div class="bg-surface-container-lowest w-full max-w-2xl rounded-xl shadow-xl border border-outline-variant flex flex-col max-h-[921px]">
+<div class="flex justify-between items-center p-4 border-b border-outline-variant bg-surface-container-low rounded-t-xl">
+<h3 class="font-headline-md text-headline-md text-on-surface">user-service Details</h3>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors p-1" onclick="document.getElementById('modal-user-service').classList.add('hidden')">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-6 overflow-y-auto flex-1 bg-[#1e1e1e]">
+<div class="flex justify-between items-center mb-2">
+<span class="text-xs text-gray-400 font-code-sm uppercase tracking-wider">/actuator/health</span>
+<button class="text-gray-400 hover:text-white flex items-center gap-1 text-xs">
+<span class="material-symbols-outlined text-[16px]">content_copy</span> Copy
+                    </button>
+</div>
+<pre class="font-code-sm text-code-sm text-green-400 whitespace-pre-wrap break-words">{
+  "status": "UP",
+  "components": {
+    "db": {
+      "status": "UP",
+      "details": {
+        "database": "PostgreSQL",
+        "validationQuery": "isValid()"
+      }
+    },
+    "diskSpace": {
+      "status": "UP",
+      "details": {
+        "total": 494384795648,
+        "free": 123456789012,
+        "threshold": 10485760,
+        "exists": true
+      }
+    },
+    "ping": {
+      "status": "UP"
+    }
+  }
+}
+                </pre>
+</div>
+</div>
+</div>
+
+    <!-- Global MiniShop Interconnected Navigation & API Client -->
+    <script src="js/nav.js"></script>
+</body></html>

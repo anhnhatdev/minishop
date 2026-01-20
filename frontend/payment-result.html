@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kết quả thanh toán - MiniShop</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed": "#d3e4fe",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed": "#00174b",
+                    "outline-variant": "#c3c6d7",
+                    "secondary-fixed-dim": "#b7c8e1",
+                    "surface-tint": "#0053db",
+                    "outline": "#737686",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed-dim": "#ffb596",
+                    "on-secondary-container": "#54647a",
+                    "primary-fixed": "#dbe1ff",
+                    "surface-container": "#eceef0",
+                    "error": "#ba1a1a",
+                    "tertiary-container": "#bc4800",
+                    "on-secondary-fixed-variant": "#38485d",
+                    "primary-container": "#2563eb",
+                    "on-surface-variant": "#434655",
+                    "inverse-primary": "#b4c5ff",
+                    "on-background": "#191c1e",
+                    "background": "#f7f9fb",
+                    "surface-container-low": "#f2f4f6",
+                    "inverse-on-surface": "#eff1f3",
+                    "tertiary": "#943700",
+                    "surface-bright": "#f7f9fb",
+                    "on-tertiary-container": "#ffede6",
+                    "surface-variant": "#e0e3e5",
+                    "on-primary-container": "#eeefff",
+                    "on-surface": "#191c1e",
+                    "surface-dim": "#d8dadc",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "secondary": "#505f76",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed": "#ffdbcd",
+                    "on-tertiary-fixed-variant": "#7d2d00",
+                    "inverse-surface": "#2d3133",
+                    "error-container": "#ffdad6",
+                    "surface-container-high": "#e6e8ea",
+                    "surface-container-highest": "#e0e3e5",
+                    "secondary-container": "#d0e1fb",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed": "#0b1c30",
+                    "surface": "#f7f9fb",
+                    "primary": "#004ac6",
+                    "on-tertiary-fixed": "#360f00",
+                    "on-tertiary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "stack-sm": "8px",
+                    "max-width-auth": "400px",
+                    "stack-md": "16px",
+                    "stack-lg": "32px",
+                    "container-padding": "24px",
+                    "base": "4px"
+            },
+            "fontFamily": {
+                    "code-sm": [
+                            "JetBrains Mono", "monospace"
+                    ],
+                    "body-sm": [
+                            "Inter", "sans-serif"
+                    ],
+                    "body-md": [
+                            "Inter", "sans-serif"
+                    ],
+                    "headline-lg": [
+                            "Inter", "sans-serif"
+                    ],
+                    "label-caps": [
+                            "Inter", "sans-serif"
+                    ],
+                    "headline-md": [
+                            "Inter", "sans-serif"
+                    ]
+            },
+            "fontSize": {
+                    "code-sm": [
+                            "13px",
+                            {
+                                    "lineHeight": "18px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "body-sm": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-lg": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "label-caps": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "headline-md": [
+                            "20px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "600"
+                            }
+                    ]
+            }
+          }
+        }
+      }
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap');
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        body {
+            background-color: #f8fafc; /* Tailwind slate-50 equivalent */
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col font-body-md">
+<!-- Suppressed TopAppBar and Footer as this is a transactional success page -->
+<main class="flex-grow flex flex-col items-center justify-center p-gutter w-full max-w-7xl mx-auto">
+<div class="w-full max-w-max-width-auth bg-surface-container-lowest rounded-xl shadow-[0_4px_6px_-1px_rgb(0,0,0,0.1)] p-stack-lg flex flex-col items-center text-center">
+<div class="w-20 h-20 bg-primary-container/10 rounded-full flex items-center justify-center mb-stack-md text-primary">
+<span class="material-symbols-outlined fill text-[48px]">check_circle</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-stack-sm">Cảm ơn bạn đã đặt hàng!</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-stack-lg">
+                Đơn hàng của bạn đã được thanh toán thành công. Mã đơn hàng: <strong class="text-on-surface">#ORD-98765432</strong>
+</p>
+<div class="bg-surface-container w-full p-stack-md rounded-lg mb-stack-lg border border-outline-variant/30 text-left">
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] mt-[2px]">info</span>
+<span>Chúng tôi sẽ gửi email xác nhận chi tiết trạng thái đơn hàng trong ít phút nữa.</span>
+</p>
+</div>
+<a class="w-full bg-primary hover:bg-primary/90 text-on-primary font-body-md text-body-md py-3 px-4 rounded-lg transition-colors flex justify-center items-center" href="/orders/98765432">
+                Xem đơn hàng của tôi
+            </a>
+</div>
+<!-- Debug Panel -->
+<div class="w-full max-w-3xl mt-12 bg-surface-container-high rounded-xl border border-outline-variant/50 overflow-hidden shadow-sm">
+<div class="bg-surface-container-highest px-container-padding py-stack-md border-b border-outline-variant/50 flex justify-between items-center">
+<h3 class="font-label-caps text-label-caps text-on-surface uppercase tracking-wider flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">bug_report</span>
+                    Debug Panel: Raw URL Query Params
+                </h3>
+</div>
+<div class="p-0 bg-[#1e293b] text-[#f8fafc] overflow-x-auto">
+<pre class="font-code-sm text-code-sm p-container-padding m-0"><code>{
+  "vnp_Amount": "10000000",
+  "vnp_BankCode": "NCB",
+  "vnp_BankTranNo": "VNP123456789",
+  "vnp_CardType": "ATM",
+  "vnp_OrderInfo": "Thanh toan don hang ORD-98765432",
+  "vnp_PayDate": "20231027153000",
+  "vnp_ResponseCode": "00",
+  "vnp_TmnCode": "MINISHOP",
+  "vnp_TransactionNo": "987654321",
+  "vnp_TransactionStatus": "00",
+  "vnp_TxnRef": "ORD-98765432",
+  "vnp_SecureHash": "abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890"
+}</code></pre>
+</div>
+</div>
+</main>
+<!-- Token Status Bar Fixed Footer -->
+<div class="fixed bottom-0 left-0 w-full z-50 bg-[#0f172a] text-[#f8fafc] px-gutter py-2 flex justify-between items-center font-code-sm text-code-sm">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+<span>JWT: Active</span>
+</div>
+<div class="text-slate-400 flex gap-4">
+<span>Role: CUSTOMER</span>
+<a class="hover:text-white transition-colors underline" href="#">View Token</a>
+</div>
+</div>
+
+    <!-- Global MiniShop Interconnected Navigation & API Client -->
+    <script src="js/nav.js"></script>
+</body></html>

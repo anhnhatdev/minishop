@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Inventory Management - MiniShop Seller Center</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "on-surface": "#191c1e",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f7f9fb",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#505f76",
+                        "tertiary-fixed": "#ffdbcd",
+                        "inverse-on-surface": "#eff1f3",
+                        "outline": "#737686",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "surface": "#f7f9fb",
+                        "tertiary": "#943700",
+                        "on-background": "#191c1e",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-primary-container": "#eeefff",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#c3c6d7",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#bc4800",
+                        "on-tertiary": "#ffffff",
+                        "primary-container": "#2563eb",
+                        "on-tertiary-container": "#ffede6",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-dim": "#d8dadc",
+                        "on-primary-fixed": "#00174b",
+                        "surface-container": "#eceef0",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed": "#360f00",
+                        "surface-container-low": "#f2f4f6",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "surface-container-high": "#e6e8ea",
+                        "on-primary": "#ffffff",
+                        "surface-tint": "#0053db",
+                        "on-secondary-fixed": "#0b1c30",
+                        "inverse-primary": "#b4c5ff",
+                        "on-surface-variant": "#434655",
+                        "primary": "#004ac6",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-variant": "#e0e3e5",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "secondary-container": "#d0e1fb",
+                        "inverse-surface": "#2d3133",
+                        "on-secondary-container": "#54647a",
+                        "error": "#ba1a1a",
+                        "background": "#f7f9fb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "stack-lg": "32px",
+                        "stack-sm": "8px",
+                        "container-padding": "24px",
+                        "max-width-auth": "400px",
+                        "gutter": "16px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter", "sans-serif"],
+                        "body-sm": ["Inter", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "code-sm": ["JetBrains Mono", "monospace"],
+                        "headline-md": ["Inter", "sans-serif"],
+                        "label-caps": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "code-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md overflow-hidden flex flex-col h-screen">
+<!-- TopNavBar -->
+<nav class="bg-surface text-primary flex justify-between items-center w-full px-container-padding h-16 docked full-width top-0 sticky z-50 border-b border-outline-variant shadow-sm shrink-0">
+<div class="flex items-center">
+<span class="text-headline-md font-headline-md font-black text-primary">MiniShop</span>
+</div>
+<div class="flex-1 max-w-md mx-8">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 py-2 border border-outline-variant rounded font-body-sm text-body-sm bg-surface-container-lowest text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-shadow" placeholder="Search resources..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined cursor-pointer active:opacity-80 text-on-surface-variant hover:bg-surface-container-low transition-colors p-2 rounded-full" data-icon="notifications">notifications</button>
+<button class="material-symbols-outlined cursor-pointer active:opacity-80 text-on-surface-variant hover:bg-surface-container-low transition-colors p-2 rounded-full" data-icon="help">help</button>
+<div class="flex items-center gap-3 ml-2 pl-4 border-l border-outline-variant cursor-pointer group">
+<img class="w-8 h-8 rounded-full object-cover border border-outline-variant group-hover:border-primary transition-colors" data-alt="A small, professional avatar image of an e-commerce seller, rendered in a bright, clean lighting environment suitable for a minimalist dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeyUfcNKbsjN0PyMW4MaWBXpdhMGT5v4dYx7iubAUhKFIVEt5y_yRPNERULzpdQYAQDSfA9n3CkL9kqyLjdpVp77JW6V9qMq9QBci1OxnNR74_5J_DbDxhkPs9tNhIA3VhXwTwSCLNy-IHUWg0_CNpeYKxwb6XVDx3AH7NilJwi7_d6XrcLd179PvK0KY3TANLFjc7LfPNkHOk_oWO_dZoIjwR1k_I5h9zjNCeQac9dnhZzktrvy0"/>
+<span class="font-body-sm text-body-sm text-on-surface-variant group-hover:text-primary transition-colors">Logout</span>
+</div>
+</div>
+</nav>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar -->
+<aside class="bg-surface-container-low text-primary-fixed-dim h-full w-64 shrink-0 border-r border-outline-variant flex flex-col p-4 gap-2 z-40 overflow-y-auto hidden md:flex">
+<div class="mb-6 px-4 mt-2">
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface">Seller Center</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Manage your store</p>
+</div>
+<button class="w-full bg-primary text-on-primary font-body-sm text-body-sm font-semibold py-2.5 rounded-lg mb-4 hover:bg-surface-tint transition-colors shadow-sm">
+                Add New Product
+            </button>
+<nav class="flex flex-col gap-1 w-full">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 ease-in-out font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="person">person</span>
+                    Account Information
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 ease-in-out font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="lock">lock</span>
+                    Change Password
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 ease-in-out font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="storefront">storefront</span>
+                    My Products
+                </a>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-lg font-semibold transition-all duration-200 ease-in-out font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="inventory_2" data-weight="fill" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+                    Inventory
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 ease-in-out font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="shopping_basket">shopping_basket</span>
+                    Orders to Process
+                </a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 h-full overflow-y-auto p-stack-lg pb-16 bg-background">
+<div class="max-w-6xl mx-auto">
+<header class="mb-stack-lg">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Inventory Management</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Track stock movements and quickly import new items.</p>
+</header>
+<!-- Top Section: Quick Import Form (Level 1 Card) -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant p-container-padding mb-stack-lg transition-shadow hover:shadow-md">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-stack-md flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">add_circle</span>
+                        Quick Import Form
+                    </h2>
+<form class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-end">
+<div class="flex flex-col gap-base md:col-span-4">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Product</label>
+<div class="relative">
+<select class="w-full appearance-none border border-outline-variant rounded px-3 py-2.5 font-body-md text-body-md bg-transparent text-on-surface focus:border-primary focus:ring-2 focus:ring-primary-fixed outline-none transition-all">
+<option disabled="" selected="" value="">Select a product...</option>
+<option value="p1">Mechanical Keyboard v2</option>
+<option value="p2">Ergonomic Mouse</option>
+<option value="p3">USB-C Hub (7-in-1)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 pointer-events-none text-on-surface-variant">arrow_drop_down</span>
+</div>
+</div>
+<div class="flex flex-col gap-base md:col-span-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Import Quantity</label>
+<input class="w-full border border-outline-variant rounded px-3 py-2.5 font-body-md text-body-md bg-transparent text-on-surface focus:border-primary focus:ring-2 focus:ring-primary-fixed outline-none transition-all" min="1" placeholder="0" type="number"/>
+</div>
+<div class="flex flex-col gap-base md:col-span-4">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase">Note (Optional)</label>
+<input class="w-full border border-outline-variant rounded px-3 py-2.5 font-body-md text-body-md bg-transparent text-on-surface focus:border-primary focus:ring-2 focus:ring-primary-fixed outline-none transition-all" placeholder="e.g., Supplier Batch #4092" type="text"/>
+</div>
+<div class="md:col-span-2">
+<button class="w-full bg-primary text-on-primary font-body-md text-body-md py-2.5 rounded font-semibold hover:bg-surface-tint transition-colors h-[46px] flex items-center justify-center gap-2" type="button">
+<span class="material-symbols-outlined text-[20px]">save_alt</span>
+                                Import Stock
+                            </button>
+</div>
+</form>
+</div>
+<!-- Bottom Section: Stock Movements Table -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant overflow-hidden mb-stack-lg">
+<div class="px-container-padding py-4 border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">history</span>
+                            Stock Movements
+                        </h2>
+<button class="text-primary font-body-sm text-body-sm font-semibold hover:underline flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">download</span>
+                            Export CSV
+                        </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse whitespace-nowrap">
+<thead>
+<tr class="bg-surface">
+<th class="font-label-caps text-label-caps text-on-surface-variant px-6 py-4 uppercase border-b border-outline-variant">Time</th>
+<th class="font-label-caps text-label-caps text-on-surface-variant px-6 py-4 uppercase border-b border-outline-variant">Product</th>
+<th class="font-label-caps text-label-caps text-on-surface-variant px-6 py-4 uppercase border-b border-outline-variant">Type</th>
+<th class="font-label-caps text-label-caps text-on-surface-variant px-6 py-4 uppercase border-b border-outline-variant text-right">Change</th>
+<th class="font-label-caps text-label-caps text-on-surface-variant px-6 py-4 uppercase border-b border-outline-variant text-right">Resulting Stock</th>
+<th class="font-label-caps text-label-caps text-on-surface-variant px-6 py-4 uppercase border-b border-outline-variant">Notes</th>
+</tr>
+</thead>
+<tbody class="font-code-sm text-code-sm text-on-surface divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4 text-on-surface-variant">2023-10-27 14:30:12</td>
+<td class="px-6 py-4 font-body-sm text-body-sm font-medium">Mechanical Keyboard v2</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 bg-secondary-container text-on-secondary-container px-2 py-1 rounded text-[11px] font-bold tracking-wider">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+                                            IMPORT
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right font-medium text-primary">+150</td>
+<td class="px-6 py-4 text-right font-bold">342</td>
+<td class="px-6 py-4 text-on-surface-variant truncate max-w-[200px]" title="Supplier Batch #4092 received">Supplier Batch #4092 received</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4 text-on-surface-variant">2023-10-27 11:15:00</td>
+<td class="px-6 py-4 font-body-sm text-body-sm font-medium">Ergonomic Mouse</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 bg-error-container text-on-error-container px-2 py-1 rounded text-[11px] font-bold tracking-wider">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>
+                                            EXPORT
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right font-medium text-error">-4</td>
+<td class="px-6 py-4 text-right font-bold">18</td>
+<td class="px-6 py-4 text-on-surface-variant truncate max-w-[200px]" title="Order fulfillment #ORD-9912">Order fulfillment #ORD-9912</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4 text-on-surface-variant">2023-10-26 09:05:44</td>
+<td class="px-6 py-4 font-body-sm text-body-sm font-medium">USB-C Hub (7-in-1)</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 bg-error-container text-on-error-container px-2 py-1 rounded text-[11px] font-bold tracking-wider">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>
+                                            EXPORT
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right font-medium text-error">-1</td>
+<td class="px-6 py-4 text-right font-bold">89</td>
+<td class="px-6 py-4 text-on-surface-variant truncate max-w-[200px]" title="Damaged stock write-off">Damaged stock write-off</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4 text-on-surface-variant">2023-10-25 16:40:00</td>
+<td class="px-6 py-4 font-body-sm text-body-sm font-medium">Mechanical Keyboard v2</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 bg-secondary-container text-on-secondary-container px-2 py-1 rounded text-[11px] font-bold tracking-wider">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+                                            IMPORT
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right font-medium text-primary">+50</td>
+<td class="px-6 py-4 text-right font-bold">192</td>
+<td class="px-6 py-4 text-on-surface-variant truncate max-w-[200px]" title="Emergency restock from warehouse B">Emergency restock from warehouse B</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Debug Panel (Collapsible) -->
+<details class="bg-surface-container-low border border-outline-variant rounded-lg group shadow-sm">
+<summary class="font-code-sm text-code-sm text-on-surface-variant px-6 py-4 cursor-pointer select-none flex justify-between items-center outline-none focus:ring-2 focus:ring-primary-fixed rounded-lg bg-surface hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-2 font-semibold">
+<span class="material-symbols-outlined text-[18px]">bug_report</span>
+                            Debug Panel - Raw State JSON
+                        </div>
+<span class="material-symbols-outlined text-[20px] group-open:-rotate-180 transition-transform duration-300">expand_more</span>
+</summary>
+<div class="p-6 border-t border-outline-variant relative bg-surface-container-lowest">
+<button class="absolute top-6 right-6 text-on-surface-variant hover:text-primary transition-colors p-1 rounded hover:bg-surface-container-low" title="Copy to Clipboard">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+<pre class="font-code-sm text-code-sm text-on-surface overflow-x-auto whitespace-pre-wrap break-all pr-8 text-[12px] leading-relaxed">{
+  "inventoryState": {
+    "isSyncing": false,
+    "lastSyncTimestamp": 1698417012000,
+    "activeImportsQueue": 0,
+    "pagination": {
+      "currentPage": 1,
+      "itemsPerPage": 25,
+      "totalItems": 438
+    },
+    "recentMovementsCache": [
+      { 
+        "id": "mov_9812A", 
+        "type": "IMPORT", 
+        "qty": 150, 
+        "productId": "p1",
+        "timestamp": "2023-10-27T14:30:12Z",
+        "user_id": "usr_991"
+      }
+    ]
+  },
+  "formContext": {
+    "selectedProductId": null,
+    "isValid": false,
+    "errors": {}
+  }
+}</pre>
+</div>
+</details>
+</div>
+</main>
+</div>
+<!-- Footer / Token Status Bar -->
+<footer class="bg-inverse-surface text-inverse-on-surface font-code-sm text-code-sm fixed bottom-0 w-full h-8 flex items-center justify-between px-4 z-50 border-t border-outline-variant shadow-[0_-2px_4px_rgba(0,0,0,0.1)]">
+<div class="flex items-center gap-3">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-fixed opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary-fixed-dim"></span>
+</span>
+<span class="tracking-wide">JWT: Active | user@minishop.com | Role: Seller</span>
+</div>
+<div class="flex gap-6">
+<a class="text-surface-variant hover:text-primary-fixed-dim transition-colors hover:underline" href="#">Terms</a>
+<a class="text-surface-variant hover:text-primary-fixed-dim transition-colors hover:underline" href="#">Privacy</a>
+<a class="text-surface-variant hover:text-primary-fixed-dim transition-colors hover:underline" href="#">API Docs</a>
+</div>
+</footer>
+
+    <!-- Global MiniShop Interconnected Navigation & API Client -->
+    <script src="js/nav.js"></script>
+</body></html>

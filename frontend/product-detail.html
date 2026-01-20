@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chi tiết sản phẩm | MiniShop</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "secondary-fixed": "#d3e4fe",
+                "on-error-container": "#93000a",
+                "on-primary-fixed-variant": "#003ea8",
+                "on-secondary": "#ffffff",
+                "on-primary-fixed": "#00174b",
+                "outline-variant": "#c3c6d7",
+                "secondary-fixed-dim": "#b7c8e1",
+                "surface-tint": "#0053db",
+                "outline": "#737686",
+                "on-error": "#ffffff",
+                "tertiary-fixed-dim": "#ffb596",
+                "on-secondary-container": "#54647a",
+                "primary-fixed": "#dbe1ff",
+                "surface-container": "#eceef0",
+                "error": "#ba1a1a",
+                "tertiary-container": "#bc4800",
+                "on-secondary-fixed-variant": "#38485d",
+                "primary-container": "#2563eb",
+                "on-surface-variant": "#434655",
+                "inverse-primary": "#b4c5ff",
+                "on-background": "#191c1e",
+                "background": "#f7f9fb",
+                "surface-container-low": "#f2f4f6",
+                "inverse-on-surface": "#eff1f3",
+                "tertiary": "#943700",
+                "surface-bright": "#f7f9fb",
+                "on-tertiary-container": "#ffede6",
+                "surface-variant": "#e0e3e5",
+                "on-primary-container": "#eeefff",
+                "on-surface": "#191c1e",
+                "surface-dim": "#d8dadc",
+                "primary-fixed-dim": "#b4c5ff",
+                "secondary": "#505f76",
+                "on-primary": "#ffffff",
+                "tertiary-fixed": "#ffdbcd",
+                "on-tertiary-fixed-variant": "#7d2d00",
+                "inverse-surface": "#2d3133",
+                "error-container": "#ffdad6",
+                "surface-container-high": "#e6e8ea",
+                "surface-container-highest": "#e0e3e5",
+                "secondary-container": "#d0e1fb",
+                "surface-container-lowest": "#ffffff",
+                "on-secondary-fixed": "#0b1c30",
+                "surface": "#f7f9fb",
+                "primary": "#004ac6",
+                "on-tertiary-fixed": "#360f00",
+                "on-tertiary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "stack-sm": "8px",
+                    "max-width-auth": "400px",
+                    "stack-md": "16px",
+                    "stack-lg": "32px",
+                    "container-padding": "24px",
+                    "base": "4px"
+            },
+            "fontFamily": {
+                    "code-sm": ["JetBrains Mono"],
+                    "body-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "headline-md": ["Inter"]
+            },
+            "fontSize": {
+                    "code-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        /* Custom styles for utility-first minimalism */
+        body { background-color: #f7f9fb; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Toast Animation */
+        #toast {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+        #toast.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        /* Debug Panel Accordion */
+        .debug-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .debug-panel.open .debug-content {
+            max-height: 500px;
+        }
+        .debug-panel.open .chevron {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md text-body-md">
+<!-- Persistent Token Bar -->
+<div class="fixed top-0 left-0 w-full z-50 bg-slate-900 text-slate-50 px-gutter py-2 flex justify-between items-center text-label-caps font-label-caps">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-slate-500 animate-pulse"></span>
+<span>JWT: None</span>
+</div>
+<div>
+            Role: GUEST
+        </div>
+</div>
+<!-- TopAppBar -->
+<header class="sticky top-8 z-40 flex justify-between items-center w-full px-container-padding py-stack-md max-w-7xl mx-auto shadow-sm dark:shadow-none bg-surface-container-lowest dark:bg-inverse-surface mt-8">
+<div class="flex items-center gap-4">
+<h1 class="text-headline-md font-headline-md font-extrabold text-primary dark:text-inverse-primary">MiniShop</h1>
+</div>
+<div class="flex gap-4">
+<button class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant dark:hover:bg-surface-container-high transition-colors p-2 rounded-full active:scale-95 duration-100">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+</button>
+<button class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant dark:hover:bg-surface-container-high transition-colors p-2 rounded-full active:scale-95 duration-100">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow max-w-7xl mx-auto w-full px-container-padding py-stack-lg">
+<!-- Product Detail Layout (2 Columns) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-lg bg-surface-container-lowest shadow-sm rounded-lg p-container-padding">
+<!-- Left: Images -->
+<div class="flex flex-col gap-stack-sm">
+<div class="w-full aspect-square bg-surface-container rounded-DEFAULT overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A high-quality studio photograph of a premium, modern electronic gadget. The product is placed against a stark white, seamless background. Lighting is soft, high-key, and diffused, emphasizing the clean lines and minimalist design of the device. The overall aesthetic is sleek, professional, and suitable for a high-end e-commerce product page, maintaining a light-mode color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXCwGEp4juYkuXO2rH-oZnWTrcU8Zq3lnDM3oC-VxF060EaIFlf7hPau4ZcbXPGSaBLQJew8MU7Dm-hk1SDtFSMyd1AALr2FIJiMxCq6jjmLi0LqgljIfygHRRC14w_N81VxtnAVf_-Lh2aaEFjy_I53j3sEikNcIDBbFMI0iACWfu5HWlGCy0NRdi5wb-fB3Vl5fTfcUGu2u2hWI8sKqVIOivvrzZgs6Sda77SnMelzuzrtlbkR4"/>
+</div>
+<div class="grid grid-cols-4 gap-2">
+<div class="aspect-square bg-surface-container rounded-DEFAULT border-2 border-primary overflow-hidden cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="Thumbnail showing a close-up detail of the premium electronic gadget, focusing on textured materials and minimalist design features in a bright studio setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAIQu0P1cSASIk2JWAQKPaauZb-jLxIc-x09p6nDyrmnbWyiDAt8aNdurxSs6R-FLXsv7rowupzlIq3t4GCJY4Lpxl06cp8Xkugovq7ru9lgg3AxSf1Jsb5JqHoO2eJJeOHEWqOO4AvwWUCBgSAIr_mEPfGI-9dQZXBX83aHWQHrydO0NeDoCcIYCxg0xCMbSAWRRPUebcWoCnQyGvY-VXUMH1WXxFEXvE4tifVOoebUKxW-Or9Jg"/>
+</div>
+<div class="aspect-square bg-surface-container rounded-DEFAULT border border-outline-variant overflow-hidden cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
+<img class="w-full h-full object-cover" data-alt="Thumbnail showing the premium electronic gadget from a side angle, highlighting its slim profile in a bright studio setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnZvXIE7lAiwmYz86boC7lToNh_fWFna70RdpVXQs-9yOwmFSzb5AnsSfHz3IW661e7ORaJMhvM8wlaBiM15KGs6TPwlkZGhK5ltu45IIbItaf-XbOvQQuQkdBfwkeheK-rI8CmvrGs0IFIatCUQWpeicIeG_J2Qd037_x5-GtjHcH1ZfHYd5NLBk9_5SKI7qdaubb-YG3gaMGCk1H9w_WlBCgqGSVCq5pIy1SPNKs3fAaOXmhGhw"/>
+</div>
+<div class="aspect-square bg-surface-container rounded-DEFAULT border border-outline-variant overflow-hidden cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
+<img class="w-full h-full object-cover" data-alt="Thumbnail showing the back of the premium electronic gadget, revealing ports and clean finish in a bright studio setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0CYAG90SOtGcxnT9LFeIG_L2p6cOR9d6kN8h5qaUSbirmDFPmnBaZOp7cv9KOeHR4hwh_v9aVTlNXdVLY7Hv2hYTAYWvzMdGNVkrmFMePV-11HDLllBKnNfRVsFeeDt14Ly8LoQ2hbnKhpJGGlxmlTdmZSdLJJeGElp7NEqrhEES0dk_sod2wC9QkHHjQkpUZU0kfCx9ADwcQxSPqoNIYXUkmPIlMICZYJuBH0e0lx72lbYqyh_M"/>
+</div>
+<div class="aspect-square bg-surface-container rounded-DEFAULT border border-outline-variant overflow-hidden cursor-pointer opacity-70 hover:opacity-100 transition-opacity flex items-center justify-center bg-surface-container-low text-on-surface-variant">
+<span class="material-symbols-outlined">add</span>
+</div>
+</div>
+</div>
+<!-- Right: Details -->
+<div class="flex flex-col gap-stack-md">
+<div class="flex flex-col gap-1">
+<span class="text-label-caps font-label-caps text-secondary">ĐIỆN TỬ</span>
+<h2 class="text-headline-lg font-headline-lg text-on-surface">Tai nghe Chống ồn Không dây Pro</h2>
+<div class="flex items-center gap-2">
+<div class="flex text-tertiary-container text-sm">
+<span class="material-symbols-outlined fill text-sm">star</span>
+<span class="material-symbols-outlined fill text-sm">star</span>
+<span class="material-symbols-outlined fill text-sm">star</span>
+<span class="material-symbols-outlined fill text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star_half</span>
+</div>
+<span class="text-body-sm font-body-sm text-on-surface-variant">(124 đánh giá)</span>
+</div>
+</div>
+<div class="py-stack-sm border-y border-outline-variant flex flex-col gap-2">
+<div class="text-[32px] leading-tight font-bold text-primary">3.490.000 VNĐ</div>
+<div>
+<span class="inline-flex items-center px-2 py-1 rounded-DEFAULT bg-emerald-100 text-emerald-800 text-label-caps font-label-caps">
+                            Còn hàng
+                        </span>
+</div>
+</div>
+<!-- Quantity & Actions -->
+<div class="flex flex-col gap-stack-sm mt-4">
+<label class="text-body-sm font-body-sm font-semibold text-on-surface">Số lượng</label>
+<div class="flex items-center gap-4">
+<div class="flex items-center border border-outline-variant rounded-DEFAULT w-min">
+<button class="px-3 py-2 text-on-surface hover:bg-surface-variant transition-colors rounded-l-DEFAULT">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<input class="w-12 text-center border-0 p-0 text-body-md font-body-md focus:ring-0 focus:outline-none bg-transparent" readonly="" type="text" value="1"/>
+<button class="px-3 py-2 text-on-surface hover:bg-surface-variant transition-colors rounded-r-DEFAULT">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+</div>
+<button class="mt-4 w-full bg-primary text-on-primary py-3 rounded-DEFAULT text-body-md font-body-md font-semibold hover:bg-surface-tint transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2 flex justify-center items-center gap-2" id="addToCartBtn">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+                        Thêm vào giỏ hàng
+                    </button>
+</div>
+<!-- Description -->
+<div class="mt-stack-md flex flex-col gap-2">
+<h3 class="text-body-md font-body-md font-semibold text-on-surface">Mô tả sản phẩm</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant leading-relaxed">
+                        Trải nghiệm âm thanh tuyệt đỉnh với công nghệ chống ồn chủ động thế hệ mới. Thiết kế công thái học mang lại sự thoải mái tối đa cho cả ngày dài sử dụng. Thời lượng pin lên đến 30 giờ.
+                    </p>
+</div>
+</div>
+</div>
+<!-- Debug Panel -->
+<div class="mt-stack-lg border border-slate-300 rounded-DEFAULT bg-slate-100 debug-panel" id="debugPanel">
+<div class="p-4 border-b border-slate-300 flex justify-between items-center cursor-pointer hover:bg-slate-200 transition-colors" onclick="document.getElementById('debugPanel').classList.toggle('open')">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-500">bug_report</span>
+<h3 class="text-code-sm font-code-sm font-semibold text-slate-700">GET /products/123 Response</h3>
+</div>
+<span class="material-symbols-outlined text-slate-500 chevron transition-transform">expand_more</span>
+</div>
+<div class="debug-content bg-white p-4">
+<div class="flex justify-end mb-2">
+<button class="text-slate-400 hover:text-slate-600 transition-colors" title="Copy to clipboard">
+<span class="material-symbols-outlined text-sm">content_copy</span>
+</button>
+</div>
+<pre class="text-code-sm font-code-sm text-slate-800 overflow-x-auto"><code>{
+  "id": "123",
+  "name": "Tai nghe Chống ồn Không dây Pro",
+  "price": 3490000,
+  "currency": "VND",
+  "stock_status": "IN_STOCK",
+  "stock_quantity": 45,
+  "category": "ELECTRONICS",
+  "rating": 4.5,
+  "reviews_count": 124,
+  "description": "Trải nghiệm âm thanh tuyệt đỉnh...",
+  "images": [
+    "https://api.minishop.com/images/prod_123_main.jpg",
+    "https://api.minishop.com/images/prod_123_thumb1.jpg"
+  ]
+}</code></pre>
+</div>
+</div>
+</main>
+<!-- Toast Notification -->
+<div class="fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-error text-on-error px-4 py-3 rounded-DEFAULT shadow-lg flex items-center gap-2 z-50 text-body-sm font-body-sm" id="toast">
+<span class="material-symbols-outlined" data-icon="error">error</span>
+<span>Vui lòng đăng nhập để mua hàng</span>
+</div>
+<!-- Footer -->
+<footer class="fixed bottom-0 left-0 w-full z-50 flex justify-between items-center px-gutter py-2 bg-inverse-surface dark:bg-surface-container-highest text-surface-container-lowest dark:text-on-surface">
+<div class="text-label-caps font-label-caps">
+            JWT: None | Role: GUEST
+        </div>
+<div class="flex gap-4">
+<a class="text-surface-dim px-2 hover:text-primary-fixed-dim transition-colors text-label-caps font-label-caps" href="#">View Token</a>
+<a class="text-surface-dim px-2 hover:text-primary-fixed-dim transition-colors text-label-caps font-label-caps" href="#">Login</a>
+</div>
+</footer>
+<script>
+        document.getElementById('addToCartBtn').addEventListener('click', function() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        });
+    </script>
+
+    <!-- Global MiniShop Interconnected Navigation & API Client -->
+    <script src="js/nav.js"></script>
+</body></html>

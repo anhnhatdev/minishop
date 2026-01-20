@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Đăng ký - MiniShop</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#f7f9fb",
+                        "on-tertiary-container": "#ffede6",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "tertiary-fixed": "#ffdbcd",
+                        "error": "#ba1a1a",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#004ac6",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-container-high": "#e6e8ea",
+                        "on-surface": "#191c1e",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "inverse-on-surface": "#eff1f3",
+                        "inverse-surface": "#2d3133",
+                        "on-background": "#191c1e",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#dbe1ff",
+                        "inverse-primary": "#b4c5ff",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-surface-variant": "#434655",
+                        "secondary-container": "#d0e1fb",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#54647a",
+                        "surface-dim": "#d8dadc",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f7f9fb",
+                        "surface": "#f7f9fb",
+                        "on-tertiary-fixed": "#360f00",
+                        "tertiary-container": "#bc4800",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "surface-variant": "#e0e3e5",
+                        "secondary": "#505f76",
+                        "on-primary-container": "#eeefff",
+                        "surface-tint": "#0053db",
+                        "on-primary-fixed": "#00174b",
+                        "tertiary": "#943700",
+                        "on-secondary": "#ffffff",
+                        "surface-container": "#eceef0",
+                        "primary-container": "#2563eb",
+                        "surface-container-highest": "#e0e3e5",
+                        "outline": "#737686",
+                        "secondary-fixed": "#d3e4fe",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#c3c6d7",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container-lowest": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "stack-sm": "8px",
+                        "base": "4px",
+                        "stack-lg": "32px",
+                        "container-padding": "24px",
+                        "gutter": "16px",
+                        "max-width-auth": "400px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "code-sm": ["JetBrains Mono"],
+                        "headline-md": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "code-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #f8fafc; } /* Fallback slate-50 equivalent */
+        .auth-card {
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+        @media (max-width: 639px) {
+            .auth-card {
+                box-shadow: none;
+                border: none;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col justify-center items-center font-body-md py-stack-lg sm:py-0">
+<!-- Auth Card -->
+<main class="w-full sm:max-w-max-width-auth sm:mx-auto">
+<div class="auth-card bg-surface-container-lowest sm:rounded-lg sm:border sm:border-surface-variant p-container-padding flex flex-col gap-stack-md w-full">
+<!-- Header -->
+<div class="text-center mb-stack-sm">
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">MiniShop</h1>
+<h2 class="font-headline-md text-headline-md text-on-surface mt-base">Đăng ký tài khoản</h2>
+</div>
+<!-- Error Banner -->
+<div class="bg-error-container text-on-error-container p-stack-sm rounded border border-error-container flex items-center gap-2">
+<span class="material-symbols-outlined text-error text-[20px]" data-icon="error">error</span>
+<span class="font-body-sm text-body-sm text-error">Email đã được sử dụng</span>
+</div>
+<!-- Form -->
+<form class="flex flex-col gap-stack-md">
+<!-- Full Name -->
+<div class="flex flex-col gap-base">
+<label class="font-body-sm text-body-sm font-semibold text-on-surface" for="fullname">Full Name</label>
+<input class="border border-outline-variant rounded px-3 py-2 bg-surface-container-lowest focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-fixed-dim transition-all text-on-surface font-body-md text-body-md w-full" id="fullname" placeholder="Nguyễn Văn A" type="text"/>
+</div>
+<!-- Email -->
+<div class="flex flex-col gap-base">
+<label class="font-body-sm text-body-sm font-semibold text-on-surface" for="email">Email</label>
+<input class="border border-error rounded px-3 py-2 bg-surface-container-lowest focus:outline-none focus:border-error focus:ring-2 focus:ring-error-container transition-all text-on-surface font-body-md text-body-md w-full" id="email" placeholder="you@example.com" type="email" value="test@minishop.com"/>
+<span class="font-body-sm text-body-sm text-error">Vui lòng sử dụng email khác.</span>
+</div>
+<!-- Phone -->
+<div class="flex flex-col gap-base">
+<label class="font-body-sm text-body-sm font-semibold text-on-surface flex justify-between" for="phone">
+                        Phone Number 
+                        <span class="text-on-surface-variant font-normal">tuỳ chọn</span>
+</label>
+<input class="border border-outline-variant rounded px-3 py-2 bg-surface-container-lowest focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-fixed-dim transition-all text-on-surface font-body-md text-body-md w-full" id="phone" placeholder="0901234567" type="tel"/>
+</div>
+<!-- Password -->
+<div class="flex flex-col gap-base relative">
+<label class="font-body-sm text-body-sm font-semibold text-on-surface" for="password">Password</label>
+<div class="relative w-full">
+<input class="border border-outline-variant rounded px-3 py-2 bg-surface-container-lowest focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-fixed-dim transition-all text-on-surface font-body-md text-body-md w-full pr-10" id="password" placeholder="Tối thiểu 8 ký tự, có chữ hoa và số" type="password"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility_off">visibility_off</span>
+</button>
+</div>
+</div>
+<!-- Confirm Password -->
+<div class="flex flex-col gap-base">
+<label class="font-body-sm text-body-sm font-semibold text-on-surface" for="confirm_password">Confirm Password</label>
+<input class="border border-outline-variant rounded px-3 py-2 bg-surface-container-lowest focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-fixed-dim transition-all text-on-surface font-body-md text-body-md w-full" id="confirm_password" placeholder="Nhập lại mật khẩu" type="password"/>
+</div>
+<!-- Actions -->
+<div class="mt-stack-sm flex flex-col gap-stack-sm">
+<!-- Loading state demo -->
+<button class="w-full bg-primary text-on-primary rounded py-2 px-4 font-headline-md text-headline-md flex justify-center items-center h-11 hover:bg-on-primary-fixed-variant transition-colors opacity-80 cursor-not-allowed" type="button">
+<span class="material-symbols-outlined animate-spin" data-icon="progress_activity">progress_activity</span>
+</button>
+<!-- Normal state (hidden for this prompt's requirement, but good for reference) -->
+<!-- <button type="submit" class="w-full bg-primary text-on-primary rounded py-2 px-4 font-headline-md text-headline-md flex justify-center items-center h-11 hover:bg-on-primary-fixed-variant transition-colors">Đăng ký</button> -->
+</div>
+</form>
+<div class="text-center mt-base">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Đã có tài khoản?</span>
+<a class="font-body-sm text-body-sm text-primary hover:underline font-semibold ml-1" href="#">Đăng nhập ngay</a>
+</div>
+</div>
+<!-- Debug Info Panel -->
+<details class="mt-stack-md border border-outline-variant bg-surface-container-low rounded-lg overflow-hidden w-full group">
+<summary class="bg-surface-container font-body-sm text-body-sm font-semibold p-3 cursor-pointer flex items-center justify-between hover:bg-surface-container-high transition-colors text-on-surface">
+                Debug Info (Raw JSON)
+                <span class="material-symbols-outlined group-open:rotate-180 transition-transform" data-icon="expand_more">expand_more</span>
+</summary>
+<div class="p-3 bg-surface-container-low relative">
+<button class="absolute top-3 right-3 text-on-surface-variant hover:text-primary p-1 bg-surface-container-highest rounded transition-colors" title="Copy to clipboard" type="button">
+<span class="material-symbols-outlined text-[16px]" data-icon="content_copy">content_copy</span>
+</button>
+<pre class="font-code-sm text-code-sm text-on-surface-variant overflow-x-auto m-0 p-0 leading-tight">{
+  "timestamp": "2023-10-27T10:15:30Z",
+  "status": 409,
+  "error": "Conflict",
+  "message": "Email address already in use.",
+  "path": "/api/v1/auth/register",
+  "requestId": "req_8x9f2m4n5"
+}</pre>
+</div>
+</details>
+</main>
+<!-- Token Status Bar -->
+<div class="fixed bottom-0 w-full z-50 bg-inverse-surface border-t border-outline flex justify-between items-center px-container-padding py-2 h-10">
+<div class="flex items-center gap-2 text-inverse-on-surface font-body-sm text-body-sm">
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+<span>No Active Session</span>
+</div>
+<span class="font-code-sm text-code-sm text-outline">MiniShop Utility v2.1.0</span>
+</div>
+
+    <!-- Global MiniShop Interconnected Navigation & API Client -->
+    <script src="js/nav.js"></script>
+</body></html>
