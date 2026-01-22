@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Seller Product Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-fixed-variant": "#7d2d00",
+                      "on-surface": "#191c1e",
+                      "on-secondary": "#ffffff",
+                      "surface-bright": "#f7f9fb",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary": "#505f76",
+                      "tertiary-fixed": "#ffdbcd",
+                      "inverse-on-surface": "#eff1f3",
+                      "outline": "#737686",
+                      "on-primary-fixed-variant": "#003ea8",
+                      "surface": "#f7f9fb",
+                      "tertiary": "#943700",
+                      "on-background": "#191c1e",
+                      "secondary-fixed": "#d3e4fe",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "on-primary-container": "#eeefff",
+                      "error-container": "#ffdad6",
+                      "outline-variant": "#c3c6d7",
+                      "on-error-container": "#93000a",
+                      "tertiary-container": "#bc4800",
+                      "on-tertiary": "#ffffff",
+                      "primary-container": "#2563eb",
+                      "on-tertiary-container": "#ffede6",
+                      "primary-fixed": "#dbe1ff",
+                      "surface-dim": "#d8dadc",
+                      "on-primary-fixed": "#00174b",
+                      "surface-container": "#eceef0",
+                      "on-error": "#ffffff",
+                      "on-tertiary-fixed": "#360f00",
+                      "surface-container-low": "#f2f4f6",
+                      "tertiary-fixed-dim": "#ffb596",
+                      "surface-container-high": "#e6e8ea",
+                      "on-primary": "#ffffff",
+                      "surface-tint": "#0053db",
+                      "on-secondary-fixed": "#0b1c30",
+                      "inverse-primary": "#b4c5ff",
+                      "on-surface-variant": "#434655",
+                      "primary": "#004ac6",
+                      "surface-container-highest": "#e0e3e5",
+                      "surface-variant": "#e0e3e5",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "primary-fixed-dim": "#b4c5ff",
+                      "secondary-container": "#d0e1fb",
+                      "inverse-surface": "#2d3133",
+                      "on-secondary-container": "#54647a",
+                      "error": "#ba1a1a",
+                      "background": "#f7f9fb"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "stack-md": "16px",
+                      "stack-lg": "32px",
+                      "stack-sm": "8px",
+                      "container-padding": "24px",
+                      "max-width-auth": "400px",
+                      "gutter": "16px",
+                      "base": "4px"
+              },
+              "fontFamily": {
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "code-sm": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "code-sm": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        /* Utility overrides or specific required styles */
+        body {
+            background-color: theme('colors.slate.50'); /* Level 0 Background */
+            color: theme('colors.on-background');
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col font-body-md text-body-md bg-slate-50">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-surface-dim docked full-width top-0 sticky z-50 border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none flex justify-between items-center w-full px-container-padding h-16">
+<div class="flex items-center gap-4">
+<!-- Search on left -->
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none w-64 text-body-sm font-body-sm" placeholder="Search..." type="text"/>
+</div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 font-headline-md text-headline-md font-black text-primary dark:text-primary-fixed">
+            MiniShop
+        </div>
+<div class="flex items-center gap-4 text-on-surface-variant dark:text-on-surface-variant">
+<button aria-label="notifications" class="hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors cursor-pointer active:opacity-80 p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button aria-label="help" class="hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors cursor-pointer active:opacity-80 p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="h-8 w-px bg-outline-variant mx-2 hidden sm:block"></div>
+<button class="hidden sm:flex items-center gap-2 hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors cursor-pointer active:opacity-80 p-2 rounded">
+<span class="font-body-sm text-body-sm">Logout</span>
+</button>
+<img alt="Seller Avatar" class="w-8 h-8 rounded-full border border-outline-variant cursor-pointer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLFYBiIrwkzPQePgT1ZB0N3KWFucFunckYXfspJVCJ25z3W36oQUU7jNe4DOi9Uo7OPjADAAPdsdMrs_FRf73eBn4oqAky2W1B0g_AtmDsW8rH5Wo4Pcdq3Qwloa0gOyMbkLAqqzWQk0tC0j4_BGyHnJ3K_Cacw06d-grCPb8CQ0VJ-Hp0BVi4JO8IWZU52tRvHRgmm3sCH_m3mHn-a9lk19Sad1FgR6OkzZwVBvRvZ4ELaT2a2WU"/>
+</div>
+</header>
+<div class="flex flex-1 pt-16"> <!-- Padding top for sticky header -->
+<!-- SideNavBar (Hidden on Mobile) -->
+<aside class="hidden md:flex h-screen w-64 fixed left-0 top-16 bg-surface-container-low dark:bg-surface-container-lowest border-r border-outline-variant dark:border-outline flat no shadows flex-col p-4 gap-2 z-40">
+<div class="mb-6 px-4">
+<h2 class="text-headline-md font-headline-md font-black text-primary">Seller Center</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Manage your store</p>
+</div>
+<button class="w-full bg-primary text-on-primary py-2 px-4 rounded hover:opacity-90 transition-opacity mb-4 font-body-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                Add New Product
+            </button>
+<nav class="flex flex-col gap-1 w-full">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-body-sm text-body-sm">Account Information</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="lock">lock</span>
+<span class="font-body-sm text-body-sm">Change Password</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed font-semibold transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span class="font-body-sm text-body-sm">My Products</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-body-sm text-body-sm">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_basket">shopping_basket</span>
+<span class="font-body-sm text-body-sm">Orders to Process</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 p-container-padding pb-32 flex flex-col gap-stack-lg min-h-screen">
+<!-- 403 Forbidden Debug Banner Simulation -->
+<div class="w-full bg-error-container text-on-error-container p-4 rounded-lg border border-[#ffb4ab] flex items-start gap-3">
+<span class="material-symbols-outlined text-error mt-0.5">error</span>
+<div>
+<h3 class="font-headline-sm font-semibold mb-1">Authorization Error Simulation</h3>
+<p class="font-body-sm mb-2 opacity-90">Simulated 403 Forbidden response. This banner demonstrates how vertical/horizontal authorization testing feedback appears.</p>
+<code class="font-code-sm bg-white/50 px-2 py-1 rounded block mt-2 text-error">{"status": 403, "error": "Forbidden", "message": "You do not have permission to modify product ID: 8912"}</code>
+</div>
+<button class="ml-auto text-on-error-container hover:bg-black/5 p-1 rounded-full">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Page Header -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-background">Products</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Manage your store catalog and inventory.</p>
+</div>
+<button class="bg-primary hover:bg-surface-tint text-on-primary px-4 py-2 rounded shadow-sm transition-colors flex items-center justify-center gap-2 font-body-sm self-start sm:self-auto">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                    Add Product
+                </button>
+</div>
+<!-- Data Table Card (Level 1) -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant shadow-[0_4px_6px_-1px_rgb(0,0,0,0.1)] overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant font-body-sm text-on-surface-variant">
+<th class="p-4 font-semibold w-16">Image</th>
+<th class="p-4 font-semibold">Product Name</th>
+<th class="p-4 font-semibold">Category</th>
+<th class="p-4 font-semibold text-right">Price</th>
+<th class="p-4 font-semibold text-right">Stock</th>
+<th class="p-4 font-semibold">Status</th>
+<th class="p-4 font-semibold text-center w-24">Actions</th>
+</tr>
+</thead>
+<tbody class="font-body-sm divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-bright transition-colors group">
+<td class="p-4">
+<img class="w-10 h-10 rounded object-cover border border-outline-variant" data-alt="A clean, minimalist product shot of a sleek wireless mouse on a pure white background, softly lit to highlight its ergonomic curves and matte finish." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9LXkupztlUmD769SPswxKQ2m_BjaJNfuGrLn8hikMSL9SdqRPI8eiRpT7rHI0KR_737sch6MbLmCKBzSjS58OD4kTahJtHmLNrM-vMTlhLGvBVpyABAPh1NoKGWvIwI57cqiYvryTCrgls3Q01Wi3CJBZNw8Fy0Db3bV1SkuG9hTBlNY_0Ej4vX-pqWcRTHtElOmnGMTBDpcogvP20EdCpBIstfZM95IGMNgiIXNQpwHzGGbwYq0"/>
+</td>
+<td class="p-4 font-medium text-on-surface">Ergo Wireless Mouse</td>
+<td class="p-4 text-on-surface-variant">Electronics</td>
+<td class="p-4 text-right">$49.99</td>
+<td class="p-4 text-right">
+<span class="inline-flex items-center gap-1">
+                                        142
+                                    </span>
+</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-[#e8f5e9] text-[#2e7d32] text-[11px] font-bold tracking-wide uppercase">Active</span>
+</td>
+<td class="p-4 text-center">
+<div class="flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-secondary hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="text-secondary hover:text-error transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-bright transition-colors group">
+<td class="p-4">
+<img class="w-10 h-10 rounded object-cover border border-outline-variant" data-alt="A crisp, well-lit studio shot of a minimalist mechanical keyboard with blank grey keycaps on a stark white surface, top-down view." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9bG-A5bBIVliToC4IzHxc5nBzAQ6GNWdARvVx_xx7OO5Mc9ihQR0qAibjipJk4w4FXWmmolKXufbToG0FslSTu5Y_c5i_4unZWtOrCpEFuE0Yp_0dpZ4_XaveCpmml8AocUL17Nad7OaomZCGuk8Zx-dIkI8U3VkEfQcJgqKAUfAU-U4OyAo1YIV38nYR-ej8gc9Iaij1a5pdENFy_KYYS1XUxYt4C3e7ENB5Dj97JT-bvdYZ-t8"/>
+</td>
+<td class="p-4 font-medium text-on-surface">Mechanical Keyboard v2</td>
+<td class="p-4 text-on-surface-variant">Electronics</td>
+<td class="p-4 text-right">$129.00</td>
+<td class="p-4 text-right text-error font-medium">
+                                    0
+                                </td>
+<td class="p-4">
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-error-container text-on-error-container text-[11px] font-bold tracking-wide uppercase">Out of Stock</span>
+</td>
+<td class="p-4 text-center">
+<div class="flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-secondary hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="text-secondary hover:text-error transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-bright transition-colors group">
+<td class="p-4">
+<div class="w-10 h-10 rounded bg-surface-container-high border border-outline-variant flex items-center justify-center text-outline">
+<span class="material-symbols-outlined text-[20px]">image</span>
+</div>
+</td>
+<td class="p-4 font-medium text-on-surface">USB-C Hub Hub</td>
+<td class="p-4 text-on-surface-variant">Accessories</td>
+<td class="p-4 text-right">$34.50</td>
+<td class="p-4 text-right">
+                                    56
+                                </td>
+<td class="p-4">
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-surface-container-highest text-on-surface-variant text-[11px] font-bold tracking-wide uppercase">Draft</span>
+</td>
+<td class="p-4 text-center">
+<div class="flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-secondary hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="text-secondary hover:text-error transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="border-t border-outline-variant p-4 flex items-center justify-between bg-surface-container-lowest">
+<span class="font-body-sm text-on-surface-variant">Showing 1 to 3 of 3 entries</span>
+<div class="flex gap-1">
+<button class="p-1 rounded border border-outline-variant text-outline-variant cursor-not-allowed"><span class="material-symbols-outlined text-[18px]">chevron_left</span></button>
+<button class="p-1 rounded border border-outline-variant text-on-surface hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-[18px]">chevron_right</span></button>
+</div>
+</div>
+</div>
+<!-- Debug Panel (Collapsible) -->
+<details class="bg-slate-100 border border-outline-variant rounded-lg overflow-hidden group mt-auto">
+<summary class="font-body-sm font-semibold p-3 cursor-pointer select-none flex items-center justify-between hover:bg-slate-200 transition-colors text-on-surface">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] group-open:rotate-90 transition-transform">chevron_right</span>
+                        Debug: GET /products?sellerId=me
+                    </div>
+<span class="material-symbols-outlined text-[16px] text-secondary hover:text-primary" title="Copy to Clipboard">content_copy</span>
+</summary>
+<div class="p-4 border-t border-outline-variant overflow-x-auto bg-slate-50">
+<pre class="font-code-sm text-code-sm text-on-surface-variant"><code>{
+  "request": {
+    "endpoint": "/api/v1/products",
+    "method": "GET",
+    "params": {
+      "sellerId": "me"
+    },
+    "headers": {
+      "Authorization": "Bearer eyJhbG..."
+    }
+  },
+  "response": {
+    "status": 200,
+    "count": 3,
+    "data": [
+      { "id": "p_101", "name": "Ergo Wireless Mouse", "stock": 142, "status": "active" },
+      { "id": "p_102", "name": "Mechanical Keyboard v2", "stock": 0, "status": "out_of_stock" },
+      { "id": "p_103", "name": "USB-C Hub Hub", "stock": 56, "status": "draft" }
+    ]
+  }
+}</code></pre>
+</div>
+</details>
+</main>
+</div>
+<!-- Footer / Token Status Bar -->
+<footer class="bg-inverse-surface dark:bg-surface-container-highest text-inverse-on-surface dark:text-on-surface font-code-sm text-code-sm text-label-caps font-label-caps fixed bottom-0 w-full h-8 flex items-center border-t border-outline-variant flat flex justify-between px-4 w-full z-50">
+<div class="flex items-center gap-2 text-primary-fixed">
+<div class="w-2 h-2 rounded-full bg-[#4ade80] animate-pulse"></div>
+            🔑 seller@example.com | Role: SELLER
+        </div>
+<div class="flex gap-4">
+<a class="text-surface-variant hover:text-primary-fixed-dim transition-opacity" href="#">Terms</a>
+<a class="text-surface-variant hover:text-primary-fixed-dim transition-opacity" href="#">Privacy</a>
+<a class="text-surface-variant hover:text-primary-fixed-dim transition-opacity" href="#">API Docs</a>
+</div>
+</footer>
+
+    <!-- Global MiniShop Interconnected Navigation & API Client -->
+    <script src="js/nav.js"></script>
+</body></html>

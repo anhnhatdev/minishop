@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Manual Inventory Adjustment - MiniShop Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "surface-dim": "#d8dadc",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#b4c5ff",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "tertiary-container": "#bc4800",
+                        "surface-variant": "#e0e3e5",
+                        "surface-tint": "#0053db",
+                        "inverse-on-surface": "#eff1f3",
+                        "tertiary": "#943700",
+                        "surface": "#f7f9fb",
+                        "on-error-container": "#93000a",
+                        "primary": "#004ac6",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#eeefff",
+                        "primary-fixed": "#dbe1ff",
+                        "on-primary": "#ffffff",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-container-high": "#e6e8ea",
+                        "outline": "#737686",
+                        "surface-bright": "#f7f9fb",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#eceef0",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "secondary-fixed": "#d3e4fe",
+                        "inverse-surface": "#2d3133",
+                        "on-secondary-container": "#54647a",
+                        "on-background": "#191c1e",
+                        "secondary-container": "#d0e1fb",
+                        "on-tertiary-fixed": "#360f00",
+                        "on-tertiary-container": "#ffede6",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "surface-container-low": "#f2f4f6",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-surface": "#191c1e",
+                        "on-primary-fixed": "#00174b",
+                        "surface-container-highest": "#e0e3e5",
+                        "outline-variant": "#c3c6d7",
+                        "primary-container": "#2563eb",
+                        "on-surface-variant": "#434655",
+                        "on-secondary-fixed": "#0b1c30",
+                        "secondary": "#505f76",
+                        "tertiary-fixed": "#ffdbcd",
+                        "background": "#f7f9fb",
+                        "on-tertiary-fixed-variant": "#7d2d00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-lg": "32px",
+                        "container-padding": "24px",
+                        "stack-sm": "8px",
+                        "base": "4px",
+                        "max-width-auth": "400px",
+                        "stack-md": "16px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "code-sm": ["JetBrains Mono"],
+                        "label-caps": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "code-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline docked full-width top-0 sticky z-50 flex justify-between items-center w-full px-container-padding py-stack-sm">
+<div class="flex items-center gap-stack-md">
+<span class="font-headline-lg text-headline-lg font-bold text-primary dark:text-inverse-primary">MiniShop Admin</span>
+</div>
+<div class="flex items-center gap-stack-md">
+<div class="hidden md:flex gap-stack-md">
+<span class="material-symbols-outlined text-primary cursor-pointer active:opacity-80">account_circle</span>
+<span class="material-symbols-outlined text-primary cursor-pointer active:opacity-80">settings</span>
+<span class="material-symbols-outlined text-primary cursor-pointer active:opacity-80">logout</span>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar -->
+<aside class="bg-surface-container-low dark:bg-surface-container-lowest border-r border-outline-variant dark:border-outline h-screen w-64 fixed left-0 top-0 flex flex-col hidden md:flex pt-16 z-40">
+<div class="flex flex-col h-full p-stack-md space-y-stack-sm mt-8">
+<div class="mb-stack-lg">
+<h2 class="font-headline-md text-headline-md text-primary">MiniShop HQ</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">System Administrator</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 p-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg hover:transition-all duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body-md text-body-md">User Management</span>
+</a>
+<a class="flex items-center gap-3 p-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg hover:transition-all duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined">category</span>
+<span class="font-body-md text-body-md">Categories</span>
+</a>
+<a class="flex items-center gap-3 p-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg hover:transition-all duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-body-md text-body-md">Global Orders</span>
+</a>
+<a class="flex items-center gap-3 p-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg hover:transition-all duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-body-md text-body-md">Notification Logs</span>
+</a>
+<a class="flex items-center gap-3 p-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-lg hover:transition-all duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-body-md text-body-md">Payment Logs</span>
+</a>
+<a class="flex items-center gap-3 p-2 bg-secondary-container dark:bg-secondary-fixed-dim text-on-secondary-container dark:text-on-secondary-fixed font-bold rounded-lg hover:transition-all duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined">edit_calendar</span>
+<span class="font-body-md text-body-md">Inventory Adjustments</span>
+</a>
+</nav>
+<div class="mt-auto pt-stack-md border-t border-outline-variant">
+<button class="w-full bg-primary text-on-primary py-2 rounded-lg font-body-md font-bold mb-stack-sm active:scale-95 transition-transform">New Entry</button>
+<a class="flex items-center gap-3 p-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-body-md text-body-md">Debug Console</span>
+</a>
+<a class="flex items-center gap-3 p-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="font-body-md text-body-md">Support</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 p-container-padding mb-10 overflow-y-auto">
+<div class="max-w-4xl mx-auto space-y-stack-lg">
+<!-- Header -->
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-background">Inventory Adjustments</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Manual stock correction and global history logs.</p>
+</div>
+<!-- Adjustment Form Panel (Level 1 Elevation) -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0_4px_6px_-1px_rgb(0,0,0,0.1)] p-container-padding border border-surface-container">
+<h2 class="font-headline-md text-headline-md text-on-background mb-stack-md">New Adjustment</h2>
+<form class="space-y-stack-md">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-md">
+<div class="flex flex-col">
+<label class="font-label-caps text-label-caps text-on-surface-variant mb-1" for="product-select">Select Product</label>
+<select class="w-full border border-outline-variant rounded-lg p-2 font-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-surface-container-lowest" id="product-select">
+<option disabled="" selected="" value="">Search product SKU or Name...</option>
+<option value="p1">SKU-8921: Premium Wireless Headphones</option>
+<option value="p2">SKU-3345: Ergonomic Office Chair</option>
+<option value="p3">SKU-1102: Mechanical Keyboard</option>
+</select>
+</div>
+<div class="flex flex-col">
+<label class="font-label-caps text-label-caps text-on-surface-variant mb-1">Current Stock</label>
+<input class="w-full border border-outline-variant rounded-lg p-2 font-code-sm text-on-surface-variant bg-surface-container cursor-not-allowed" disabled="" type="text" value="--"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-md">
+<div class="flex flex-col">
+<label class="font-label-caps text-label-caps text-on-surface-variant mb-1" for="quantity-change">Quantity Change (Delta)</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-on-surface-variant font-code-sm">±</span>
+<input class="w-full pl-8 border border-outline-variant rounded-lg p-2 font-code-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" id="quantity-change" placeholder="e.g. -5 or +10" type="number"/>
+</div>
+<p class="text-[11px] text-on-surface-variant mt-1">Use negative values for deductions.</p>
+</div>
+<div class="flex flex-col">
+<label class="font-label-caps text-label-caps text-on-surface-variant mb-1" for="reason-note">Required Note</label>
+<input class="w-full border border-outline-variant rounded-lg p-2 font-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" id="reason-note" placeholder="Reason for adjustment..." type="text"/>
+</div>
+</div>
+<div class="flex justify-end pt-stack-sm">
+<button class="bg-primary text-on-primary px-6 py-2 rounded-lg font-body-md font-semibold hover:bg-primary-fixed-variant transition-colors active:scale-95 flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+                                Apply Adjustment
+                            </button>
+</div>
+</form>
+</div>
+<!-- History Table (Debug/Utilitarian Layout) -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl overflow-hidden">
+<div class="bg-surface-container px-stack-md py-stack-sm border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-body-md font-semibold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">history</span>
+                            Global Adjustment Logs
+                        </h3>
+<button class="text-primary hover:text-primary-fixed-variant font-label-caps text-label-caps flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">download</span> EXPORT CSV
+                        </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-lowest border-b border-outline-variant font-label-caps text-label-caps text-on-surface-variant">
+<th class="p-3">Timestamp</th>
+<th class="p-3">Product (SKU)</th>
+<th class="p-3">Admin</th>
+<th class="p-3 text-right">Delta</th>
+<th class="p-3">Reason</th>
+</tr>
+</thead>
+<tbody class="font-code-sm text-on-surface divide-y divide-outline-variant bg-surface-container-lowest">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-3 text-on-surface-variant">2023-10-27 14:32:01</td>
+<td class="p-3">SKU-8921</td>
+<td class="p-3">sysadmin_01</td>
+<td class="p-3 text-right font-semibold text-error">-12</td>
+<td class="p-3">Damaged stock written off during audit</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-3 text-on-surface-variant">2023-10-27 09:15:44</td>
+<td class="p-3">SKU-3345</td>
+<td class="p-3">inventory_mgr</td>
+<td class="p-3 text-right font-semibold text-primary">+50</td>
+<td class="p-3">Found missing pallet in warehouse B</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-3 text-on-surface-variant">2023-10-26 16:45:12</td>
+<td class="p-3">SKU-1102</td>
+<td class="p-3">sysadmin_01</td>
+<td class="p-3 text-right font-semibold text-error">-2</td>
+<td class="p-3">Demo units allocated to marketing</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer / Token Status Bar -->
+<footer class="bg-inverse-surface dark:bg-surface-container-lowest fixed bottom-0 w-full z-40 shadow-md flex justify-between items-center px-container-padding h-10">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary-fixed-dim animate-pulse"></div>
+<span class="font-label-caps text-label-caps text-surface-bright dark:text-on-surface">MiniShop Admin v2.4.0 - JWT: Active</span>
+</div>
+<div class="flex gap-4">
+<a class="font-label-caps text-label-caps text-surface-dim dark:text-outline-variant hover:text-primary-fixed transition-opacity duration-200" href="#">API Status</a>
+<a class="font-label-caps text-label-caps text-surface-dim dark:text-outline-variant hover:text-primary-fixed transition-opacity duration-200" href="#">Docs</a>
+<a class="font-label-caps text-label-caps text-surface-dim dark:text-outline-variant hover:text-primary-fixed transition-opacity duration-200" href="#">Security Policy</a>
+</div>
+</footer>
+<script>
+        // Simple micro-interaction for the select to mock fetching current stock
+        document.getElementById('product-select').addEventListener('change', function(e) {
+            const stockInput = e.target.closest('.grid').querySelector('input[type="text"]');
+            stockInput.classList.add('animate-pulse');
+            stockInput.value = "Loading...";
+            
+            setTimeout(() => {
+                stockInput.classList.remove('animate-pulse');
+                const mockStocks = { 'p1': '142', 'p2': '58', 'p3': '890' };
+                stockInput.value = mockStocks[e.target.value] || '--';
+            }, 600);
+        });
+    </script>
+
+    <!-- Global MiniShop Interconnected Navigation & API Client -->
+    <script src="js/nav.js"></script>
+</body></html>

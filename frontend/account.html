@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thông tin tài khoản - MiniShop</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#e6e8ea",
+                        "surface-dim": "#d8dadc",
+                        "on-primary-fixed": "#00174b",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "surface-variant": "#e0e3e5",
+                        "tertiary": "#943700",
+                        "primary-fixed": "#dbe1ff",
+                        "secondary-fixed": "#d3e4fe",
+                        "tertiary-fixed": "#ffdbcd",
+                        "on-tertiary-container": "#ffede6",
+                        "primary": "#004ac6",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-surface": "#191c1e",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-container": "#54647a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface-tint": "#0053db",
+                        "surface-container": "#eceef0",
+                        "on-error": "#ffffff",
+                        "surface": "#f7f9fb",
+                        "on-primary-container": "#eeefff",
+                        "on-surface-variant": "#434655",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "background": "#f7f9fb",
+                        "inverse-surface": "#2d3133",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-container-low": "#f2f4f6",
+                        "inverse-primary": "#b4c5ff",
+                        "inverse-on-surface": "#eff1f3",
+                        "primary-container": "#2563eb",
+                        "on-secondary-fixed": "#0b1c30",
+                        "surface-bright": "#f7f9fb",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "tertiary-container": "#bc4800",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#c3c6d7",
+                        "on-tertiary-fixed": "#360f00",
+                        "on-background": "#191c1e",
+                        "secondary-container": "#d0e1fb",
+                        "outline": "#737686",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "on-error-container": "#93000a",
+                        "secondary": "#505f76",
+                        "primary-fixed-dim": "#b4c5ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "stack-sm": "8px",
+                        "max-width-auth": "400px",
+                        "stack-md": "16px",
+                        "container-padding": "24px",
+                        "gutter": "16px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "code-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "code-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased min-h-screen flex flex-col">
+<!-- TopNavBar Component -->
+<header class="bg-surface docked full-width top-0 border-b border-outline-variant flat no shadows flex justify-between items-center w-full px-container-padding h-16 sticky z-40">
+<div class="flex items-center gap-stack-sm">
+<span class="font-headline-md text-headline-md font-bold text-primary">MiniShop</span>
+</div>
+<div class="flex items-center gap-stack-md hidden md:flex">
+<!-- Search bar is hidden per JSON -->
+</div>
+<div class="flex items-center gap-stack-md font-body-md text-body-md text-primary">
+<button class="hover:bg-surface-container transition-colors px-3 py-2 rounded-DEFAULT opacity-80 hover:opacity-100 duration-150">
+                View Token
+            </button>
+<button class="hover:bg-surface-container transition-colors px-3 py-2 rounded-DEFAULT opacity-80 hover:opacity-100 duration-150 flex items-center gap-2">
+<span class="material-symbols-outlined">logout</span>
+                Logout
+            </button>
+<img alt="User profile avatar" class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="A professional user profile avatar showing a generic, modern vector illustration of a person's head and shoulders against a pristine white background. The aesthetic is extremely minimalist, utilizing subtle shades of slate blue and cool gray to align with a sleek, high-end digital dashboard environment. Soft, diffused lighting creates a clean, corporate mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhg58V_A9_zUy4c3BQW84JvQzR0RDHJn0SUH54qpmk2hN2EAV0_QZMk3vZdu7DmdrqEWjuQD_30AtIXG40Krhb4LOo4XFmDwcmC4sN0vb47qkJLsP-3bOXqIT1l-DbMcFpFNICNa1UmkJICrRVjCeZiN74Hc0Fy4kYzYGEhVQzanQ_lNd_3k-gd24oKLLNkSZ5kowACkUkQUg3ocm4fIcPcWrNL9KwqnHbC3HLmQ5D1xKu4JwDBGA"/>
+</div>
+</header>
+<!-- Main Content Area -->
+<div class="flex flex-1 overflow-hidden h-[calc(100vh-64px)] pb-12">
+<!-- SideNavBar Component -->
+<aside class="bg-surface-container-low h-full w-64 border-r border-outline-variant flat no shadows flex flex-col h-full py-stack-lg hidden md:flex flex-shrink-0 font-label-caps text-label-caps text-primary">
+<div class="px-container-padding mb-stack-lg flex flex-col gap-base">
+<div class="flex items-center gap-stack-sm mb-stack-sm">
+<img alt="User avatar" class="w-10 h-10 rounded-full border border-outline-variant object-cover" data-alt="A minimalist and highly stylized user avatar icon for a sleek administrative dashboard. The graphic is composed of pure geometric shapes rendered in shades of professional slate and primary blue. It sits on a smooth, light gray background, conveying a sense of organized, secure, and modern digital identity suitable for an enterprise web application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDghhL_r624Ad-8HRdMCPsL0y49243iNpqym-Ue_KCMDRDvncttFULIWLPQ5rK1mya-ywa-ICQ-fRn4Lm-GMsBMs1PZOR0OzZSnqizP4nQixOnMWaz93soIDR2OKi28LyQZflJ5J-8HVwJ406p-Ntcp7ldRunlhxXVsEgYjvw2HJK6uu-nhQ4urKO4afhA3AcLpqAPaPscx9JIarhL8073CVF_cSgv4vxwpbpZiybIc2y6MaJjV9Dk"/>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm font-bold text-on-surface">user@minishop.com</span>
+<span class="text-on-surface-variant">ADMIN Role</span>
+</div>
+</div>
+</div>
+<nav class="flex flex-col px-gutter gap-base flex-1">
+<!-- Active Nav Item -->
+<a class="bg-secondary-container text-on-secondary-container rounded-lg flex items-center gap-stack-md px-4 py-3 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+                    Account Info
+                </a>
+<!-- Inactive Nav Items -->
+<a class="text-on-surface-variant hover:bg-surface-variant rounded-lg flex items-center gap-stack-md px-4 py-3 transition-all duration-200 ease-in-out hover:bg-surface-variant" href="#">
+<span class="material-symbols-outlined">lock_reset</span>
+                    Change Password
+                </a>
+<a class="text-on-surface-variant hover:bg-surface-variant rounded-lg flex items-center gap-stack-md px-4 py-3 transition-all duration-200 ease-in-out hover:bg-surface-variant" href="#">
+<span class="material-symbols-outlined">storefront</span>
+                    Seller Dashboard
+                </a>
+<a class="text-on-surface-variant hover:bg-surface-variant rounded-lg flex items-center gap-stack-md px-4 py-3 transition-all duration-200 ease-in-out hover:bg-surface-variant" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+                    Admin Dashboard
+                </a>
+</nav>
+</aside>
+<!-- Canvas -->
+<main class="flex-1 overflow-y-auto p-container-padding bg-background">
+<div class="max-w-[1024px] mx-auto flex flex-col gap-stack-lg">
+<!-- Success Banner -->
+<div class="w-full bg-secondary-container text-on-secondary-container px-4 py-3 rounded-DEFAULT flex items-center gap-stack-sm shadow-sm border border-secondary-fixed-dim">
+<span class="material-symbols-outlined">check_circle</span>
+<span class="font-body-sm text-body-sm font-bold">Cập nhật thành công</span>
+</div>
+<!-- Header -->
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Thông tin tài khoản</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Manage your personal details and settings.</p>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-stack-md">
+<!-- Section A: Editable Form (Main Card) -->
+<div class="lg:col-span-2 bg-surface-container-lowest rounded-xl shadow-[0_4px_6px_-1px_rgb(0,0,0,0.1)] p-container-padding flex flex-col gap-stack-md border border-outline-variant/30">
+<h2 class="font-headline-md text-headline-md text-on-surface border-b border-outline-variant/50 pb-2">Hồ sơ cá nhân</h2>
+<form class="flex flex-col gap-stack-md">
+<div class="flex flex-col gap-base">
+<label class="font-label-caps text-label-caps text-on-surface-variant" for="fullname">Họ tên</label>
+<input class="font-body-md text-body-md bg-surface text-on-surface border border-outline-variant rounded-DEFAULT px-3 py-2 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all w-full" id="fullname" type="text" value="Nguyễn Văn A"/>
+</div>
+<div class="flex flex-col gap-base">
+<label class="font-label-caps text-label-caps text-on-surface-variant" for="phone">Số điện thoại</label>
+<input class="font-body-md text-body-md bg-surface text-on-surface border border-outline-variant rounded-DEFAULT px-3 py-2 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all w-full" id="phone" type="tel" value="0901234567"/>
+</div>
+<div class="pt-4 flex gap-stack-sm">
+<button class="bg-primary text-on-primary font-body-sm text-body-sm font-bold px-6 py-2.5 rounded-DEFAULT hover:opacity-90 transition-opacity flex items-center justify-center min-w-[140px]" type="button">
+                                    Lưu thay đổi
+                                </button>
+<!-- Example of Loading State Button -->
+<button class="bg-surface-dim text-on-surface-variant font-body-sm text-body-sm font-bold px-6 py-2.5 rounded-DEFAULT cursor-not-allowed flex items-center justify-center min-w-[140px] opacity-70" disabled="" type="button">
+<span class="material-symbols-outlined animate-spin text-[20px]">progress_activity</span>
+</button>
+</div>
+</form>
+</div>
+<!-- Section B: Read-only Info (Side Card) -->
+<div class="lg:col-span-1 bg-surface-container-low rounded-xl shadow-[0_4px_6px_-1px_rgb(0,0,0,0.1)] p-container-padding flex flex-col gap-stack-md border border-outline-variant/50">
+<h2 class="font-headline-md text-headline-md text-on-surface border-b border-outline-variant/50 pb-2">Thông tin hệ thống</h2>
+<ul class="flex flex-col gap-4 font-body-sm text-body-sm">
+<li class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Email</span>
+<span class="text-on-surface font-bold">user@example.com</span>
+</li>
+<li class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Vai trò</span>
+<div><span class="bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded-sm font-code-sm text-code-sm">CUSTOMER</span></div>
+</li>
+<li class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Trạng thái</span>
+<div class="flex items-center gap-1 text-primary-fixed-variant">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span class="font-bold">ACTIVE</span>
+</div>
+</li>
+<li class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Ngày tạo</span>
+<span class="text-on-surface">14/08/2026</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Debug Panel (Collapsible) -->
+<div class="w-full bg-surface-container rounded-lg border border-outline-variant overflow-hidden mt-stack-md shadow-sm">
+<div class="bg-surface-container-highest px-4 py-3 flex justify-between items-center cursor-pointer hover:bg-surface-variant transition-colors">
+<div class="flex items-center gap-stack-sm text-on-surface">
+<span class="material-symbols-outlined">bug_report</span>
+<span class="font-headline-md text-headline-md text-[16px]">Debug Info (Raw JSON)</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">expand_more</span>
+</div>
+<div class="p-4 bg-surface-container-lowest border-t border-outline-variant relative">
+<button class="absolute top-4 right-4 text-on-surface-variant hover:text-primary transition-colors" title="Copy to Clipboard">
+<span class="material-symbols-outlined text-[20px]">content_copy</span>
+</button>
+<pre class="font-code-sm text-code-sm text-on-surface overflow-x-auto whitespace-pre-wrap">{
+  "status": 200,
+  "data": {
+    "id": "usr_9x8c7v",
+    "email": "user@example.com",
+    "role": "CUSTOMER",
+    "status": "ACTIVE",
+    "profile": {
+      "fullname": "Nguyễn Văn A",
+      "phone": "0901234567"
+    },
+    "created_at": "2026-08-14T10:30:00Z"
+  }
+}</pre>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer Component -->
+<footer class="bg-inverse-surface docked full-width bottom-0 shadow-md fixed bottom-0 left-0 w-full z-50 flex justify-between items-center px-gutter py-base font-code-sm text-code-sm text-surface-bright pulse-indicator-on-status">
+<div class="flex items-center gap-2 text-primary-fixed-dim">
+<span class="w-2 h-2 rounded-full bg-primary-fixed-dim animate-pulse"></span>
+<span>JWT: Active</span>
+</div>
+<div class="flex items-center gap-stack-md text-surface-dim">
+<a class="hover:text-primary-fixed transition-colors" href="#">API Documentation</a>
+<a class="hover:text-primary-fixed transition-colors" href="#">Support</a>
+</div>
+</footer>
+
+    <!-- Global MiniShop Interconnected Navigation & API Client -->
+    <script src="js/nav.js"></script>
+</body></html>

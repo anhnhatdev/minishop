@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Edit Product - MiniShop</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "on-surface": "#191c1e",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f7f9fb",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#505f76",
+                        "tertiary-fixed": "#ffdbcd",
+                        "inverse-on-surface": "#eff1f3",
+                        "outline": "#737686",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "surface": "#f7f9fb",
+                        "tertiary": "#943700",
+                        "on-background": "#191c1e",
+                        "secondary-fixed": "#d3e4fe",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-primary-container": "#eeefff",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#c3c6d7",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#bc4800",
+                        "on-tertiary": "#ffffff",
+                        "primary-container": "#2563eb",
+                        "on-tertiary-container": "#ffede6",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-dim": "#d8dadc",
+                        "on-primary-fixed": "#00174b",
+                        "surface-container": "#eceef0",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed": "#360f00",
+                        "surface-container-low": "#f2f4f6",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "surface-container-high": "#e6e8ea",
+                        "on-primary": "#ffffff",
+                        "surface-tint": "#0053db",
+                        "on-secondary-fixed": "#0b1c30",
+                        "inverse-primary": "#b4c5ff",
+                        "on-surface-variant": "#434655",
+                        "primary": "#004ac6",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-variant": "#e0e3e5",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "secondary-container": "#d0e1fb",
+                        "inverse-surface": "#2d3133",
+                        "on-secondary-container": "#54647a",
+                        "error": "#ba1a1a",
+                        "background": "#f7f9fb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "stack-lg": "32px",
+                        "stack-sm": "8px",
+                        "container-padding": "24px",
+                        "max-width-auth": "400px",
+                        "gutter": "16px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "code-sm": ["JetBrains Mono"],
+                        "headline-md": ["Inter"],
+                        "label-caps": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "code-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .icon-fill { font-variation-settings: 'FILL' 1; }
+        /* Custom scrollbar for debug panel */
+        .debug-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
+        .debug-scroll::-webkit-scrollbar-track { background: transparent; }
+        .debug-scroll::-webkit-scrollbar-thumb { background: #c3c6d7; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md flex h-screen overflow-hidden antialiased">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col bg-surface-container-low dark:bg-surface-container-lowest h-screen w-64 fixed left-0 top-16 border-r border-outline-variant dark:border-outline z-40 transition-all duration-200 ease-in-out p-4 gap-2">
+<div class="mb-stack-md px-2">
+<h2 class="text-headline-md font-headline-md font-black text-primary">Seller Center</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Manage your store</p>
+</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span aria-hidden="true" class="material-symbols-outlined">person</span>
+<span>Account Information</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span aria-hidden="true" class="material-symbols-outlined">lock</span>
+<span>Change Password</span>
+</a>
+<!-- Active Tab -->
+<a class="flex items-center gap-3 px-3 py-2 bg-secondary-container text-on-secondary-container rounded-lg font-semibold transition-colors" href="#">
+<span aria-hidden="true" class="material-symbols-outlined icon-fill">storefront</span>
+<span>My Products</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span aria-hidden="true" class="material-symbols-outlined">inventory_2</span>
+<span>Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span aria-hidden="true" class="material-symbols-outlined">shopping_basket</span>
+<span>Orders to Process</span>
+</a>
+<div class="mt-auto pt-4">
+<button class="w-full flex items-center justify-center gap-2 bg-primary text-on-primary py-2 rounded-lg hover:opacity-90 transition-opacity font-semibold">
+<span aria-hidden="true" class="material-symbols-outlined">add</span>
+                Add New Product
+            </button>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="flex-1 flex flex-col md:ml-64 w-full h-full relative">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-surface-dim docked full-width top-0 sticky z-50 border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none flex justify-between items-center w-full px-container-padding h-16">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-on-surface-variant hover:bg-surface-container-low transition-colors p-2 rounded-full cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="text-headline-md font-headline-md font-black text-primary dark:text-primary-fixed">MiniShop</div>
+</div>
+<div class="flex-1 max-w-md mx-4 hidden sm:block">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-full py-2 pl-10 pr-4 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-body-sm font-body-sm" placeholder="Search..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<button class="hover:bg-surface-container-low transition-colors p-2 rounded-full cursor-pointer active:opacity-80 flex items-center justify-center">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="hover:bg-surface-container-low transition-colors p-2 rounded-full cursor-pointer active:opacity-80 flex items-center justify-center">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant">
+<img alt="Seller Avatar" class="w-8 h-8 rounded-full border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2vImtKBOkP2TP3KHUn1fXtdFZk8YqFiaRv4tZTLpIeHGtb0k_DjWOshQFWn4H7_aXOO1n_yCnPD5Y_Im3fw4EcdiXUTvrfOcTxiIBWR6B8yk6fvUzytHpBHDSKpxIg8epkGhfWMAzFEcXrslsKXhRKAaHnDAJFH1Y-8N7AjJFBGJ6IEYftsiroysO7fwqMiT2MluzxqofWblZtMg2TlAAt_eIUde12VXJncygxES6DqXsN1BmrKI"/>
+<button class="text-body-sm font-body-sm font-semibold text-primary hover:underline cursor-pointer active:opacity-80">Logout</button>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<main class="flex-1 overflow-y-auto bg-surface-bright pb-32">
+<div class="max-w-[800px] mx-auto p-container-padding flex flex-col gap-stack-lg mt-stack-md">
+<!-- 403 Forbidden Banner -->
+<div class="w-full bg-error-container border border-error/20 rounded-DEFAULT p-4 flex items-start gap-3 shadow-sm">
+<span class="material-symbols-outlined text-on-error-container mt-0.5 icon-fill">error</span>
+<div class="flex-1">
+<h3 class="text-body-md font-headline-md text-on-error-container font-semibold">403 Forbidden</h3>
+<p class="text-body-sm font-body-sm text-on-error-container/80 mt-1">You do not have permission to edit this product. Simulation mode active for horizontal ownership authorization testing.</p>
+</div>
+</div>
+<!-- Product Form Card (Level 1 Elevation) -->
+<div class="bg-surface-container-lowest shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] rounded-lg p-container-padding border border-surface-container-low">
+<div class="border-b border-outline-variant pb-4 mb-stack-md">
+<h1 class="text-headline-lg font-headline-lg text-on-surface">Edit Product</h1>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1">Update the details for ID: PROD-8924</p>
+</div>
+<form class="flex flex-col gap-stack-md">
+<div class="flex flex-col gap-1">
+<label class="text-body-sm font-body-sm font-semibold text-on-surface" for="productName">Product Name</label>
+<input class="w-full border border-outline-variant bg-surface-container-lowest rounded-DEFAULT px-3 py-2 text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-container transition-all disabled:bg-surface-container-low disabled:text-on-surface-variant disabled:cursor-not-allowed" disabled="" id="productName" type="text" value="Ergonomic Developer Chair"/>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-md">
+<div class="flex flex-col gap-1">
+<label class="text-body-sm font-body-sm font-semibold text-on-surface" for="category">Category</label>
+<select class="w-full border border-outline-variant bg-surface-container-lowest rounded-DEFAULT px-3 py-2 text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-container transition-all disabled:bg-surface-container-low disabled:text-on-surface-variant disabled:cursor-not-allowed appearance-none" disabled="" id="category">
+<option selected="" value="furniture">Office Furniture</option>
+<option value="electronics">Electronics</option>
+<option value="accessories">Accessories</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-body-sm font-body-sm font-semibold text-on-surface" for="price">Price (USD)</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">$</span>
+<input class="w-full border border-outline-variant bg-surface-container-lowest rounded-DEFAULT py-2 pl-8 pr-3 text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-container transition-all disabled:bg-surface-container-low disabled:text-on-surface-variant disabled:cursor-not-allowed" disabled="" id="price" type="number" value="349.99"/>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-body-sm font-body-sm font-semibold text-on-surface" for="description">Description</label>
+<textarea class="w-full border border-outline-variant bg-surface-container-lowest rounded-DEFAULT px-3 py-2 text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-container transition-all resize-y disabled:bg-surface-container-low disabled:text-on-surface-variant disabled:cursor-not-allowed" disabled="" id="description" rows="4">High-quality ergonomic chair designed for long coding sessions. Features adjustable lumbar support and breathable mesh.</textarea>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-body-sm font-body-sm font-semibold text-on-surface">Product Image</label>
+<div class="border-2 border-dashed border-outline-variant rounded-lg p-6 flex flex-col items-center justify-center bg-surface-container-low opacity-70 cursor-not-allowed">
+<span class="material-symbols-outlined text-outline text-4xl mb-2">image</span>
+<p class="text-body-sm font-body-sm text-on-surface-variant text-center">Click to upload or drag and drop<br/>SVG, PNG, JPG or GIF (max. 5MB)</p>
+</div>
+</div>
+<div class="flex items-center justify-end gap-3 mt-4 pt-4 border-t border-outline-variant">
+<button class="px-6 py-2 border border-outline text-on-surface rounded-DEFAULT font-semibold hover:bg-surface-container-low transition-colors" type="button">
+                                Cancel
+                            </button>
+<!-- Simulating loading state initially disabled due to 403 -->
+<button class="px-8 py-2 bg-primary text-on-primary rounded-DEFAULT font-semibold flex items-center justify-center opacity-50 cursor-not-allowed w-[100px]" disabled="" type="button">
+<span class="material-symbols-outlined animate-spin text-[20px]">progress_activity</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+</main>
+<!-- Debug Panel (Level 2) -->
+<div class="absolute bottom-8 left-0 right-0 bg-surface-container-low border-t border-outline-variant shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] transition-transform duration-300 translate-y-[calc(100%-40px)] z-30" id="debugPanel">
+<div class="h-[40px] px-4 flex items-center justify-between cursor-pointer hover:bg-surface-container-high transition-colors" onclick="document.getElementById('debugPanel').classList.toggle('translate-y-[calc(100%-40px)]')">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">bug_report</span>
+<span class="text-label-caps font-label-caps text-secondary">Auth &amp; API Debug</span>
+</div>
+<span class="material-symbols-outlined text-secondary transition-transform duration-300 transform" id="debugIcon">expand_less</span>
+</div>
+<div class="p-4 h-[250px] flex gap-4 overflow-hidden">
+<div class="flex-1 flex flex-col">
+<div class="flex items-center justify-between mb-2">
+<span class="text-code-sm font-code-sm text-on-surface-variant font-semibold">Request Payload</span>
+<button class="text-secondary hover:text-primary transition-colors"><span class="material-symbols-outlined text-[16px]">content_copy</span></button>
+</div>
+<pre class="flex-1 bg-surface-container-lowest border border-outline-variant rounded-DEFAULT p-3 overflow-auto debug-scroll text-code-sm font-code-sm text-on-surface"><code>{
+  "action": "UPDATE_PRODUCT",
+  "productId": "PROD-8924",
+  "actorId": "seller@example.com",
+  "timestamp": "2023-10-27T14:32:01Z"
+}</code></pre>
+</div>
+<div class="flex-1 flex flex-col">
+<div class="flex items-center justify-between mb-2">
+<span class="text-code-sm font-code-sm text-on-error-container font-semibold">Response (403 Forbidden)</span>
+<button class="text-secondary hover:text-primary transition-colors"><span class="material-symbols-outlined text-[16px]">content_copy</span></button>
+</div>
+<pre class="flex-1 bg-error-container/20 border border-error/30 rounded-DEFAULT p-3 overflow-auto debug-scroll text-code-sm font-code-sm text-on-error-container"><code>{
+  "status": 403,
+  "error": "Forbidden",
+  "message": "Actor 'seller@example.com' does not have ownership rights to resource 'PROD-8924'.",
+  "traceId": "req_8a9b2c3d4e5f"
+}</code></pre>
+</div>
+</div>
+</div>
+<!-- Footer / Token Status Bar -->
+<footer class="bg-inverse-surface dark:bg-surface-container-highest text-inverse-on-surface dark:text-on-surface font-code-sm text-code-sm fixed bottom-0 md:left-64 right-0 h-8 flex items-center border-t border-outline-variant justify-between px-4 w-[calc(100%-16rem)] z-50 transition-opacity md:w-auto md:w-[calc(100%-16rem)] sm:w-full">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+<span>JWT: Active | user@minishop.com | Role: Seller</span>
+</div>
+<div class="flex gap-4">
+<a class="text-surface-variant hover:text-primary-fixed-dim transition-opacity" href="#">Terms</a>
+<a class="text-surface-variant hover:text-primary-fixed-dim transition-opacity" href="#">Privacy</a>
+<a class="text-surface-variant hover:text-primary-fixed-dim transition-opacity" href="#">API Docs</a>
+</div>
+</footer>
+</div>
+<script>
+        // Simple JS for debug panel icon rotation
+        const debugPanel = document.getElementById('debugPanel');
+        const debugIcon = document.getElementById('debugIcon');
+        
+        debugPanel.addEventListener('click', (e) => {
+            if(e.target.closest('.h-\\[40px\\]')) {
+                if(debugPanel.classList.contains('translate-y-[calc(100%-40px)]')) {
+                    debugIcon.style.transform = 'rotate(0deg)';
+                } else {
+                    debugIcon.style.transform = 'rotate(180deg)';
+                }
+            }
+        });
+    </script>
+
+    <!-- Global MiniShop Interconnected Navigation & API Client -->
+    <script src="js/nav.js"></script>
+</body></html>

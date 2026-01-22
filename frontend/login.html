@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MiniShop - Đăng nhập</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#f7f9fb",
+                        "on-tertiary-container": "#ffede6",
+                        "on-tertiary-fixed-variant": "#7d2d00",
+                        "tertiary-fixed": "#ffdbcd",
+                        "error": "#ba1a1a",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#004ac6",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-container-high": "#e6e8ea",
+                        "on-surface": "#191c1e",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "inverse-on-surface": "#eff1f3",
+                        "inverse-surface": "#2d3133",
+                        "on-background": "#191c1e",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#dbe1ff",
+                        "inverse-primary": "#b4c5ff",
+                        "on-secondary-fixed": "#0b1c30",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-surface-variant": "#434655",
+                        "secondary-container": "#d0e1fb",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#54647a",
+                        "surface-dim": "#d8dadc",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#f7f9fb",
+                        "surface": "#f7f9fb",
+                        "on-tertiary-fixed": "#360f00",
+                        "tertiary-container": "#bc4800",
+                        "on-secondary-fixed-variant": "#38485d",
+                        "surface-variant": "#e0e3e5",
+                        "secondary": "#505f76",
+                        "on-primary-container": "#eeefff",
+                        "surface-tint": "#0053db",
+                        "on-primary-fixed": "#00174b",
+                        "tertiary": "#943700",
+                        "on-secondary": "#ffffff",
+                        "surface-container": "#eceef0",
+                        "primary-container": "#2563eb",
+                        "surface-container-highest": "#e0e3e5",
+                        "outline": "#737686",
+                        "secondary-fixed": "#d3e4fe",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#c3c6d7",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container-lowest": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "stack-sm": "8px",
+                        "base": "4px",
+                        "stack-lg": "32px",
+                        "container-padding": "24px",
+                        "gutter": "16px",
+                        "max-width-auth": "400px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "code-sm": ["JetBrains Mono"],
+                        "headline-md": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "code-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .debug-panel {
+            transition: max-height 0.3s ease-in-out;
+            max-height: 0;
+            overflow: hidden;
+        }
+        .debug-panel.open {
+            max-height: 500px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col font-body-md text-on-surface pb-16">
+<!-- Main Content Area -->
+<main class="flex-grow flex flex-col items-center justify-center p-gutter">
+<!-- Auth Card -->
+<div class="w-full max-w-max-width-auth bg-white rounded-xl shadow-[0_4px_6px_-1px_rgb(0,0,0,0.1)] sm:border sm:border-slate-200 overflow-hidden">
+<div class="p-container-padding flex flex-col gap-stack-lg">
+<!-- Header -->
+<div class="text-center">
+<h1 class="font-headline-lg text-headline-lg text-primary mb-stack-sm tracking-tight font-bold">MiniShop</h1>
+<h2 class="font-headline-md text-headline-md text-on-surface">Đăng nhập</h2>
+</div>
+<!-- Error Banner (Simulated 401) -->
+<div class="bg-red-50 p-stack-sm rounded border border-red-200 flex items-center gap-stack-sm" role="alert">
+<span class="material-symbols-outlined text-red-700" style="font-variation-settings: 'FILL' 1;">error</span>
+<span class="font-body-sm text-body-sm text-red-700 font-medium">Email hoặc mật khẩu không đúng</span>
+</div>
+<!-- Form -->
+<form class="flex flex-col gap-stack-md" onsubmit="event.preventDefault(); document.getElementById('login-btn').innerHTML = '<span class=\'material-symbols-outlined animate-spin\'>progress_activity</span>';">
+<div class="flex flex-col gap-base">
+<label class="font-label-caps text-label-caps text-on-surface-variant" for="email">Email</label>
+<input class="w-full px-stack-md py-stack-sm border border-slate-300 rounded focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none font-body-sm text-body-sm transition-all" id="email" placeholder="Nhập email của bạn" type="email" value="user@example.com"/>
+</div>
+<div class="flex flex-col gap-base relative">
+<label class="font-label-caps text-label-caps text-on-surface-variant" for="password">Mật khẩu</label>
+<div class="relative w-full">
+<input class="w-full pl-stack-md pr-[40px] py-stack-sm border border-slate-300 rounded focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none font-body-sm text-body-sm transition-all" id="password" placeholder="Nhập mật khẩu" type="password" value="password123"/>
+<button class="absolute inset-y-0 right-0 px-stack-sm flex items-center text-on-surface-variant hover:text-primary transition-colors" onclick="const p = document.getElementById('password'); p.type = p.type === 'password' ? 'text' : 'password'; this.querySelector('span').textContent = p.type === 'password' ? 'visibility_off' : 'visibility';" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility_off">visibility_off</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-stack-sm mt-stack-sm">
+<input class="w-4 h-4 text-primary bg-white border-slate-300 rounded focus:ring-primary focus:ring-2" id="remember" type="checkbox"/>
+<label class="font-body-sm text-body-sm text-on-surface-variant" for="remember">Ghi nhớ đăng nhập</label>
+</div>
+<button class="w-full bg-primary text-white py-stack-sm rounded font-headline-md text-body-md hover:bg-primary-container transition-colors flex items-center justify-center h-[44px]" id="login-btn" type="submit">
+                        Đăng nhập
+                    </button>
+</form>
+<!-- Footer Link -->
+<div class="text-center">
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                        Chưa có tài khoản? <a class="text-primary hover:underline font-medium" href="#">Đăng ký ngay</a>
+</p>
+</div>
+</div>
+<!-- Debug Panel -->
+<div class="bg-slate-100 border-t border-slate-200">
+<button class="w-full px-container-padding py-stack-sm flex items-center justify-between font-label-caps text-label-caps text-on-surface-variant hover:bg-slate-200 transition-colors" onclick="document.getElementById('debug-content').classList.toggle('open'); const icon = this.querySelector('.toggle-icon'); icon.style.transform = icon.style.transform === 'rotate(180deg)' ? '' : 'rotate(180deg)';">
+<span>Debug Panel - JSON Response</span>
+<span class="material-symbols-outlined text-[16px] toggle-icon transition-transform duration-300" data-icon="expand_more">expand_more</span>
+</button>
+<div class="debug-panel px-container-padding" id="debug-content">
+<div class="py-stack-md relative">
+<button class="absolute top-stack-md right-stack-md text-on-surface-variant hover:text-primary transition-colors" title="Copy to clipboard">
+<span class="material-symbols-outlined text-[16px]" data-icon="content_copy">content_copy</span>
+</button>
+<pre class="font-code-sm text-code-sm text-slate-800 bg-white p-stack-sm rounded border border-slate-200 overflow-x-auto">{
+  "status": 401,
+  "error": "Unauthorized",
+  "message": "Invalid email or password",
+  "path": "/api/v1/auth/login",
+  "timestamp": "2023-10-27T10:00:00Z"
+}</pre>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Persistent Token Status Bar -->
+<div class="fixed bottom-0 w-full z-50 bg-slate-900 text-slate-50 shadow-md">
+<div class="flex justify-between items-center px-container-padding py-stack-sm h-16 max-w-7xl mx-auto">
+<div class="flex items-center gap-stack-sm">
+<span class="relative flex h-3 w-3 mr-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+</span>
+<span class="font-code-sm text-code-sm font-medium tracking-wide">
+                    🔑 Đang đăng nhập: user@example.com | Role: CUSTOMER
+                </span>
+</div>
+<div class="flex gap-stack-md">
+<button class="font-label-caps text-label-caps text-secondary-fixed-dim hover:text-white transition-colors">
+                    [Xem token]
+                </button>
+<button class="font-label-caps text-label-caps text-red-300 hover:text-red-100 transition-colors">
+                    [Đăng xuất]
+                </button>
+</div>
+</div>
+</div>
+
+    <!-- Global MiniShop Interconnected Navigation & API Client -->
+    <script src="js/nav.js"></script>
+</body></html>

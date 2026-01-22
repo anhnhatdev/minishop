@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniShop — Frontend UI Portal (Google Stitch Design Spec)</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f7f9fb; }
+        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.08); }
+    </style>
+</head>
+<body class="bg-[#f7f9fb] text-[#191c1e] min-h-screen p-8">
+    <div class="max-w-7xl mx-auto">
+        <header class="mb-10 text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold uppercase tracking-wider mb-3">
+                <span class="material-symbols-outlined text-sm">palette</span> Google Stitch Design Spec
+            </div>
+            <h1 class="text-3xl font-bold text-[#004ac6] tracking-tight">MiniShop Frontend Design Portal</h1>
+            <p class="text-[#434655] mt-2">Tổng hợp toàn bộ <strong>25 màn hình</strong> xuất trực tiếp từ Stitch Project <code>573268449518407870</code></p>
+        </header>
+
+        <div class="mb-12">
+            <div class="flex items-center gap-3 border-b border-[#e0e3e5] pb-3 mb-6">
+                <span class="material-symbols-outlined text-2xl text-[#004ac6]">storefront</span>
+                <h2 class="text-2xl font-bold text-[#191c1e]">Customer Storefront (13)</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    
+                <a href="checkout.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: af68fec3</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">Checkout - MiniShop</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> checkout.html
+                    </p>
+                </a>
+        
+                <a href="cart.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: a3d129a6</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">Shopping Cart - MiniShop</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> cart.html
+                    </p>
+                </a>
+        
+                <a href="my-orders.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: 20bb1dd4</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">My Orders - MiniShop</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> my-orders.html
+                    </p>
+                </a>
+        
+                <a href="register.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: cf5992bb</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">Register - MiniShop</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> register.html
+                    </p>
+                </a>
+        
+                <a href="change-password.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: 2e901ab6</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">Change Password - MiniShop</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> change-password.html
+                    </p>
+                </a>
+        
+                <a href="product-listing.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: 5f27aeee</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">Product Listing - MiniShop</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> product-listing.html
+                    </p>
+                </a>
+        
+                <a href="order-details.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: 6aa72d7a</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">Order Details - MiniShop</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> order-details.html
+                    </p>
+                </a>
+        
+                <a href="product-review.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: 7d2194f2</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">Product Review - MiniShop</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> product-review.html
+                    </p>
+                </a>
+        
+                <a href="account.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: d3597d9a</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">Account Information - MiniShop</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> account.html
+                    </p>
+                </a>
+        
+                <a href="payment-result.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: 096783f4</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">Payment Result - MiniShop</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> payment-result.html
+                    </p>
+                </a>
+        
+                <a href="forgot-password.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: 5bc646b9</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">Forgot Password - MiniShop</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> forgot-password.html
+                    </p>
+                </a>
+        
+                <a href="login.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: 1f44b14a</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">Login - MiniShop</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> login.html
+                    </p>
+                </a>
+        
+                <a href="product-detail.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: 441bb91d</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">Product Details - MiniShop</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> product-detail.html
+                    </p>
+                </a>
+        
+            </div>
+        </div>
+    
+        <div class="mb-12">
+            <div class="flex items-center gap-3 border-b border-[#e0e3e5] pb-3 mb-6">
+                <span class="material-symbols-outlined text-2xl text-[#004ac6]">store</span>
+                <h2 class="text-2xl font-bold text-[#191c1e]">Seller Center (4)</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    
+                <a href="inventory-management.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: 2c4a2d18</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">Inventory Management - Seller Center</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> inventory-management.html
+                    </p>
+                </a>
+        
+                <a href="seller-product-edit.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: eb1de090</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">Edit Product - Seller Center</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> seller-product-edit.html
+                    </p>
+                </a>
+        
+                <a href="my-products.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: 4be80e7f</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">My Products - Seller Center</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> my-products.html
+                    </p>
+                </a>
+        
+                <a href="orders-to-process.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: 2e1185f6</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">Orders to Process - Seller Center</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> orders-to-process.html
+                    </p>
+                </a>
+        
+            </div>
+        </div>
+    
+        <div class="mb-12">
+            <div class="flex items-center gap-3 border-b border-[#e0e3e5] pb-3 mb-6">
+                <span class="material-symbols-outlined text-2xl text-[#004ac6]">admin_panel_settings</span>
+                <h2 class="text-2xl font-bold text-[#191c1e]">Admin Console (6)</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    
+                <a href="admin-users.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: ca69d976</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">User Management - MiniShop Admin</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> admin-users.html
+                    </p>
+                </a>
+        
+                <a href="global-order-monitoring.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: db5347fa</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">Global Order Monitoring - MiniShop Admin</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> global-order-monitoring.html
+                    </p>
+                </a>
+        
+                <a href="notification-logs.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: d1eb56ac</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">Notification Logs - MiniShop Admin</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> notification-logs.html
+                    </p>
+                </a>
+        
+                <a href="admin-payment-logs.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: d6fb1560</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">Payment & Callback Logs - MiniShop Admin</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> admin-payment-logs.html
+                    </p>
+                </a>
+        
+                <a href="admin-inventory.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: 9a2bf2ff</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">Inventory Adjustments - MiniShop Admin</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> admin-inventory.html
+                    </p>
+                </a>
+        
+                <a href="category-management.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: f49be2a2</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">Category Management - MiniShop Admin</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> category-management.html
+                    </p>
+                </a>
+        
+            </div>
+        </div>
+    
+        <div class="mb-12">
+            <div class="flex items-center gap-3 border-b border-[#e0e3e5] pb-3 mb-6">
+                <span class="material-symbols-outlined text-2xl text-[#004ac6]">terminal</span>
+                <h2 class="text-2xl font-bold text-[#191c1e]">Developer & Debug Console (2)</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    
+                <a href="debug-api-console.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: bf3f5875</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">API Console - MiniShop Debug</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> debug-api-console.html
+                    </p>
+                </a>
+        
+                <a href="debug-system-status.html" class="block bg-white p-6 rounded-xl border border-[#e0e3e5] shadow-sm transition-all duration-200 card-hover group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">web</span>
+                        </span>
+                        <span class="text-xs text-gray-400 font-mono">ID: e7c84303</span>
+                    </div>
+                    <h3 class="text-base font-semibold text-[#191c1e] group-hover:text-[#004ac6] transition-colors line-clamp-1">System Status - MiniShop Debug</h3>
+                    <p class="text-xs text-[#737686] mt-2 flex items-center gap-1 font-mono">
+                        <span class="material-symbols-outlined text-xs">open_in_new</span> debug-system-status.html
+                    </p>
+                </a>
+        
+            </div>
+        </div>
+    
+        <footer class="mt-16 text-center text-sm text-[#737686] border-t border-[#e0e3e5] pt-8">
+            MiniShop E-Commerce Microservices & Frontend Portal • Connected to API Gateway at <code>http://localhost:8080</code>
+        </footer>
+    </div>
+
+    <!-- Global MiniShop Interconnected Navigation & API Client -->
+    <script src="js/nav.js"></script>
+</body>
+</html>

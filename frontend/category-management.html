@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Manage Categories - MiniShop Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error": "#ba1a1a",
+                      "surface-dim": "#d8dadc",
+                      "on-secondary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "inverse-primary": "#b4c5ff",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "tertiary-container": "#bc4800",
+                      "surface-variant": "#e0e3e5",
+                      "surface-tint": "#0053db",
+                      "inverse-on-surface": "#eff1f3",
+                      "tertiary": "#943700",
+                      "surface": "#f7f9fb",
+                      "on-error-container": "#93000a",
+                      "primary": "#004ac6",
+                      "error-container": "#ffdad6",
+                      "on-primary-container": "#eeefff",
+                      "primary-fixed": "#dbe1ff",
+                      "on-primary": "#ffffff",
+                      "primary-fixed-dim": "#b4c5ff",
+                      "surface-container-high": "#e6e8ea",
+                      "outline": "#737686",
+                      "surface-bright": "#f7f9fb",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container": "#eceef0",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "secondary-fixed": "#d3e4fe",
+                      "inverse-surface": "#2d3133",
+                      "on-secondary-container": "#54647a",
+                      "on-background": "#191c1e",
+                      "secondary-container": "#d0e1fb",
+                      "on-tertiary-fixed": "#360f00",
+                      "on-tertiary-container": "#ffede6",
+                      "tertiary-fixed-dim": "#ffb596",
+                      "surface-container-low": "#f2f4f6",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-fixed-variant": "#003ea8",
+                      "on-surface": "#191c1e",
+                      "on-primary-fixed": "#00174b",
+                      "surface-container-highest": "#e0e3e5",
+                      "outline-variant": "#c3c6d7",
+                      "primary-container": "#2563eb",
+                      "on-surface-variant": "#434655",
+                      "on-secondary-fixed": "#0b1c30",
+                      "secondary": "#505f76",
+                      "tertiary-fixed": "#ffdbcd",
+                      "background": "#f7f9fb",
+                      "on-tertiary-fixed-variant": "#7d2d00"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "stack-lg": "32px",
+                      "container-padding": "24px",
+                      "stack-sm": "8px",
+                      "base": "4px",
+                      "max-width-auth": "400px",
+                      "stack-md": "16px",
+                      "gutter": "16px"
+              },
+              "fontFamily": {
+                      "body-md": ["Inter"],
+                      "code-sm": ["JetBrains Mono"],
+                      "label-caps": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "headline-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "code-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .debug-code { font-family: 'JetBrains Mono', monospace; }
+    </style>
+</head>
+<body class="bg-background text-on-surface h-screen flex overflow-hidden">
+<!-- SideNavBar -->
+<nav class="h-screen w-64 fixed left-0 top-0 flex flex-col bg-surface-container-low border-r border-outline-variant flat no shadows p-stack-md space-y-stack-sm z-40">
+<div class="mb-stack-lg">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary text-3xl">storefront</span>
+<h1 class="font-headline-md text-headline-md text-primary">MiniShop HQ</h1>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-2">
+<img alt="Admin User" class="w-6 h-6 rounded-full object-cover" data-alt="A small, professional headshot avatar of a system administrator in a clean, minimalist style, light mode compatible." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD14IzsZP5cpd8a5HxSw6uDUhMcze6GUFmiFYg4B_z14OdAmfYQweAooIYPRN0oG7iuUK_y11HRsE09INkBR0biTzY9SA7_ThdmmAk7xVFPwF2FrAe5SYvfkq-CN0MFeyq-2qdTaNeMM-5VyvzO6MALJrsGB6dgWOs9RQxxtyrKT92AsQpEJ4qK7O9uc8AcSFHdg04F-jzCCkEsJ0nUFLYhW4j2txGrq-QtUzdg8HqxrSARVtCpq6s"/>
+                System Administrator
+            </p>
+</div>
+<div class="flex-1 space-y-2 overflow-y-auto">
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg hover:transition-all duration-150 active:scale-95 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">group</span>
+                User Management
+            </a>
+<a class="flex items-center gap-3 p-3 bg-secondary-container text-on-secondary-container font-bold rounded-lg hover:transition-all duration-150 active:scale-95 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">category</span>
+                Categories
+            </a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg hover:transition-all duration-150 active:scale-95 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+                Global Orders
+            </a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg hover:transition-all duration-150 active:scale-95 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">history</span>
+                Notification Logs
+            </a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg hover:transition-all duration-150 active:scale-95 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">payments</span>
+                Payment Logs
+            </a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg hover:transition-all duration-150 active:scale-95 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined">edit_calendar</span>
+                Inventory Adjustments
+            </a>
+</div>
+<div class="mt-auto pt-4 border-t border-outline-variant space-y-2">
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg hover:transition-all duration-150 font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">terminal</span>
+                Debug Console
+            </a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg hover:transition-all duration-150 font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">help_outline</span>
+                Support
+            </a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="ml-64 flex-1 flex flex-col h-screen relative">
+<!-- TopAppBar -->
+<header class="bg-surface flex justify-between items-center w-full px-container-padding py-stack-sm border-b border-outline-variant flat no shadows sticky top-0 z-30">
+<h2 class="font-headline-lg text-headline-lg font-bold text-primary tracking-tight">MiniShop Admin</h2>
+<div class="flex items-center gap-4">
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="pl-10 pr-4 py-2 border border-outline-variant rounded-full bg-surface-container-lowest focus:border-primary focus:ring-2 focus:ring-primary-fixed outline-none font-body-sm text-body-sm transition-all w-64" placeholder="Search..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-primary hover:bg-surface-container transition-colors cursor-pointer active:opacity-80 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+<button class="p-2 text-primary hover:bg-surface-container transition-colors cursor-pointer active:opacity-80 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="p-2 text-error hover:bg-error-container transition-colors cursor-pointer active:opacity-80 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">logout</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="flex-1 overflow-y-auto p-container-padding pb-32">
+<!-- Header & Action -->
+<div class="flex justify-between items-end mb-stack-lg">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-1">Categories</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Manage product categories and taxonomy.</p>
+</div>
+<button class="bg-primary text-on-primary font-body-sm text-body-sm font-semibold px-4 py-2 rounded flex items-center gap-2 hover:bg-on-primary-fixed-variant transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                    Add Category
+                </button>
+</div>
+<!-- Error Banner -->
+<div class="bg-error-container border border-error/20 rounded-lg p-4 mb-stack-lg flex items-start gap-3 shadow-sm">
+<span class="material-symbols-outlined text-error mt-0.5">error</span>
+<div class="flex-1">
+<h4 class="font-body-sm text-body-sm font-bold text-on-error-container">409 Conflict: Deletion Failed</h4>
+<p class="font-body-sm text-body-sm text-on-error-container/80 mt-1">Cannot delete category "Electronics". There are currently 42 products assigned to this category. Please reassign or delete these products first.</p>
+</div>
+<button class="text-on-error-container/60 hover:text-on-error-container transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Main Data Table Card (Level 1) -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0_4px_6px_-1px_rgb(0,0,0,0.1)] border border-outline-variant/50 overflow-hidden mb-stack-lg">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="font-label-caps text-label-caps text-on-surface-variant px-6 py-4">Category Name</th>
+<th class="font-label-caps text-label-caps text-on-surface-variant px-6 py-4">Slug</th>
+<th class="font-label-caps text-label-caps text-on-surface-variant px-6 py-4">Product Count</th>
+<th class="font-label-caps text-label-caps text-on-surface-variant px-6 py-4 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/50">
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-[18px]">devices</span>
+</div>
+<span class="font-body-sm text-body-sm font-semibold text-on-surface">Electronics</span>
+</div>
+</td>
+<td class="px-6 py-4 font-code-sm text-code-sm text-on-surface-variant">electronics</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-caps text-[10px]">42 Items</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-error hover:bg-error-container/50 rounded transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-[18px]">checkroom</span>
+</div>
+<span class="font-body-sm text-body-sm font-semibold text-on-surface">Apparel</span>
+</div>
+</td>
+<td class="px-6 py-4 font-code-sm text-code-sm text-on-surface-variant">apparel</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-label-caps text-[10px]">128 Items</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-error hover:bg-error-container/50 rounded transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-[18px]">chair</span>
+</div>
+<span class="font-body-sm text-body-sm font-semibold text-on-surface">Home &amp; Furniture</span>
+</div>
+</td>
+<td class="px-6 py-4 font-code-sm text-code-sm text-on-surface-variant">home-furniture</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-label-caps text-[10px]">0 Items</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded transition-colors" title="Edit">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-error hover:bg-error-container/50 rounded transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="bg-surface-container-low px-6 py-3 border-t border-outline-variant flex justify-between items-center">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Showing 1 to 3 of 3 entries</span>
+<div class="flex gap-1">
+<button class="p-1 rounded text-outline-variant cursor-not-allowed"><span class="material-symbols-outlined text-[20px]">chevron_left</span></button>
+<button class="p-1 rounded text-on-surface hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[20px]">chevron_right</span></button>
+</div>
+</div>
+</div>
+<!-- Debug Panel -->
+<div class="bg-surface-container border border-outline-variant rounded-lg overflow-hidden">
+<div class="bg-surface-container-high px-4 py-2 flex justify-between items-center border-b border-outline-variant cursor-pointer">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">bug_report</span>
+<span class="font-label-caps text-label-caps">Categories API Debug</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">expand_more</span>
+</div>
+<div class="p-4 overflow-x-auto bg-[#1e1e1e] text-[#d4d4d4] debug-code text-code-sm relative group">
+<button class="absolute top-2 right-2 p-1.5 bg-white/10 hover:bg-white/20 rounded text-white opacity-0 group-hover:opacity-100 transition-opacity" title="Copy to Clipboard">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+<pre><code>{
+  "request": {
+    "method": "DELETE",
+    "endpoint": "/api/v1/categories/electronics",
+    "headers": {
+      "Authorization": "Bearer jwt_..."
+    }
+  },
+  "response": {
+    "status": 409,
+    "error": "Conflict",
+    "message": "Category contains active products",
+    "details": {
+      "product_count": 42
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</main>
+<!-- Token Status Footer -->
+<footer class="fixed bottom-0 w-full z-50 flex justify-between items-center px-container-padding h-10 bg-inverse-surface shadow-md transition-opacity duration-200" style="left: 0;">
+<div class="flex items-center gap-4 w-64">
+<!-- Spacer for sidenav width -->
+</div>
+<div class="flex-1 flex justify-between items-center">
+<span class="font-label-caps text-label-caps text-surface-bright">MiniShop Admin v2.4.0</span>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 font-label-caps text-label-caps text-surface-dim">
+<a class="hover:text-primary-fixed transition-colors" href="#">API Status</a>
+<a class="hover:text-primary-fixed transition-colors" href="#">Docs</a>
+<a class="hover:text-primary-fixed transition-colors" href="#">Security Policy</a>
+</div>
+<div class="flex items-center gap-2 bg-black/30 px-3 py-1 rounded-full">
+<div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+<span class="font-code-sm text-code-sm text-surface-bright">JWT: Active</span>
+</div>
+</div>
+</div>
+</footer>
+
+    <!-- Global MiniShop Interconnected Navigation & API Client -->
+    <script src="js/nav.js"></script>
+</body></html>

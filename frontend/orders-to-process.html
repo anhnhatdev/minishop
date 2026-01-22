@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Seller Center - Orders to Process</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-fixed-variant": "#7d2d00",
+                      "on-surface": "#191c1e",
+                      "on-secondary": "#ffffff",
+                      "surface-bright": "#f7f9fb",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary": "#505f76",
+                      "tertiary-fixed": "#ffdbcd",
+                      "inverse-on-surface": "#eff1f3",
+                      "outline": "#737686",
+                      "on-primary-fixed-variant": "#003ea8",
+                      "surface": "#f7f9fb",
+                      "tertiary": "#943700",
+                      "on-background": "#191c1e",
+                      "secondary-fixed": "#d3e4fe",
+                      "on-secondary-fixed-variant": "#38485d",
+                      "on-primary-container": "#eeefff",
+                      "error-container": "#ffdad6",
+                      "outline-variant": "#c3c6d7",
+                      "on-error-container": "#93000a",
+                      "tertiary-container": "#bc4800",
+                      "on-tertiary": "#ffffff",
+                      "primary-container": "#2563eb",
+                      "on-tertiary-container": "#ffede6",
+                      "primary-fixed": "#dbe1ff",
+                      "surface-dim": "#d8dadc",
+                      "on-primary-fixed": "#00174b",
+                      "surface-container": "#eceef0",
+                      "on-error": "#ffffff",
+                      "on-tertiary-fixed": "#360f00",
+                      "surface-container-low": "#f2f4f6",
+                      "tertiary-fixed-dim": "#ffb596",
+                      "surface-container-high": "#e6e8ea",
+                      "on-primary": "#ffffff",
+                      "surface-tint": "#0053db",
+                      "on-secondary-fixed": "#0b1c30",
+                      "inverse-primary": "#b4c5ff",
+                      "on-surface-variant": "#434655",
+                      "primary": "#004ac6",
+                      "surface-container-highest": "#e0e3e5",
+                      "surface-variant": "#e0e3e5",
+                      "secondary-fixed-dim": "#b7c8e1",
+                      "primary-fixed-dim": "#b4c5ff",
+                      "secondary-container": "#d0e1fb",
+                      "inverse-surface": "#2d3133",
+                      "on-secondary-container": "#54647a",
+                      "error": "#ba1a1a",
+                      "background": "#f7f9fb"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "stack-md": "16px",
+                      "stack-lg": "32px",
+                      "stack-sm": "8px",
+                      "container-padding": "24px",
+                      "max-width-auth": "400px",
+                      "gutter": "16px",
+                      "base": "4px"
+              },
+              "fontFamily": {
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "code-sm": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "code-sm": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+          .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+          }
+          .material-symbols-outlined.fill {
+            font-variation-settings:
+            'FILL' 1,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+          }
+      </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col relative pb-8">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-surface-dim docked full-width top-0 sticky z-50 border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none flex justify-between items-center w-full px-container-padding h-16">
+<div class="flex items-center gap-4">
+<span class="text-headline-md font-headline-md font-black text-primary dark:text-primary-fixed">MiniShop</span>
+</div>
+<div class="flex-1 flex justify-start pl-8 hidden md:flex">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-2 text-on-surface-variant" data-icon="search">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-md py-1.5 pl-10 pr-3 text-body-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="Search orders..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors cursor-pointer active:opacity-80 p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors cursor-pointer active:opacity-80 p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border border-outline-variant">
+<img alt="Seller Avatar" class="object-cover w-full h-full" data-alt="A professional headshot of an e-commerce seller in a clean, modern studio setting, minimalist light-mode aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-vh_DaDSAPeeK5f2xnL_tHZcX5fiCQ9lLf6SdvVI6-WDbSOPiHwDtDrQ47B9IKUTJ_s78iPsoHJso_tNbHEEuQeKWjAtCBtI53eLq3GJZAXyTFvQJzqGGybX8QGU5O1Ss1FgsKHSyJLc8MJTcuFEH5T0-Z6txPlw0xzBW-5z0tu4ns50BUkwmK1awLPDESUln3LpZsmMODRZluR3BKVlzixEGbwdk1CwukcIvXPPVrTGHKixS_I0"/>
+</div>
+<button class="text-on-surface-variant font-body-sm font-medium hover:text-primary transition-colors ml-2">Logout</button>
+</div>
+</header>
+<div class="flex flex-1">
+<!-- SideNavBar -->
+<nav class="hidden md:flex bg-surface-container-low dark:bg-surface-container-lowest h-screen w-64 fixed left-0 top-16 border-r border-outline-variant dark:border-outline flat no shadows flex-col p-4 gap-2 z-40">
+<div class="mb-6 px-2">
+<h2 class="text-headline-md font-headline-md font-black text-primary">Seller Center</h2>
+<p class="text-body-sm text-on-surface-variant mt-1">Manage your store</p>
+</div>
+<button class="w-full bg-primary text-on-primary rounded-lg py-2 px-4 font-body-md font-medium flex items-center justify-center gap-2 mb-4 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                Add New Product
+            </button>
+<ul class="flex flex-col gap-1 w-full">
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 ease-in-out font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+                        Account Information
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 ease-in-out font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="lock">lock</span>
+                        Change Password
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 ease-in-out font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+                        My Products
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200 ease-in-out font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+                        Inventory
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed rounded-lg font-semibold transition-all duration-200 ease-in-out font-body-md text-body-md justify-between" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined fill" data-icon="shopping_basket" data-weight="fill">shopping_basket</span>
+                            Orders to Process
+                        </div>
+<span class="bg-error text-on-error text-[10px] font-bold px-1.5 py-0.5 rounded-full">12</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Main Content -->
+<main class="flex-1 md:ml-64 p-container-padding pb-32">
+<div class="max-w-6xl mx-auto">
+<div class="flex justify-between items-end mb-6">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Orders to Process</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Manage and update customer orders.</p>
+</div>
+</div>
+<!-- Error Banner Example -->
+<div class="bg-error-container border border-error-container rounded-md p-4 mb-6 flex items-start gap-3 shadow-sm">
+<span class="material-symbols-outlined text-on-error-container mt-0.5" data-icon="error">error</span>
+<div class="flex-1">
+<h3 class="font-body-md text-body-md font-semibold text-on-error-container">400: Invalid Status Transition</h3>
+<p class="font-body-sm text-body-sm text-on-error-container opacity-90 mt-1">Order #ORD-8924 cannot be moved directly from 'Processing' to 'Delivered'. Please update to 'Shipping' first.</p>
+</div>
+<button class="text-on-error-container hover:opacity-70 transition-opacity">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<!-- Data Table Container -->
+<div class="bg-surface-container-lowest rounded-lg shadow-[0_4px_6px_-1px_rgb(0,0,0,0.1)] border border-outline-variant overflow-hidden">
+<!-- Filter Tabs -->
+<div class="border-b border-outline-variant px-2 flex overflow-x-auto">
+<button class="px-4 py-3 font-body-sm text-body-sm font-medium text-on-surface-variant hover:text-on-surface border-b-2 border-transparent transition-colors whitespace-nowrap">All Orders</button>
+<button class="px-4 py-3 font-body-sm text-body-sm font-medium text-primary border-b-2 border-primary transition-colors whitespace-nowrap">Processing</button>
+<button class="px-4 py-3 font-body-sm text-body-sm font-medium text-on-surface-variant hover:text-on-surface border-b-2 border-transparent transition-colors whitespace-nowrap">Confirmed</button>
+<button class="px-4 py-3 font-body-sm text-body-sm font-medium text-on-surface-variant hover:text-on-surface border-b-2 border-transparent transition-colors whitespace-nowrap">Shipping</button>
+<button class="px-4 py-3 font-body-sm text-body-sm font-medium text-on-surface-variant hover:text-on-surface border-b-2 border-transparent transition-colors whitespace-nowrap">Delivered</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant text-on-surface-variant font-label-caps text-label-caps">
+<th class="py-3 px-4 font-semibold w-12">
+<input class="rounded-sm border-outline-variant text-primary focus:ring-primary w-4 h-4" type="checkbox"/>
+</th>
+<th class="py-3 px-4 font-semibold">Order ID</th>
+<th class="py-3 px-4 font-semibold">Customer</th>
+<th class="py-3 px-4 font-semibold">Date</th>
+<th class="py-3 px-4 font-semibold text-right">Total</th>
+<th class="py-3 px-4 font-semibold">Status</th>
+<th class="py-3 px-4 font-semibold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm text-on-surface divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-bright transition-colors group">
+<td class="py-3 px-4">
+<input class="rounded-sm border-outline-variant text-primary focus:ring-primary w-4 h-4" type="checkbox"/>
+</td>
+<td class="py-3 px-4 font-code-sm text-code-sm">ORD-8924</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-[10px]">JD</div>
+                                            Jane Doe
+                                        </div>
+</td>
+<td class="py-3 px-4 text-on-surface-variant">Oct 24, 2023</td>
+<td class="py-3 px-4 text-right font-medium">$124.50</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-primary-container/20 text-primary border border-primary-container">Processing</span>
+</td>
+<td class="py-3 px-4 text-right relative">
+<button class="text-primary hover:text-primary-fixed-dim font-medium flex items-center justify-end gap-1 w-full" onclick="document.getElementById('dropdown-1').classList.toggle('hidden')">
+                                            Update
+                                            <span class="material-symbols-outlined text-[18px]" data-icon="arrow_drop_down">arrow_drop_down</span>
+</button>
+<!-- Dropdown (Hidden by default, shown for example) -->
+<div class="hidden absolute right-4 top-10 bg-surface-container-lowest border border-outline-variant rounded-md shadow-lg w-40 z-10 py-1 text-left" id="dropdown-1">
+<button class="w-full text-left px-4 py-2 hover:bg-surface-container-low text-on-surface text-body-sm">Mark Confirmed</button>
+<button class="w-full text-left px-4 py-2 hover:bg-surface-container-low text-on-surface text-body-sm">Mark Shipping</button>
+<button class="w-full text-left px-4 py-2 hover:bg-surface-container-low text-error text-body-sm border-t border-outline-variant mt-1 pt-2">Cancel Order</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="py-3 px-4">
+<input class="rounded-sm border-outline-variant text-primary focus:ring-primary w-4 h-4" type="checkbox"/>
+</td>
+<td class="py-3 px-4 font-code-sm text-code-sm">ORD-8925</td>
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-[10px]">SM</div>
+                                            Sam Smith
+                                        </div>
+</td>
+<td class="py-3 px-4 text-on-surface-variant">Oct 24, 2023</td>
+<td class="py-3 px-4 text-right font-medium">$89.00</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-primary-container/20 text-primary border border-primary-container">Processing</span>
+</td>
+<td class="py-3 px-4 text-right">
+<button class="text-primary hover:text-primary-fixed-dim font-medium flex items-center justify-end gap-1 w-full">
+                                            Update
+                                            <span class="material-symbols-outlined text-[18px]" data-icon="arrow_drop_down">arrow_drop_down</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-4 py-3 border-t border-outline-variant flex items-center justify-between bg-surface-container-low">
+<span class="text-body-sm font-body-sm text-on-surface-variant">Showing 1 to 2 of 12 orders</span>
+<div class="flex gap-1">
+<button class="p-1 rounded text-on-surface-variant hover:bg-surface-variant disabled:opacity-50" disabled=""><span class="material-symbols-outlined text-[18px]" data-icon="chevron_left">chevron_left</span></button>
+<button class="p-1 rounded text-on-surface-variant hover:bg-surface-variant"><span class="material-symbols-outlined text-[18px]" data-icon="chevron_right">chevron_right</span></button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Debug Panel (Collapsible) -->
+<div class="fixed bottom-8 w-full md:pl-64 z-40 px-4 pointer-events-none">
+<div class="max-w-6xl mx-auto flex justify-end pointer-events-auto">
+<div class="bg-surface-container-highest border border-outline-variant rounded-t-lg shadow-lg w-full max-w-md overflow-hidden transition-all duration-300 transform translate-y-[calc(100%-40px)] hover:translate-y-0 focus-within:translate-y-0" id="debug-panel">
+<div class="bg-surface-container-low px-4 py-2 flex items-center justify-between cursor-pointer border-b border-outline-variant" onclick="document.getElementById('debug-panel').classList.toggle('translate-y-[calc(100%-40px)]')">
+<span class="font-code-sm text-code-sm font-semibold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="bug_report">bug_report</span>
+                        API Response Debug
+                    </span>
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]" data-icon="expand_less">expand_less</span>
+</div>
+<div class="p-4 bg-surface h-48 overflow-y-auto relative">
+<button class="absolute top-2 right-2 text-on-surface-variant hover:text-primary transition-colors p-1" title="Copy JSON">
+<span class="material-symbols-outlined text-[16px]" data-icon="content_copy">content_copy</span>
+</button>
+<pre class="font-code-sm text-code-sm text-on-surface-variant whitespace-pre-wrap break-all">{
+  "status": 400,
+  "error": "Invalid Transition",
+  "message": "Cannot move status directly to DELIVERED",
+  "current_state": "PROCESSING",
+  "allowed_next": ["SHIPPING", "CANCELLED"],
+  "order_id": "ORD-8924",
+  "timestamp": "2023-10-24T14:32:01Z"
+}
+                    </pre>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer / Status Bar -->
+<footer class="bg-inverse-surface dark:bg-surface-container-highest fixed bottom-0 w-full h-8 flex items-center border-t border-outline-variant flex justify-between px-4 z-50">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<span class="font-code-sm text-code-sm text-inverse-on-surface dark:text-on-surface">🔑 seller@example.com | Role: SELLER</span>
+</div>
+<div class="flex gap-4">
+<a class="font-code-sm text-code-sm text-surface-variant hover:text-primary-fixed-dim transition-opacity" href="#">Terms</a>
+<a class="font-code-sm text-code-sm text-surface-variant hover:text-primary-fixed-dim transition-opacity" href="#">Privacy</a>
+<a class="font-code-sm text-code-sm text-surface-variant hover:text-primary-fixed-dim transition-opacity" href="#">API Docs</a>
+</div>
+</footer>
+
+    <!-- Global MiniShop Interconnected Navigation & API Client -->
+    <script src="js/nav.js"></script>
+</body></html>
