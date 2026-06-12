@@ -1,14 +1,14 @@
 # 🛍️ MiniShop — E-Commerce Microservices Platform
 
-[![Java 21](https://img.shields.io/badge/Java-21%20LTS-orange.svg?style=for-the-badge&logo=openjdk)](https://adoptium.net/)
-[![Spring Boot 3.3.2](https://img.shields.io/badge/Spring%20Boot-3.3.2-brightgreen.svg?style=for-the-badge&logo=springboot)](https://spring.io/projects/spring-boot)
-[![Spring Cloud 2023.0.3](https://img.shields.io/badge/Spring%20Cloud-2023.0.3-blue.svg?style=for-the-badge&logo=spring)](https://spring.io/projects/spring-cloud)
+[![Java 25](https://img.shields.io/badge/Java-25%20LTS-orange.svg?style=for-the-badge&logo=openjdk)](https://adoptium.net/)
+[![Spring Boot 4.1.0](https://img.shields.io/badge/Spring%20Boot-4.1.0-brightgreen.svg?style=for-the-badge&logo=springboot)](https://spring.io/projects/spring-boot)
+[![Spring Cloud 2025.1.3](https://img.shields.io/badge/Spring%20Cloud-2025.1.3-blue.svg?style=for-the-badge&logo=spring)](https://spring.io/projects/spring-cloud)
 [![Apache Kafka](https://img.shields.io/badge/Apache%20Kafka-Distributed%20Events-231F20.svg?style=for-the-badge&logo=apachekafka)](https://kafka.apache.org/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database%20Per%20Service-336791.svg?style=for-the-badge&logo=postgresql)](https://www.postgresql.org/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Polyglot%20Persistence-47A248.svg?style=for-the-badge&logo=mongodb)](https://www.mongodb.com/)
 [![Docker](https://img.shields.io/badge/Docker-Multi--stage%20Containers-2496ED.svg?style=for-the-badge&logo=docker)](https://www.docker.com/)
 
-**MiniShop** is an enterprise-grade, distributed e-commerce backend platform built with **Java 21**, **Spring Boot 3.3**, **Spring Cloud 2023**, and **Apache Kafka**. Designed to mirror high-throughput production e-commerce architectures (e.g., Shopee, Lazada), it implements core distributed patterns including **Choreography-based Saga**, **Anti-Oversell Optimistic Locking Concurrency Control**, **Polyglot Persistence (PostgreSQL & MongoDB)**, **Payment Gateway HMAC-SHA512 Verification**, **Asynchronous Notifications**, **Stateless JWT Security**, **Service Discovery**, **Resilience4j Circuit Breakers**, and **Database-per-Service** isolation.
+**MiniShop** is an enterprise-grade, distributed e-commerce backend platform built with **Java 25**, **Spring Boot 4.1**, **Spring Cloud 2025**, and **Apache Kafka**. Designed to mirror high-throughput production e-commerce architectures (e.g., Shopee, Lazada), it implements core distributed patterns including **Choreography-based Saga**, **Anti-Oversell Optimistic Locking Concurrency Control**, **Polyglot Persistence (PostgreSQL & MongoDB)**, **Payment Gateway HMAC-SHA512 Verification**, **Asynchronous Notifications**, **Stateless JWT Security**, **Service Discovery**, **Resilience4j Circuit Breakers**, and **Database-per-Service** isolation.
 
 ---
 
@@ -244,17 +244,29 @@ PUT    /api/v1/reviews/{id}/hide              # Admin: Soft-hide abusive review
 
 ---
 
+## 🎨 Frontend Portal (Google Stitch Design Spec)
+
+MiniShop includes a high-fidelity frontend UI comprising **25 interconnected screens** designed directly via Google Stitch (`projects/573268449518407870`), built with Tailwind CSS, Material Symbols, Inter typography, and centralized API Client (`frontend/js/api.js`):
+
+- **🛒 Customer Storefront (13 Screens)**: [index.html](./frontend/index.html), [login.html](./frontend/login.html), [register.html](./frontend/register.html), [forgot-password.html](./frontend/forgot-password.html), [change-password.html](./frontend/change-password.html), [account.html](./frontend/account.html), [product-listing.html](./frontend/product-listing.html), [product-detail.html](./frontend/product-detail.html), [cart.html](./frontend/cart.html), [checkout.html](./frontend/checkout.html), [payment-result.html](./frontend/payment-result.html), [my-orders.html](./frontend/my-orders.html), [order-details.html](./frontend/order-details.html), [product-review.html](./frontend/product-review.html)
+- **🏪 Seller Center (4 Screens)**: [my-products.html](./frontend/my-products.html), [seller-product-edit.html](./frontend/seller-product-edit.html), [inventory-management.html](./frontend/inventory-management.html), [orders-to-process.html](./frontend/orders-to-process.html)
+- **🛡️ Admin Console (6 Screens)**: [admin-users.html](./frontend/admin-users.html), [category-management.html](./frontend/category-management.html), [global-order-monitoring.html](./frontend/global-order-monitoring.html), [admin-inventory.html](./frontend/admin-inventory.html), [admin-payment-logs.html](./frontend/admin-payment-logs.html), [notification-logs.html](./frontend/notification-logs.html)
+- **💻 Developer & Debug Console (2 Screens)**: [debug-api-console.html](./frontend/debug-api-console.html), [debug-system-status.html](./frontend/debug-system-status.html)
+
+---
+
 ## 🛠️ Technology Stack & Dependencies
 
-- **Language & JDK**: Java 21 LTS (Eclipse Temurin)
-- **Frameworks**: Spring Boot 3.3.2, Spring Cloud 2023.0.3 (Gateway, Netflix Eureka, OpenFeign)
+- **Language & JDK**: Java 25 LTS (Eclipse Temurin)
+- **Frameworks**: Spring Boot 4.1.0, Spring Cloud 2025.1.3 (Gateway, Netflix Eureka, OpenFeign)
+- **Frontend**: Google Stitch UI Spec, Tailwind CSS, Vanilla JS API Client & Global Navigation Switcher
 - **Event Messaging**: Apache Kafka 3.x with Spring Kafka
 - **Persistence**: PostgreSQL 16, MongoDB 7, Spring Data JPA, Spring Data MongoDB, Flyway
-- **Mailing & Communication**: Spring Boot Mail (`JavaMailSender`), Jakarta Mail
+- **Mailing & Communication**: Spring Boot Mail (`JavaMailSender`), Jakarta Mail, Mailpit Sandbox
 - **Cryptography & Security**: HMAC-SHA512 Signature Verification, Spring Security 6, JJWT 0.12.6, BCrypt
 - **Concurrency & Resilience**: JPA `@Version` Optimistic Locking, Spring Retry (`@Retryable`), Resilience4j Circuit Breaker
 - **Mapping & Utilities**: MapStruct 1.5.5, Lombok
-- **API Documentation**: Springdoc OpenAPI 2.6.0 (Swagger UI at `/swagger-ui.html`)
+- **API Documentation**: Springdoc OpenAPI (Swagger UI at `/swagger-ui.html`)
 - **Containerization**: Multi-stage Dockerfiles with healthchecks
 
 ---
@@ -262,34 +274,28 @@ PUT    /api/v1/reviews/{id}/hide              # Admin: Soft-hide abusive review
 ## 🚀 Getting Started
 
 ### 1. Prerequisites
-- **JDK 21 LTS**
-- **Docker & Docker Compose** (for PostgreSQL, MongoDB & Kafka)
+- **JDK 25 LTS**
+- **Docker & Docker Compose** (for PostgreSQL, MongoDB, Kafka, Zookeeper, Mailpit)
 - **Maven 3.9+** (or using bundled `./mvnw`)
 
-### 2. Running Services Locally
+### 2. Launching Infrastructure & Microservices
 
-Start the services in the following order:
+```powershell
+# 1. Start Infrastructure Containers (Postgres, Mongo, Kafka, Mailpit)
+.\start-infra.bat
 
-```bash
-# 1. Start Eureka Discovery Server
-cd eureka-server && ./mvnw spring-boot:run
+# 2. Start All Microservices in Sequence (PowerShell)
+.\start-services.ps1
 
-# 2. Start Core Services
-cd ../user-service && ./mvnw spring-boot:run
-cd ../product-service && ./mvnw spring-boot:run
-cd ../order-service && ./mvnw spring-boot:run
-cd ../inventory-service && ./mvnw spring-boot:run
-cd ../payment-service && ./mvnw spring-boot:run
-cd ../notification-service && ./mvnw spring-boot:run
-cd ../review-service && ./mvnw spring-boot:run
-
-# 3. Start API Gateway
-cd ../api-gateway && ./mvnw spring-boot:run
+# 3. Stop All Running Microservices cleanly
+.\stop-services.ps1
 ```
 
 ### 3. Service Dashboards & Swagger UIs
+- **Frontend Portal**: [frontend/index.html](./frontend/index.html)
 - **Eureka Dashboard**: [http://localhost:8761](http://localhost:8761)
 - **API Gateway Entry**: [http://localhost:8080](http://localhost:8080)
+- **Mailpit Web UI (Sandbox Emails)**: [http://localhost:8025](http://localhost:8025)
 - **User Service Swagger**: [http://localhost:8081/swagger-ui.html](http://localhost:8081/swagger-ui.html)
 - **Product Service Swagger**: [http://localhost:8082/swagger-ui.html](http://localhost:8082/swagger-ui.html)
 - **Order Service Swagger**: [http://localhost:8083/swagger-ui.html](http://localhost:8083/swagger-ui.html)
